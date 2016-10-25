@@ -7,6 +7,6 @@ var port = Number(process.env.PORT || PORT);
 app.use(express.logger());
 app.use(express.compress());
 
-app.use(express.static(_dirname + '/static'));
+app.use(express.static(__dirname + '/static'));
 
-server.listen(port);
+app.listen(port);
