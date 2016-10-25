@@ -1,10 +1,12 @@
-var http = require('http');
+var PORT = 3000;
 
-var server = http.createServer(function(req,res) {
-	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.end('Hello World!');
-});
+var express = require('express');
+var app = express();
+var port = Number(process.env.PORT || PORT);
 
-var port = Number(process.env.PORT || 3000);
+app.use(express.logger());
+app.use(express.compress());
+
+app.use(express.static(_dirname + '/static'));
 
 server.listen(port);
