@@ -33,7 +33,7 @@ if('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/', login.view);
+app.get('/login', login.view);
 app.get('/castles/:userName', castles.view);
 app.get('/castle/', castle.view);
 app.get('/castle/user/join', castle.join);
