@@ -36,7 +36,8 @@ if('development' == app.get('env')) {
 app.get('/login', login.view);
 app.get('/castles/:userName', castles.view);
 app.get('/castle/', castle.view);
-app.get('/castle/user/join', castle.join);
+app.get('/castle/join', castle.join);
+app.get('/castle/build', castle.build);
 app.get('/castle/team', team.view);
 // Example route
 // app.get('/users', user.list);

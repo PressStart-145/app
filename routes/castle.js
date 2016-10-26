@@ -19,3 +19,7 @@ exports.view = function(req, res) {
 exports.join = function(req, res){
     res.render('join');
 };
+
+exports.build = function(req, res){
+    res.render('buildCastle');
+};

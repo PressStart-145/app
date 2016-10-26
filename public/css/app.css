@@ -2,3 +2,12 @@ body {
 	color: #1CCAD8;
 	font-family: Helvetica, monospace;
 }
+
+.shrink {
+	height: 0px;
+	overflow: hidden;
+}
+
+.confirm {
+	display: none;
+}
