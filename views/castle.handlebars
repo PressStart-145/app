@@ -1,0 +1,34 @@
+<!-- Main castle screen. -->
+
+<!doctype html>
+
+<html>
+<head>
+	<title>Welcome to {{castleName}}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/app.css">
+</head>
+
+<body>
+	<div class="container">
+		<div class="jumbotron">
+			<h1>Hello, {{name}}!</h1>
+		</div>
+		<div class="sidebar">
+			<ul>
+				<li><a href="#">Castle</a></li>
+				<li><a href="team/ranking">Team Info</a></li>
+				<li><a href="">Quests</a></li>
+				<li><a href="">Make a Quest</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="js/app.js"></script>
+</body>
+</html>

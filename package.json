@@ -1,14 +1,15 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "CSE170/COGS120 web app",
+  "description": "Team task-sharing app.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "3.x"
+    "express": "3.x",
+    "express3-handlebars": "*"
   },
   "repository": {
     "type": "git",
