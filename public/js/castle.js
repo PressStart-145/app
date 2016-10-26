@@ -1,3 +1,14 @@
+/* Build Castle JS */
+$("#nameCastle").click(function(e) {
+    $("#nameForm").hide();
+    $("#addMembers").show();
+});
+
+$("#searchMem").click(function(e) {
+    $("#mapMem").show();
+});
+
+/* Join Castle JS */
 $("#resultsList a").click(function(e) {
     $("#search").hide();
     $(".confirm").show();
@@ -11,3 +22,6 @@ $("#noJoin").click(function(e) {
     $("#search").show();
     $(".confirm p").text("");
 });
+
+/* Other Castle JS */
+$("#sidebarMenu").load('/sidebar.html');
