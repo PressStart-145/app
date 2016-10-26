@@ -20,14 +20,17 @@
 		</div>
 		<div class="sidebar">
 			<ul>
-                <li><a href="castle/user/castle1">Castle</a></li>
+                <li><a href="/castle/">Castle</a></li>
 				<li><a href="#">Team Info</a></li>
 				<li><a href="">Quests</a></li>
 				<li><a href="">Make a Quest</a></li>
 			</ul>
 		</div>
-        <div>
-            <p>Rankings</p>
+		<div class="nav">
+			<a href="#" id="aRank">Rankings</a>
+			<a href="#" id="aAch">Achievements</a>
+		</div>
+        <div id="ranks">
             <ul>
                 <li>User 1</li>
                 <li>User 2</li>
@@ -35,10 +38,18 @@
                 <li>User 3</li>
             </ul>
         </div>
+		<div id="achievements" style="display: none;">
+            <ul>
+                <li>Killed a boss!</li>
+                <li>Protected 10 towns!</li>
+                <li>No damage in a week!</li>
+            </ul>
+        </div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/app.js"></script>
+	<script src="/js/team.js"></script>
 </body>
 </html>

@@ -14,7 +14,7 @@ var app = express();
 var castle = require('./routes/castle');
 var castles = require('./routes/castles');
 var login = require('./routes/login');
-var ranking = require('./routes/ranking');
+var team = require('./routes/team');
 
 var port = process.env.PORT || PORT;
 
@@ -37,7 +37,7 @@ app.get('/', login.view);
 app.get('/castles/:userName', castles.view);
 app.get('/castle/', castle.view);
 app.get('/castle/user/join', castle.join);
-app.get('/castle/team/ranking', ranking.view);
+app.get('/castle/team', team.view);
 // Example route
 // app.get('/users', user.list);
 
