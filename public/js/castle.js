@@ -24,4 +24,3 @@ $("#noJoin").click(function(e) {
 });
 
 /* Other Castle JS */
-$("#sidebarMenu").load('/sidebar.html');

@@ -3,6 +3,10 @@
  * GET castle page.
  */
 
+exports.select = function(req,res) {
+    res.render('castles');
+}
+
 exports.view = function(req, res) {
     /*var nameToShow = req.params.userName;
     var castleName = req.params.castleName;
@@ -17,7 +21,7 @@ exports.view = function(req, res) {
 };
 
 exports.join = function(req, res){
-    res.render('join');
+    res.render('joinCastle');
 };
 
 exports.build = function(req, res){

@@ -4,7 +4,6 @@
 
 var PORT = 3000;
 
-var fs = require('fs');
 var express = require('express');
 var http = require('http');
 var path = require('path');
@@ -12,7 +11,6 @@ var handlebars = require('express3-handlebars');
 
 var app = express();
 var castle = require('./routes/castle');
-var castles = require('./routes/castles');
 var login = require('./routes/login');
 var team = require('./routes/team');
 
@@ -34,8 +32,8 @@ if('development' == app.get('env')) {
 
 // Add routes here
 app.get('/login', login.view);
-app.get('/castles/:userName', castles.view);
-app.get('/castle/', castle.view);
+app.get('/castle/select', castle.select);
+app.get('/castle', castle.view);
 app.get('/castle/join', castle.join);
 app.get('/castle/build', castle.build);
 app.get('/castle/team', team.view);

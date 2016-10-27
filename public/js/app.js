@@ -1,0 +1,1 @@
+$("#sidebarMenu").load('/sidebar.html');
