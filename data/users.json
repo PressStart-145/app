@@ -1,0 +1,12 @@
+{
+    "username": {
+                    "password": "password",
+                    "name": "John Smith",
+                    "imageURL": ""
+                },
+    "user 1": {
+                    "password": "12345",
+                    "name": "Jane Doe",
+                    "imageURL": ""
+                }
+}

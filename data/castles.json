@@ -1,0 +1,21 @@
+var castles = {"castle 1": {
+                    "members": [
+                            {
+                                "username": "user 1",
+                                "imageURL": ""
+                            }
+                            {
+                                "username": "user 2",
+                                "imageURL": ""
+                            }
+                    ],
+                    "quests": [
+                        {
+                            "title": "task 1",
+                            "description": "test description",
+                            "level": "0",
+                            "takenBy": "user 2"
+                        }
+                    ]
+                }
+            };
