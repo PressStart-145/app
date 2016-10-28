@@ -10,19 +10,84 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+
+	<link href="css/castle.css" rel="stylesheet">
 </head>
 
 <body>
-	<div class="container">
+	<div class="container wrap">
+
+		<div id="castleDiv">
+			<div class="row sidebarToggleButton">
+				<a href="#menu-toggle" id="castleSidebarButtonImg">
+					<img src="images/HamburgerMenuBar-01.png"/>
+				</a>
+			</div>
+			<div id="castleNameDiv" class="row">
+				<h1>{{castleName}}</h1>
+			</div>
+			<div id="castleImg" class="row">
+				<img src="images/Castle.png"/>
+			</div>
+		</div>
+
+
+  	<div id="sidebarDiv" class="toggled">
+			<div class="row sidebarToggleButton sidebarButton">
+				<a href="#menu-toggle">
+					<img src="images/HamburgerMenuBar-01.png"/>
+				</a>
+			</div>
+			<br/>
+			<div class="row">
+				<a href="/castle/team" class="sidebarButton">
+					<img src="images/TeamInfo-01-01.png"/>
+				</a>
+			</div>
+			<div class="row">
+				<a href="/quests.html" class="sidebarButton">
+					<img src="images/Quests-01-01.png"/>
+				</a>
+			</div>
+			<div class="row">
+				<a href="/newQuest.html" class="sidebarButton">
+					<img src="images/MakeTask-01-01.png"/>
+				</a>
+			</div>
+			<br/>
+			<div class="row">
+				<a href="/" class="sidebarButton">
+					<img src="images/PersonalAccount-01-01.png"/>
+				</a>
+			</div>
+			<div id="welcomeMsgDiv" class="row">
+				Welcome back {{name}}!
+			</div>
+			<div id="myAccountDiv" class="row">
+				<a href="/">Log Out</a> | <a href="/">Help</a>
+			</div>
+		</div>
+
+
+		<!--
 		<div class="jumbotron">
 			<h1>Hello, {{name}}!</h1>
 		</div>
 		<div id="sidebarMenu"></div>
+		-->
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/castle.js"></script>
+
+	<!-- Menu Toggle Script -->
+	<script>
+	$(".sidebarToggleButton").click(function(e) {
+			e.preventDefault();
+			$("#sidebarDiv").toggleClass("toggled");
+	});
+	</script>
 </body>
 </html>
