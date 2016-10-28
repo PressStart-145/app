@@ -13,6 +13,7 @@ var app = express();
 var castle = require('./routes/castle');
 var login = require('./routes/login');
 var team = require('./routes/team');
+var quests = require('./routes/quests');
 
 var port = process.env.PORT || PORT;
 
@@ -37,6 +38,7 @@ app.get('/castle', castle.view);
 app.get('/castle/join', castle.join);
 app.get('/castle/build', castle.build);
 app.get('/castle/team', team.view);
+app.get('/account', quests.account)
 // Example route
 // app.get('/users', user.list);
 

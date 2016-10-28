@@ -1,0 +1,58 @@
+<!-- User's account screen. -->
+
+<!doctype html>
+
+<html>
+<head>
+	<title>My Account</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/app.css">
+</head>
+
+<body>
+	<div class="container">
+		<button class="backBtn">Back</button>
+        <div id="questList">
+			<p>Your Current Quests</p>
+			<div id="currCastle">
+				Castle 1:
+				<ul>
+					<li>quest 1 <a href="#" class="btn">Complete</a></li>
+					<li>quest 2 <a href="#" class="btn">Complete</a></li>
+					<li>quest 3 <a href="#" class="btn">Complete</a></li>
+				</ul>
+			</div>
+			<div id="otherCastle">
+				Other Castles:
+				<ul>
+					<li>
+						Castle 2
+						<ul>
+			                <li>quest 1 <a href="#" class="btn">Complete</a></li>
+			                <li>quest 2 <a href="#" class="btn">Complete</a></li>
+			            </ul>
+					</li>
+				</ul>
+			</div>
+        </div>
+		<div class="confirm">
+			<p>Are you all done with <span id="taskTitle"></span>?</p>
+			<a href="#" id="yesDone">Yes</a>
+			<a href="#" id="noDone">No</a>
+		</div>
+		<div>
+			Completed {{numCompleted}} Quests.
+			</br>
+			<a href="#">Change your password.</a>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/app.js"></script>
+	<script src="/js/quests.js"></script>
+</body>
+</html>
