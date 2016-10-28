@@ -15,7 +15,7 @@ exports.view = function(req, res) {
   	     'castleName': castleName
      });*/
      res.render('castle', {
-         'name': "user",
+         'name': "John",
          'castleName': "Castle 1"
      });
 };
