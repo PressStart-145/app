@@ -1,6 +1,6 @@
 $("#sidebarMenu").load('/sidebar.html');
 
 $(".backBtn").click(function() {
-    console.log("dgdfs");
+    e.preventDefault();
     window.history.back();
 });
