@@ -1,12 +1,25 @@
 {
-    "username": {
-                    "password": "password",
-                    "name": "John Smith",
-                    "imageURL": ""
-                },
-    "user 1": {
-                    "password": "12345",
-                    "name": "Jane Doe",
-                    "imageURL": ""
-                }
+    "users": [
+        {
+            "name": "John Smith",
+            "username": "username",
+            "password": "password",
+            "email": "username@mail.com",
+            "imageURL": ""
+        },
+        {
+            "name": "Jane Doe",
+            "username": "user 1",
+            "password": "12345",
+            "email": "user1@mail.com",
+            "imageURL": ""
+        },
+        {
+            "name": "Joe Schmoe",
+            "username": "user",
+            "password": "12345word",
+            "email": "user@mail.com",
+            "imageURL": ""
+        }
+    ]
 }
