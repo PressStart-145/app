@@ -1,13 +1,15 @@
+@import url('/css/sidebar.css');
+
 body {
-	color: black;
-	font-family: Helvetica, monospace;
+  color: black;
+  font-family: Helvetica, monospace;
 }
 
 .shrink {
-	height: 0px;
-	overflow: hidden;
+  height: 0px;
+  overflow: hidden;
 }
 
 .confirm {
-	display: none;
+  display: none;
 }
