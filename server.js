@@ -23,8 +23,8 @@ app.set('view engine', 'handlebars');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.json());
+app.use(express.urlencoded());
 app.use(app.router);
-
 app.use(express.static(path.join(__dirname + '/public')));
 
 if('development' == app.get('env')) {
@@ -32,7 +32,7 @@ if('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/signup/add', users.add);
+app.post('/signup/add', users.add);
 app.get('/login', users.login);
 app.get('/castle/select', castle.select);
 app.get('/castle', castle.view);

@@ -14,11 +14,13 @@
 
 <body>
 	<div class="container">
-        <form id="signUp">
-            <input type="text" placeholder="Full Name">
-            <input type="text" placeholder="Username">
-            <input type="text" placeholder="Password">
-            <a href="/signup/add">Submit</a>
+        <form method="post" action="/signup/add">
+            <input type="text" name="fullname" placeholder="Full Name" autofocus>
+            <input type="text" name="username" placeholder="Username">
+            <input type="text" name="password" placeholder="Password">
+			<input type="text" name="email" placeholder="E-mail">
+			<input type="file" name="image" accept="image/*">
+			<input type="submit" value="Submit">
             <a href="/">Cancel</a>
         </form>
 	</div>
