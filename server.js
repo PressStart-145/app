@@ -11,7 +11,7 @@ var handlebars = require('express3-handlebars');
 
 var app = express();
 var castle = require('./routes/castle');
-var login = require('./routes/login');
+var users = require('./routes/users');
 var team = require('./routes/team');
 var quests = require('./routes/quests');
 
@@ -32,7 +32,8 @@ if('development' == app.get('env')) {
 }
 
 // Add routes here
-app.get('/login', login.view);
+app.get('/signup/add', users.add);
+app.get('/login', users.login);
 app.get('/castle/select', castle.select);
 app.get('/castle', castle.view);
 app.get('/castle/join', castle.join);
