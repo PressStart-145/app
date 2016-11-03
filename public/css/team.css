@@ -1,3 +1,4 @@
+@import url('/css/sidebar.css');
 
 html, body {
   margin: 0;
@@ -81,17 +82,13 @@ html, body {
   width: 90%;
   text-align: center;
 }
-
-.sidebarButton {
-
-}
-
+/*
 .sidebarButton img {
   width: 30%;
   height: auto;
   margin-left: 35%;
 }
-
+*/
 
 #castleNameDiv {
   position: absolute;
@@ -100,7 +97,7 @@ html, body {
   margin: 0px !important;
   text-align: center;
 }
-
+/*
 #castleSidebarButtonImg {
   position: absolute;
   left: 82%;
@@ -126,7 +123,6 @@ html, body {
   width: 100%;
   height: 100%;
   z-index: 100;
-  background: #B7A6AD;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
   -o-transition: all 0.5s ease;
@@ -139,14 +135,13 @@ html, body {
   height: 100%;
   z-index: 110;
   left: 60%;
-  background: #846E74;
+  background: var(--pink);
   top: 0px;
   -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+        -o-transition: all 0.5s ease;
+            transition: all 0.5s ease;
 }
 #sidebarDiv.toggled {
-
   left: 100%;
-}
+}*/
