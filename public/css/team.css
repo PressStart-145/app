@@ -2,7 +2,14 @@
 html, body {
   margin: 0;
   height: 100%;
-  overflow: hidden
+  overflow: hidden;
+  background-color: var(--blue);
+
+  color: #D8CBEB;
+}
+
+.btn {
+  color: white;
 }
 
 #rankingAchievmentButtonRow {
@@ -30,6 +37,7 @@ html, body {
 
 .achievementRowDiv {
   height: 10%;
+  margin-bottom: 2% !important;
 }
 
 .achievementRowDiv img  {
@@ -51,6 +59,7 @@ html, body {
 
 .rankingRowDiv {
   height: 10%;
+  margin-bottom: 2% !important;
 }
 
 .rankingRowDiv img  {
@@ -82,71 +91,10 @@ html, body {
   text-align: center;
 }
 
-.sidebarButton {
-
-}
-
-.sidebarButton img {
-  width: 30%;
-  height: auto;
-  margin-left: 35%;
-}
-
-
 #castleNameDiv {
   position: absolute;
   top:10%;
   width:inherit;
   margin: 0px !important;
   text-align: center;
-}
-
-#castleSidebarButtonImg {
-  position: absolute;
-  left: 82%;
-  width: 10%;
-  height: auto;
-}
-#castleSidebarButtonImg img{
-  width: 100%;
-  height: auto;
-}
-
-#sidebarDiv div {
-  margin: 5%;
-}
-
-#castleDiv div {
-  margin: 3%;
-}
-#castleDiv {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  background: #B7A6AD;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#sidebarDiv {
-  position: absolute;
-  width: 40%;
-  height: 100%;
-  z-index: 110;
-  left: 60%;
-  background: #846E74;
-  top: 0px;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-#sidebarDiv.toggled {
-
-  left: 100%;
 }

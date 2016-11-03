@@ -17,7 +17,7 @@
 <body>
 	<div class="container wrap">
 
-		<div id="castleDiv">
+		<div id="mainDiv">
 			<div class="row sidebarToggleButton">
 				<a href="#menu-toggle" id="mainDivSidebarButtonImg">
 					<img src="/images/HamburgerMenuBar-01.png"/>
@@ -27,7 +27,7 @@
 				<h1>Team {{castleName}}</h1>
 			</div>
 			<div class="row" id='rankingAchievmentButtonRow'>
-				<a href="#" id='rankingsButton' class="selected">Rankings</a> | <a href="#" id='achievementsButton'>Achievements</a>
+				<a href="#" id='rankingsButton' class="selected btn">Rankings</a> <a href="#" id='achievementsButton' class="btn">Achievements</a>
 			</div>
 			<div id="rankingDiv">
 				{{#each rankings}}
@@ -97,10 +97,7 @@
 
 	<!-- Menu Toggle Script -->
 	<script>
-	$(".sidebarToggleButton").click(function(e) {
-			e.preventDefault();
-			$("#sidebarDiv").toggleClass("toggled");
-	});
+
 	$("#rankingsButton").click(function(e) {
 			e.preventDefault();
 			$("#achievementDiv").addClass("hidden");

@@ -3,6 +3,7 @@
 <!doctype html>
 
 <html>
+
 <head>
 	<title>My Account</title>
 	<meta charset="utf-8">
@@ -10,49 +11,95 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/account.css">
 </head>
 
 <body>
-	<div class="container">
-		<button class="backBtn">Back</button>
-        <div id="questList">
-			<p>Your Current Quests</p>
-			<div id="currCastle">
-				Castle 1:
-				<ul>
-					<li>quest 1 <a href="#" class="btn">Complete</a></li>
-					<li>quest 2 <a href="#" class="btn">Complete</a></li>
-					<li>quest 3 <a href="#" class="btn">Complete</a></li>
-				</ul>
+	<div class="container wrap">
+		<div id="mainDiv">
+			<div class="row sidebarToggleButton">
+				<a href="#menu-toggle" id="mainDivSidebarButtonImg">
+					<img src="/images/HamburgerMenuBar-01.png" />
+				</a>
 			</div>
-			<div id="otherCastle">
-				Other Castles:
-				<ul>
-					<li>
-						Castle 2
-						<ul>
-			                <li>quest 1 <a href="#" class="btn">Complete</a></li>
-			                <li>quest 2 <a href="#" class="btn">Complete</a></li>
-			            </ul>
-					</li>
-				</ul>
+			<div class="container-fluid">
+				<!-- <button class="backBtn">Back</button> -->
+				<div class="container-fluid">
+				   <div class="row">
+						 <div class="col-xs-4">
+								<img src="/images/characters/wizardTransparent.png" height="100px">
+						 </div>
+				       <div class="col-xs-6">
+				          <div>Pierre Karpov</div>
+				          <div>Skankhunt42</div>
+									<div><a href="" class="btn" id="btnChangeInfo">Change your info</a></div>
+				       </div>
+				    </div>
+				</div>
+				<div id="questList" class="container-fluid">
+					<div class="row" >
+						<div class="col-xs-6">
+							<h5 style"width:100%;text-align:center;">Current Quests</h5>
+						</div>
+						<div class="col-xs-6">
+							<h5 style"width:100%;text-align:center;">Completed Quests</h5>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-5">Do a thing</div>
+						<div class="col-xs-3">60 pts</div>
+						<div class="col-xs-4 btn">Complete</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-5">Print Flyers</div>
+						<div class="col-xs-3">60 pts</div>
+						<div class="col-xs-4 btn">Complete</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-5">Get coffee</div>
+						<div class="col-xs-3">60 pts</div>
+						<div class="col-xs-4 btn">Complete</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-5">Interview President Trump</div>
+						<div class="col-xs-3">60 pts</div>
+						<div class="col-xs-4 btn">Complete</div>
+					</div>
+				</div>
+				<div class="confirm">
+					<p>Are you all done with <span id="taskTitle"></span>?</p>
+					<a href="#" id="yesDone" class="btn">Yes</a>
+					<a href="#" id="noDone" class="btn">No</a>
+				</div>
+				<h3 style="width:100%; text-align:center;">
+					Completed {{numCompleted}} Quests.
+				</h3>
 			</div>
-        </div>
-		<div class="confirm">
-			<p>Are you all done with <span id="taskTitle"></span>?</p>
-			<a href="#" id="yesDone">Yes</a>
-			<a href="#" id="noDone">No</a>
-		</div>
-		<div>
-			Completed {{numCompleted}} Quests.
-			</br>
-			<a href="#">Change your password.</a>
 		</div>
 	</div>
+	<!-- mainDiv -->
+
+	<div id="sidebarDiv" class="toggled">
+		<div class="row sidebarToggleButton sidebarButton">
+			<a href="#menu-toggle">
+				<img src="/images/HamburgerMenuBar-01.png" />
+			</a>
+		</div>
+		<br/>
+		<div id="welcomeMsgDiv" class="row">
+			Welcome back {{name}}!
+		</div>
+		<div id="sidebarMenu"></div>
+	</div>
+	<!-- sidebarDiv -->
+	</div>
+	<!-- container -->
+
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/app.js"></script>
 	<script src="/js/quests.js"></script>
 </body>
+
 </html>

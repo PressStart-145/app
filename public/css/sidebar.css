@@ -28,6 +28,10 @@ html, body {
 #mainDiv div {
   margin: 3%;
 }
+
+#mainDiv div div{
+  margin: 0%;
+}
 #mainDiv {
   position: absolute;
   left: 0px;
@@ -35,7 +39,7 @@ html, body {
   width: 100%;
   height: 100%;
   z-index: 100;
-  background: #b7a6ad;
+  /*background: #b7a6ad;*/
   -webkit-transition: all .5s ease;
      -moz-transition: all .5s ease;
        -o-transition: all .5s ease;
@@ -48,7 +52,7 @@ html, body {
   height: 100%;
   z-index: 110;
   left: 60%;
-  background: #846e74;
+  background: var(--purple);
   top: 0px;
   -webkit-transition: all .5s ease;
      -moz-transition: all .5s ease;
