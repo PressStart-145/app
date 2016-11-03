@@ -44,3 +44,4 @@ app.get('/account', quests.account)
 // app.get('/users', user.list);
 
 http.createServer(app).listen(port);
+console.log("Listening on port " + port);
