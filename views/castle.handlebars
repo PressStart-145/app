@@ -34,7 +34,7 @@ d888888b .88b  d88. d8888b.      d88888b .88b  d88.  .d8b.  d888888b db
    88    88  88  88 88           88.     88  88  88 88   88   .88.   88booo.
    YP    YP  YP  YP 88           Y88888P YP  YP  YP YP   YP Y888888P Y88888P
 -->
-			<div is='emailDiv'><a href="">Send Email</a></div>
+			<div id='emailDiv'><a href="">Send Email</a></div>
 			<div id="castleImg" class="row">
 				<img src="/images/Castle.png"/>
 			</div>
@@ -91,6 +91,12 @@ d888888b .88b  d88. d8888b.      d88888b .88b  d88.  .d8b.  d888888b db
 	$(".sidebarToggleButton").click(function(e) {
 			e.preventDefault();
 			$("#sidebarDiv").toggleClass("toggled");
+	});
+	</script>
+
+	<script>
+	$("#emailDiv").click(function(e) {
+			console.log("In sending email function");
 	});
 	</script>
 </body>
