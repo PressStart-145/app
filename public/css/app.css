@@ -1,8 +1,20 @@
 @import url('/css/sidebar.css');
 
+:root {
+  --blue: #3f4677;
+  --purple: #a467a3;
+  --pink: #f48d99;
+  --green: #69b594;
+  --yellow: #f2dc93;
+}
+
 body {
   color: black;
   font-family: Helvetica, monospace;
+}
+
+a {
+    color: var(--blue);
 }
 
 .shrink {
@@ -12,4 +24,8 @@ body {
 
 .confirm {
   display: none;
+}
+
+.btn {
+    background-color: var(--pink);
 }

@@ -10,17 +10,32 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/login.css">
 </head>
 
 <body>
-	<div class="container">
-        <form>
-            <input type="text" placeholder="Username">
-            <input type="text" placeholder="Password">
-            <a href="castle/select">Login</a>
-        </form>
-        <a href="#" id="forgotPassword">Forgot your password?</a>
-		<a href="/signup.html" id="makeAccount">Don't have an account?</a>
+	<div class="vertical-center">
+		<div class="container">
+			<div class="col-xs-8 col-xs-offset-2">
+				<div class="row">
+					<h1>CREWsades</h1>
+				</div>
+		        <form>
+					<div class="row">
+		            	<input type="text" placeholder="Username">
+					</div> <div class="row">
+		            	<input type="text" placeholder="Password">
+					</div> <div class="row">
+		            	<div class="btn" id="loginBtn"><a href="castle/select">Login</a></div>
+					</div>
+		        </form>
+				<div class="row extra">
+		        	<div class="btn" id="passBtn"><a href="#" id="forgotPassword">Forgot your password?</a></div>
+				</div> <div class="row extra">
+					<div class="btn" id="signBtn"><a href="/signup.html" id="makeAccount">Don't have an account?</a></div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
