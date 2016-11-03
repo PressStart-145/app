@@ -28,6 +28,10 @@ html, body {
 #mainDiv div {
   margin: 3%;
 }
+
+#mainDiv div div{
+  margin: 0%;
+}
 #mainDiv {
   position: absolute;
   left: 0px;

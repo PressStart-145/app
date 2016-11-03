@@ -3,6 +3,7 @@
 <!doctype html>
 
 <html>
+
 <head>
 	<title>Welcome to {{castleName}}</title>
 	<meta charset="utf-8">
@@ -15,34 +16,25 @@
 
 <body>
 	<div class="container wrap">
-
 		<div id="mainDiv">
 			<div class="row sidebarToggleButton">
 				<a href="#menu-toggle" id="mainDivSidebarButtonImg">
-					<img src="/images/HamburgerMenuBar-01.png"/>
+					<img src="/images/HamburgerMenuBar-01.png" />
 				</a>
 			</div>
 			<div id="castleNameDiv" class="row">
 				<h1>{{castleName}}</h1>
 			</div>
-<!--
-d888888b .88b  d88. d8888b.      d88888b .88b  d88.  .d8b.  d888888b db
-`~~88~~' 88'YbdP`88 88  `8D      88'     88'YbdP`88 d8' `8b   `88'   88
-   88    88  88  88 88oodD'      88ooooo 88  88  88 88ooo88    88    88
-   88    88  88  88 88~~~        88~~~~~ 88  88  88 88~~~88    88    88
-   88    88  88  88 88           88.     88  88  88 88   88   .88.   88booo.
-   YP    YP  YP  YP 88           Y88888P YP  YP  YP YP   YP Y888888P Y88888P
--->
-			<div id='emailDiv'><a href="">Send Email</a></div>
+			<!-- <div id='emailDiv'><a href="">Send Email</a></div> -->
 			<div id="castleImg" class="row">
-				<img src="/images/Castle.png"/>
+				<img src="/images/Castle.png" />
 			</div>
-		</div>
+		</div> <!-- mainDiv -->
 
-  	<div id="sidebarDiv" class="toggled">
+		<div id="sidebarDiv" class="toggled">
 			<div class="row sidebarToggleButton sidebarButton">
 				<a href="#menu-toggle">
-					<img src="/images/HamburgerMenuBar-01.png"/>
+					<img src="/images/HamburgerMenuBar-01.png" />
 				</a>
 			</div>
 			<br/>
@@ -50,7 +42,12 @@ d888888b .88b  d88. d8888b.      d88888b .88b  d88.  .d8b.  d888888b db
 				Welcome back {{name}}!
 			</div>
 			<div id="sidebarMenu"></div>
+<<<<<<< HEAD
 	</div>
+=======
+		</div> <!-- sidebarDiv -->
+	</div> <!-- container -->
+>>>>>>> account page layout done
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
@@ -58,17 +55,13 @@ d888888b .88b  d88. d8888b.      d88888b .88b  d88.  .d8b.  d888888b db
 	<script src="/js/castle.js"></script>
 
 	<!-- Menu Toggle Script -->
-	<script>
-	$(".sidebarToggleButton").click(function(e) {
-			e.preventDefault();
-			$("#sidebarDiv").toggleClass("toggled");
-	});
-	</script>
+
 
 	<script>
-	$("#emailDiv").click(function(e) {
+		$("#emailDiv").click(function(e) {
 			console.log("In sending email function");
-	});
+		});
 	</script>
 </body>
+
 </html>
