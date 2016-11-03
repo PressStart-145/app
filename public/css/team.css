@@ -3,7 +3,14 @@
 html, body {
   margin: 0;
   height: 100%;
-  overflow: hidden
+  overflow: hidden;
+  background-color: var(--blue);
+
+  color: #D8CBEB;
+}
+
+.btn {
+  color: white;
 }
 
 #rankingAchievmentButtonRow {
@@ -31,6 +38,7 @@ html, body {
 
 .achievementRowDiv {
   height: 10%;
+  margin-bottom: 2% !important;
 }
 
 .achievementRowDiv img  {
@@ -52,6 +60,7 @@ html, body {
 
 .rankingRowDiv {
   height: 10%;
+  margin-bottom: 2% !important;
 }
 
 .rankingRowDiv img  {
@@ -82,6 +91,7 @@ html, body {
   width: 90%;
   text-align: center;
 }
+
 /*
 .sidebarButton img {
   width: 30%;
@@ -90,13 +100,6 @@ html, body {
 }
 */
 
-#castleNameDiv {
-  position: absolute;
-  top:10%;
-  width:inherit;
-  margin: 0px !important;
-  text-align: center;
-}
 /*
 #castleSidebarButtonImg {
   position: absolute;
@@ -145,3 +148,5 @@ html, body {
 #sidebarDiv.toggled {
   left: 100%;
 }*/
+=======
+>>>>>>> account page layout done

@@ -1,0 +1,45 @@
+body {
+    background-color: var(--blue);
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    color: #D8CBEB;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+}
+
+#btnChangeInfo {
+  background-color: var(--purple);
+  color: white;
+}
+
+.btn {
+  color: white;
+}
+
+.extra .btn {
+    background-color: var(--purple);
+}
+
+.vertical-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+#questList div {
+  margin: 0px;
+  font-size: 12px;
+}
+
+#questList div.row {
+  margin-bottom: 2%;
+}
