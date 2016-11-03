@@ -18,6 +18,7 @@
                     "title": "task 1",
                     "description": "test description",
                     "level": "10",
+                    "deadline": "11/10/2016",
                     "takenBy": "",
                     "completed": false
                 },
@@ -25,6 +26,7 @@
                     "title": "Pass out flyers",
                     "description": "do the thing",
                     "level": "1",
+                    "deadline": "11/10/2016",
                     "takenBy": "user",
                     "completed": true
                 }
@@ -45,6 +47,7 @@
                     "title": "task 1",
                     "description": "test description",
                     "level": "10",
+                    "deadline": "11/10/2016",
                     "takenBy": "",
                     "completed": false
                 },
@@ -52,6 +55,7 @@
                     "title": "Put up posters",
                     "description": "do the thing",
                     "level": "1",
+                    "deadline": "11/10/2016",
                     "takenBy": "",
                     "completed": false
                 }

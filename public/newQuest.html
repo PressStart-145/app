@@ -15,12 +15,12 @@
 <body>
 	<div class="container">
 		<a href="/castle" class="backBtn">Cancel</a>
-		<form>
-			<input type="text" placeholder="Quest Name">
-			<input type="text" placeholder="Description">
-			<input type="text" placeholder="Deadline">
-			Reward <input type="text" placeholder="1-10"> points
-			<a href="/map.html">Create</a>
+		<form method="post" action="/quests/add">
+			<input type="text" name="title" placeholder="Quest Name">
+			<input type="text" name="description" placeholder="Description">
+			<input type="text" name="deadline" placeholder="Deadline">
+			Reward <input type="text" name="level" placeholder="1-10"> points
+			<input type="submit" value="Create">
 		</form>
 	</div>
 

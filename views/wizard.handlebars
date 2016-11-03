@@ -26,9 +26,9 @@
             <div id="available">
 				<p>Available</p>
                 <ul>
-                    <li>quest 1</li>
-                    <li>quest 2</li>
-                    <li>quest 3</li>
+					{{#each quests}}
+                    	<li>{{title}}</li>
+					{{/each}}
                 </ul>
             </div>
             <div id="inprogress">

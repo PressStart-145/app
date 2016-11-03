@@ -1,6 +1,6 @@
 
 /*
- * GET log in page.
+ * GET log in page. Add user.
  */
 
 var data = require("../data/users.json");
