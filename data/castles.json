@@ -1,21 +1,62 @@
-var castles = {"castle 1": {
-                    "members": [
-                            {
-                                "username": "user 1",
-                                "imageURL": ""
-                            }
-                            {
-                                "username": "user 2",
-                                "imageURL": ""
-                            }
-                    ],
-                    "quests": [
-                        {
-                            "title": "task 1",
-                            "description": "test description",
-                            "level": "0",
-                            "takenBy": "user 2"
-                        }
-                    ]
+{
+    "castles": [
+        {
+            "name": "Castle 1",
+            "admin": "user",
+            "members": [
+                {
+                    "username": "user",
+                    "numCompleted": 1
+                },
+                {
+                    "username": "user1",
+                    "numCompleted": 0
                 }
-            };
+            ],
+            "quests": [
+                {
+                    "title": "task 1",
+                    "description": "test description",
+                    "level": "10",
+                    "takenBy": "",
+                    "completed": false
+                },
+                {
+                    "title": "Pass out flyers",
+                    "description": "do the thing",
+                    "level": "1",
+                    "takenBy": "user",
+                    "completed": true
+                }
+            ],
+            "numCompleted": 1
+        },
+        {
+            "name": "Disney",
+            "admin": "DonaldDuck",
+            "members": [
+                {
+                    "username": "DonaldDuck",
+                    "numCompleted": 0
+                }
+            ],
+            "quests": [
+                {
+                    "title": "task 1",
+                    "description": "test description",
+                    "level": "10",
+                    "takenBy": "",
+                    "completed": false
+                },
+                {
+                    "title": "Put up posters",
+                    "description": "do the thing",
+                    "level": "1",
+                    "takenBy": "",
+                    "completed": false
+                }
+            ],
+            "numCompleted": 0
+        }
+    ]
+}
