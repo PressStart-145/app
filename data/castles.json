@@ -20,7 +20,7 @@
                     "level": "10",
                     "deadline": "11/10/2016",
                     "takenBy": "",
-                    "completed": true
+                    "completed": false
                 },
                 {
                     "title": "Pass out flyers",
@@ -29,6 +29,13 @@
                     "deadline": "11/10/2016",
                     "takenBy": "user",
                     "completed": false
+                },{
+                    "title": "Ayy baguette",
+                    "description": "Flyers duh",
+                    "level": "35",
+                    "deadline": "11/10/2016",
+                    "takenBy": "hon hon",
+                    "completed": true
                 },
                 {
                     "title": "Do a thing",
