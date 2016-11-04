@@ -48,11 +48,24 @@ input {
     margin-bottom: 10px;
 }
 
+.list div{
+    margin: 0px;
+    padding-top: 3%;
+    font-size: 12px;
+}
+
+.list div.row {
+  margin-bottom: 3%;
+}
+
+/*
 #questList div {
   margin: 0px;
+  padding-top: 2%;
   font-size: 12px;
 }
 
 #questList div.row {
   margin-bottom: 2%;
 }
+*/

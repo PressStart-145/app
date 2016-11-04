@@ -36,7 +36,7 @@
 						</div>
 					</div>
 				</div>
-				<div id="questList" class="container-fluid">
+				<div class="container-fluid">
 					<div class="row extra">
 						<div class="col-xs-6">
 							<h5 id="currentQuestsBtn" class="btn">Current Quests</h5>
@@ -45,13 +45,25 @@
 							<h5 id="completedQuestsBtn" class="btn">Done Quests</h5>
 						</div>
 					</div>
-					{{#each currentTaskList}}
-						<div class="row">
-							<div class="col-xs-5 taskTitle">{{title}}</div>
-							<div class="col-xs-3">{{level}} pts</div>
-							<div class="col-xs-4 btn">Complete</div>
-						</div>
-					{{/each}}
+
+					<div id="questList" class="list">
+						{{#each currentTaskList}}
+							<div class="row">
+								<div class="col-xs-5 taskTitle">{{title}}</div>
+								<div class="col-xs-3">{{level}} pts</div>
+								<div class="col-xs-4 btn">Complete</div>
+							</div>
+						{{/each}}
+					</div>
+					<div id="doneList" class="shrink list">
+						{{#each doneTaskList}}
+							<div class="row">
+								<div class="col-xs-5 taskTitle">{{title}}</div>
+								<div class="col-xs-3">{{level}} pts</div>
+								<div class="col-xs-4 btn">Complete</div>
+							</div>
+						{{/each}}
+					</div>
 					<!-- <div class="row">
 						<div class="col-xs-5">Do a thing</div>
 						<div class="col-xs-3">60 pts</div>

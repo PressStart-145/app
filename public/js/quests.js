@@ -19,3 +19,15 @@ $("#noDone").click(function(e) {
     e.preventDefault();
     $(".confirm").hide();
 });
+
+$("#currentQuestsBtn").click(function(e) {
+    e.preventDefault();
+    $("#questList").toggleClass("shrink");
+    $("#doneList").toggleClass("shrink");
+});
+
+$("#completedQuestsBtn").click(function(e) {
+    e.preventDefault();
+    $("#questList").toggleClass("shrink");
+    $("#doneList").toggleClass("shrink");
+});
