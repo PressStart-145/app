@@ -1,0 +1,53 @@
+.container {
+    height: 100%;
+    padding: 0;
+}
+
+.row {
+    margin-bottom: 10px;
+}
+
+#carousel {
+    height: 100%;
+}
+
+.carousel-inner {
+    height: 100% !important;
+}
+
+.item {
+    height: 100%;
+    text-align: center;
+}
+
+.item div {
+    padding-top: 50%;
+    height: 100%;
+    background-image: url("../images/castle.png");
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.carousel-control {
+    background-image: none !important;
+}
+
+#noCastle {
+    padding-top: 50%;
+    background-image: url("../images/BuildACastle.png");
+    background-position: center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.btn {
+    width: 50%;
+    background-color: var(--yellow);
+    font-size: 2em;
+    font-weight: bold;
+}

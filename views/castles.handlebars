@@ -10,14 +10,41 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/castles.css">
 </head>
 
 <body>
 	<div class="container">
-        <div id="castle1"><a href="../castle/">Castle 1</a></div>
-		<div id="newCastle"><a href="../castle/build">Build</div>
-        <div id="newCastle"><a href="../castle/join">Join</div>
-		<div id="logout"><a href="/">Log Out</div>
+		<div id="carousel" class="carousel slide">
+			<!-- Indicators -->
+			<ol class="carousel-indicators">
+				<li data-target="#carousel" data-slide-to="0" class="active"></li>
+				<li data-target="#carousel" data-slide-to="1"></li>
+			</ol>
+
+			<!-- Wrapper for slides -->
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<div id="castle1"><a href="../castle/">Castle 1</a></div>
+				</div>
+				<div class="item">
+					<div id="noCastle">
+						<div class="row">
+							<a href="../castle/build" class="btn">Build</a>
+						</div><div class="row">
+							<a href="../castle/join" class="btn">Join</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+				<span><</span><span class="sr-only">Previous</span>
+			</a>
+			<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+				<span>></span><span class="sr-only">Next</span>
+			</a>
+		</div>
+		<div id="logout"><a href="/">Log Out</a></div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>

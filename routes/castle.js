@@ -53,7 +53,8 @@ exports.view = function(req, res) {
 
      res.render('castle', {
          'name': "John",
-         'castleName': "Castle 1"
+         'castleName': "Castle 1",
+         'monsterName': "Kraken"
      });
 };
 
