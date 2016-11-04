@@ -9,8 +9,9 @@
 }
 
 body {
-  color: black;
-  font-family: Helvetica, monospace;
+    background-color: var(--yellow);
+    color: black;
+    font-family: Helvetica, monospace;
 }
 
 a {
@@ -18,12 +19,12 @@ a {
 }
 
 .shrink {
-  height: 0px;
-  overflow: hidden;
+    height: 0px;
+    overflow: hidden;
 }
 
 .confirm {
-  display: none;
+    display: none;
 }
 
 .btn {

@@ -39,7 +39,10 @@ html, body {
   width: 100%;
   height: 100%;
   z-index: 100;
+<<<<<<< HEAD
   /*background: #b7a6ad;*/
+=======
+>>>>>>> master
   -webkit-transition: all .5s ease;
      -moz-transition: all .5s ease;
        -o-transition: all .5s ease;
@@ -52,7 +55,11 @@ html, body {
   height: 100%;
   z-index: 110;
   left: 60%;
+<<<<<<< HEAD
   background: var(--purple);
+=======
+  background: var(--pink);
+>>>>>>> master
   top: 0px;
   -webkit-transition: all .5s ease;
      -moz-transition: all .5s ease;
