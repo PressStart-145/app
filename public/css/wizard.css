@@ -8,6 +8,42 @@ body {
     color: #D8CBEB;
 }
 
+#greedingDiv {
+  padding-top: 8%;
+  font-size: 20px;
+}
+
+.inProgressTaskList.hidden {
+  visibility: hidden;
+}
+
+.doneTaskRow.hidden {
+  visibility: hidden;
+}
+
+.todoTaskRow.hidden {
+  visibility: hidden;
+}
+
+
 .btn {
   color: white;
+}
+
+.btn.selected {
+  color: black;
+}
+
+.row {
+    margin-bottom: 10px !important;
+}
+
+.list div{
+    margin: 0px;
+    padding-top: 3%;
+    font-size: 12px;
+}
+
+.list div.row {
+  margin-bottom: 3% !important;
 }
