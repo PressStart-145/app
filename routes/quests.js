@@ -29,7 +29,6 @@ exports.add = function(req, res) {
         }
     }
 
-
     res.render('wizard', {
       'doneTaskList': doneTaskList,
       'todoTaskList': todoTaskList,

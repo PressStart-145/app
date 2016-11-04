@@ -28,9 +28,9 @@ window.onload = function() {
     var str = $("#monsterHP").text().match(/:.*?\//g)[0];
     var monsterHealth = str.substring(2, str.length - 1);
     var fraction = monsterHealth / 100;
-    var width = fraction * 0.5;
-    $("#monsterHealth").css("width", (fraction * width) + "% !important");
-    console.log((fraction * width) + "% !important");
+    var width = fraction * 50;
+    $("#monsterHealth").css('width', (fraction * width) + "%");
+    console.log((fraction * width) + "%");
 };
 
 var dmgMonster = function() {
