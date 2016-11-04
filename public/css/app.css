@@ -9,15 +9,9 @@
 }
 
 body {
-<<<<<<< HEAD
     background-color: var(--yellow);
     color: black;
     font-family: Helvetica, monospace;
-=======
-  background-color: var(--yellow);
-  color: black;
-  font-family: Helvetica, monospace;
->>>>>>> asdf
 }
 
 a {
