@@ -91,16 +91,6 @@ html, body {
   width: 90%;
   text-align: center;
 }
-<<<<<<< HEAD
-/*
-.sidebarButton img {
-  width: 30%;
-  height: auto;
-  margin-left: 35%;
-}
-*/
-=======
->>>>>>> account page layout done
 
 #castleNameDiv {
   position: absolute;
@@ -109,7 +99,6 @@ html, body {
   margin: 0px !important;
   text-align: center;
 }
-<<<<<<< HEAD
 /*
 #castleSidebarButtonImg {
   position: absolute;
@@ -158,5 +147,3 @@ html, body {
 #sidebarDiv.toggled {
   left: 100%;
 }*/
-=======
->>>>>>> account page layout done
