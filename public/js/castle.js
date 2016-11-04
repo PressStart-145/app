@@ -23,4 +23,13 @@ $("#noJoin").click(function(e) {
     $(".confirm p").text("");
 });
 
+/* Game Castle JS */
+var dmgMonster = function() {
+    console.log("sgblsdgsdifhedisl");
+    var fraction = monsterHealth / 100;
+    var width = document.getElementById("monsterInfo").style.width;
+    document.getElementById("monsterInfo").style.width = fraction * width;
+    console.log(width);
+};
+
 /* Other Castle JS */
