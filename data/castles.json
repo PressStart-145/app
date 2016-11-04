@@ -24,11 +24,35 @@
                 },
                 {
                     "title": "Pass out flyers",
-                    "description": "do the thing",
-                    "level": "1",
+                    "description": "Flyers duh",
+                    "level": "75",
                     "deadline": "11/10/2016",
                     "takenBy": "user",
-                    "completed": true
+                    "completed": false
+                },
+                {
+                    "title": "Do a thing",
+                    "description": "do the thing",
+                    "level": "2",
+                    "deadline": "11/10/2016",
+                    "takenBy": "user",
+                    "completed": false
+                },
+                {
+                    "title": "Get coffee",
+                    "description": "Venti caramel frapuccino",
+                    "level": "5",
+                    "deadline": "11/10/2016",
+                    "takenBy": "user2",
+                    "completed": false
+                },
+                {
+                    "title": "Interview president Trump",
+                    "description": "ayy we re screwed",
+                    "level": "25",
+                    "deadline": "11/10/2016",
+                    "takenBy": "user",
+                    "completed": false
                 }
             ],
             "numCompleted": 1
