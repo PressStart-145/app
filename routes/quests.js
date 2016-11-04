@@ -1,5 +1,5 @@
 var data = require("../data/castles.json");
-var dataUsers = require("../data/castles.json");
+var dataUsers = require("../data/users.json");
 var quests = data.castles[0].quests;
 var monsterHealth = data.castles[0].game["monsterHealth"];
 
@@ -28,11 +28,13 @@ exports.taskDone = function(req, res) {
 }
 
 exports.account = function(req, res) {
-    var currentUser = 'user'; //TODO lookup in dataUsers
+    var currentUser = dataUsers.users[2].username; //TODO lookup in dataUsers
     var currentCastle = data.castles[0]; //TODO harcoded
     var todoTaskList = [];
     var doneTaskList = [];
     var completedTask = 0;
+
+    console.log(currentUser);
 
 
     for (var key in currentCastle.quests) {
@@ -53,7 +55,8 @@ exports.account = function(req, res) {
         'numCompleted': completedTask,
         'currentTaskList': todoTaskList,
         'doneTaskList': doneTaskList,
-        'onlyOneCompleted': onlyOneCompleted
+        'onlyOneCompleted': onlyOneCompleted,
+        'user': dataUsers.users[2]
     });
 };
 
@@ -64,7 +67,7 @@ exports.view = function(req, res) {
 exports.completeTask = function(req, res) {
   console.log(req.body.taskName);
   var completedTaskName = req.body.taskName;
-  var currentUser = 'user'; //TODO harcoded
+  var currentUser = dataUsers.users[2].username; //TODO harcoded
   var currentCastle = data.castles[0]; //TODO harcoded
   var completedTaskList = [];
   var todoTaskList = [];
@@ -97,14 +100,15 @@ exports.completeTask = function(req, res) {
       'numCompleted': completedTask,
       'currentTaskList': todoTaskList,
       'doneTaskList': doneTaskList,
-      'onlyOneCompleted': onlyOneCompleted
+      'onlyOneCompleted': onlyOneCompleted,
+      'user': dataUsers.users[2]
   });
 }
 
 exports.reopenTask = function(req, res) {
   console.log(req.body.taskName);
   var completedTaskName = req.body.taskName;
-  var currentUser = 'user'; //TODO harcoded
+  var currentUser = dataUsers.users[2].username; //TODO harcoded
   var currentCastle = data.castles[0]; //TODO harcoded
   var completedTaskList = [];
   var todoTaskList = [];
@@ -136,6 +140,7 @@ exports.reopenTask = function(req, res) {
       'numCompleted': completedTask,
       'currentTaskList': todoTaskList,
       'doneTaskList': doneTaskList,
-      'onlyOneCompleted': onlyOneCompleted
+      'onlyOneCompleted': onlyOneCompleted,
+      'user': dataUsers.users[2]
   });
 }
