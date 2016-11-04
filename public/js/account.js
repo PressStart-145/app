@@ -9,7 +9,5 @@ $("#completedQuestsBtn").click(function(e) {
     $(this).toggleClass("active");
     $(".doneTaskRow").removeClass("hidden");
     $(".currentTaskRow").addClass("hidden");
-
-    console.log("hellow");
     //$("#ranks").hide();
 });
