@@ -1,5 +1,8 @@
+var data = require("../data/castles.json");
+
 exports.view = function(req, res) {
     res.render('team', {
+        'users': data.castles[0].members,
         'castleName': "Castle 1",
         'rankings': [
           {
