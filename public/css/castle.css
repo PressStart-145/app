@@ -68,6 +68,20 @@ html, body {
     border-right: 1px solid black;
 }
 
+#castleHP {
+    position: absolute;
+    top: 48%;
+    float: left;
+}
+
+#monsterHP {
+    width: 100%;
+    position: absolute;
+    top: 48%;
+    text-align: right;
+    float: right;
+}
+
 #castleHealth {
     float: left;
 }
