@@ -8,6 +8,14 @@ body {
     color: #D8CBEB;
 }
 
+.currentTaskRow.hidden {
+  visibility: hidden;
+}
+
+.doneTaskRow.hidden {
+  visibility: hidden;
+}
+
 #currentQuestsBtn {
   width: 100%;
   text-align: center;
