@@ -20,7 +20,7 @@
                     "level": "10",
                     "deadline": "11/10/2016",
                     "takenBy": "",
-                    "completed": false
+                    "completed": true
                 },
                 {
                     "title": "Pass out flyers",
@@ -55,7 +55,12 @@
                     "completed": false
                 }
             ],
-            "numCompleted": 1
+            "numCompleted": 1,
+            "game": {
+                "castleHealth": 100,
+                "monsterHealth": 100,
+                "items": []
+            }
         },
         {
             "name": "Disney",
@@ -84,7 +89,12 @@
                     "completed": false
                 }
             ],
-            "numCompleted": 0
+            "numCompleted": 0,
+            "game": {
+                "castleHealth": 100,
+                "monsterHealth": 100,
+                "items": []
+            }
         }
     ]
 }

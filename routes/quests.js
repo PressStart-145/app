@@ -1,5 +1,7 @@
 var data = require("../data/castles.json");
 var dataUsers = require("../data/castles.json");
+var quests = data.castles[0].quests;
+var monsterHealth = data.castles[0].game["monsterHealth"];
 
 exports.add = function(req, res) {
     var newQuest = {
@@ -13,6 +15,17 @@ exports.add = function(req, res) {
     data.castles[0].quests.push(newQuest);
     res.render('wizard', data.castles[0]);
 };
+
+exports.taskDone = function(req, res) {
+    quests.forEach(function(e) {
+        if(e["title"] == req.query.task) {
+            e["completed"] = true;
+            monsterHealth = monsterHealth - e["level"];
+            console.log(quests);
+            console.log(monsterHealth);
+        }
+    });
+}
 
 exports.account = function(req, res) {
     var currentUser = 'user'; //TODO lookup in dataUsers

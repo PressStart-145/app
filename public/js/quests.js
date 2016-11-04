@@ -1,16 +1,17 @@
+var task = "";
+
 $("#questList .btn").click(function(e) {
     e.preventDefault();
     $(".confirm").show();
-    console.log($(this).parent());
-    var txt = $(this).parent()[0].children[0].textContent.trim();
-    console.log(txt);
-
-    $("#taskTitle").text(txt); //txt.trim());
+    task = $(this).parent().children('.taskTitle').text().trim();
+    $("#taskTitle").text(task);
 });
 
 $("#yesDone").click(function(e) {
     e.preventDefault();
     $(".confirm").hide();
+    window.location = "/complete?task=" + task;
+    return false;
 });
 
 
