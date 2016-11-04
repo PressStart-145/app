@@ -13,6 +13,11 @@ html, body {
   color: white;
 }
 
+#castleNameDiv {
+  width: 100%;
+  text-align: center;
+}
+
 #rankingAchievmentButtonRow {
   position: absolute;
   top: 20%;
@@ -140,5 +145,3 @@ html, body {
 #sidebarDiv.toggled {
   left: 100%;
 }*/
-=======
->>>>>>> account page layout done
