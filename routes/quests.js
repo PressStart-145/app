@@ -27,6 +27,7 @@ exports.taskDone = function(req, res) {
     });
 }
 
+
 exports.account = function(req, res) {
     var currentUser = dataUsers.users[2].username; //TODO lookup in dataUsers
     var currentCastle = data.castles[0]; //TODO harcoded
@@ -57,6 +58,40 @@ exports.account = function(req, res) {
         'doneTaskList': doneTaskList,
         'onlyOneCompleted': onlyOneCompleted,
         'user': dataUsers.users[2]
+    });
+};
+
+
+exports.acceptTask = function(req, res) {
+    var acceptedTaskName = req.body.taskName;
+    var accepteeUsername = req.body.username;
+    //var currentCastle = data.castles[0]; //TODO harcoded
+    var todoTaskList = [];
+    var inProgressTaskList = [];
+    var doneTaskList = [];
+
+
+    for (var key in data.castles[0].quests) {
+      if (data.castles[0].quests[key].title === acceptedTaskName) {
+          data.castles[0].quests[key].takenBy = accepteeUsername;
+      }
+    }
+
+    for (var key in data.castles[0].quests) {
+        if (data.castles[0].quests[key].completed) {
+            doneTaskList.push(data.castles[0].quests[key]);
+        } else if (data.castles[0].quests[key].takenBy === "") {
+            todoTaskList.push(data.castles[0].quests[key]);
+        } else {
+            inProgressTaskList.push(data.castles[0].quests[key]);
+        }
+    }
+
+
+    res.render('wizard', {
+      'doneTaskList': doneTaskList,
+      'todoTaskList': todoTaskList,
+      'inProgressTaskList': inProgressTaskList
     });
 };
 
