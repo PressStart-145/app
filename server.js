@@ -35,6 +35,7 @@ if('development' == app.get('env')) {
 app.post('/signup/add', users.add);
 app.post('/account/completeTask', quests.completeTask);
 app.post('/account/reopenTask', quests.reopenTask);
+app.post('/wizard/acceptTask', quests.acceptTask);
 app.get('/login', users.login);
 app.get('/castle/select', castle.select);
 app.get('/castle', castle.view);

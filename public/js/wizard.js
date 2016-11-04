@@ -30,3 +30,13 @@ $("#completedQuestsBtn").click(function(e) {
     $(".todoTaskRow").addClass("hidden");
     //$("#ranks").show();
 });
+
+$(".todoTaskRow .btn").click(function(e) {
+  e.preventDefault();
+  var txt = $(this).parent()[0].children[0].textContent.trim();
+  console.log(txt);
+
+
+  $.post( "/wizard/acceptTask", {'taskName': txt, 'username': "user"},function(data){});
+  location.reload();
+});
