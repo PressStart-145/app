@@ -49,6 +49,7 @@ html, body {
 #sidebarDiv {
   position: absolute;
   width: 40%;
+  left: 60%;
   height: 100%;
   z-index: 110;
   background: var(--pink);
