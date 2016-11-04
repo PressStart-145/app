@@ -20,15 +20,18 @@
     text-align: center;
 }
 
-.item div {
+.item>div {
     padding-top: 50%;
     height: 100%;
-    background-image: url("../images/castle.png");
     background-position: center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+#castle1 {
+    background-image: url("../images/castle.png");
 }
 
 .carousel-control {
@@ -36,13 +39,7 @@
 }
 
 #noCastle {
-    padding-top: 50%;
     background-image: url("../images/BuildACastle.png");
-    background-position: center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
 }
 
 .btn {
