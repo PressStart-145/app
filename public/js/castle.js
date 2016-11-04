@@ -29,8 +29,8 @@ window.onload = function() {
     var monsterHealth = str.substring(2, str.length - 1);
     var fraction = monsterHealth / 100;
     var width = fraction * 0.5;
-    $("#monsterHealth").css.width = (fraction * width) + "%";
-    console.log($("#monsterHealth").css.width);
+    $("#monsterHealth").css("width", (fraction * width) + "% !important");
+    console.log((fraction * width) + "% !important");
 };
 
 var dmgMonster = function() {

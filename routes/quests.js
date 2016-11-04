@@ -13,7 +13,28 @@ exports.add = function(req, res) {
         "completed": false
     };
     data.castles[0].quests.push(newQuest);
-    res.render('wizard', data.castles[0]);
+
+    var currentCastle = data.castles[0]; //TODO harcoded
+    var todoTaskList = [];
+    var inProgressTaskList = [];
+    var doneTaskList = [];
+
+    for (var key in currentCastle.quests) {
+        if (currentCastle.quests[key].completed) {
+            doneTaskList.push(currentCastle.quests[key]);
+        } else if (currentCastle.quests[key].takenBy === "") {
+            todoTaskList.push(currentCastle.quests[key]);
+        } else {
+            inProgressTaskList.push(currentCastle.quests[key]);
+        }
+    }
+
+
+    res.render('wizard', {
+      'doneTaskList': doneTaskList,
+      'todoTaskList': todoTaskList,
+      'inProgressTaskList': inProgressTaskList
+    });
 };
 
 exports.taskDone = function(req, res) {
