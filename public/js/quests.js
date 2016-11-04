@@ -6,8 +6,6 @@ $("#questList .currentTaskRow .btn").click(function(e) {
     //console.log(txt);
 
     $("#taskTitle").text(txt); //txt.trim());
-
-
     //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
     $.post( "/account/completeTask", {'taskName': txt},function(data){});
     location.reload();
