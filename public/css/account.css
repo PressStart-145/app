@@ -43,6 +43,10 @@ input {
   color: white;
 }
 
+.btn.selected {
+  color: black;
+}
+
 .extra .btn {
     background-color: var(--purple);
 }
