@@ -10,10 +10,88 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/wizard.css">
 </head>
 
 <body>
-	<div class="container">
+	<div class="container wrap">
+		<div id="mainDiv">
+			<div class="row sidebarToggleButton">
+				<a href="#menu-toggle" id="mainDivSidebarButtonImg">
+					<img src="/images/HamburgerMenuBar-01.png" />
+				</a>
+			</div>
+			<div class="container-fluid">
+				<!-- <button class="backBtn">Back</button> -->
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-4">
+							<img src="/images/characters/wizardTransparent.png" height="100px">
+						</div>
+						<div class="col-xs-6">
+							<div>{{user.name}}</div>
+							<div>{{user.username}}</div>
+							<div><a href="" class="btn" id="btnChangeInfo">Change your info</a></div>
+						</div>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row extra">
+						<div class="col-xs-6">
+							<h5 id="currentQuestsBtn" class="btn selected active">Current Quests</h5>
+						</div>
+						<div class="col-xs-6">
+							<h5 id="completedQuestsBtn" class="btn">Done Quests</h5>
+						</div>
+					</div>
+					{{#each currentTaskList}}
+						<div class="row currentTaskRow">
+							<div class="col-xs-5">{{title}}</div>
+							<div class="col-xs-3">{{level}} pts</div>
+							<div class="col-xs-4 btn">Complete</div>
+						</div>
+					{{/each}}
+					{{#each doneTaskList}}
+						<div class="row doneTaskRow hidden">
+							<div class="col-xs-5">{{title}}</div>
+							<div class="col-xs-3">{{level}} pts</div>
+							<div class="col-xs-4 btn">Reopen</div>
+						</div>
+					{{/each}}
+				</div>
+				<div class="confirm">
+					<p>Are you all done with <span id="taskTitle"></span>?</p>
+					<a href="#" id="yesDone" class="btn">Yes</a>
+					<a href="#" id="noDone" class="btn">No</a>
+				</div>
+				<h3 style="width:100%; text-align:center;">
+					{{#if onlyOneCompleted}}
+						Completed {{numCompleted}} Quest
+					{{else}}
+						Completed {{numCompleted}} Quests
+					{{/if}}
+				</h3>
+			</div>
+		</div>
+		<!-- mainDiv -->
+
+		<div id="sidebarDiv" class="toggled">
+			<div class="row sidebarToggleButton sidebarButton">
+				<a href="#menu-toggle">
+					<img src="/images/HamburgerMenuBar-01.png" />
+				</a>
+			</div>
+			<br/>
+			<div id="welcomeMsgDiv" class="row">
+				Welcome back {{name}}!
+			</div>
+			<div id="sidebarMenu"></div>
+		</div>
+		<!-- sidebarDiv -->
+	</div>
+	<!-- container -->
+
+	<!-- <div class="container">
 		<a href="/castle" class="backBtn">Cancel</a>
         <div id="npc">
 			<img src="/images/characters/wizardTransparent.png" height="100px">
@@ -41,7 +119,7 @@
 				</ul>
             </div>
         </div>
-	</div>
+	</div> -->
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
