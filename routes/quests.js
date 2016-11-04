@@ -97,6 +97,7 @@ exports.completeTask = function(req, res) {
   for (var key in currentCastle.quests) {
       if (currentCastle.quests[key].title === completedTaskName) {
           data.castles[0].quests[key].completed = true;
+          data.castles[0].game.monsterHealth -= data.castles[0].quests[key].level;
           //completedTaskList.push(currentCastle.quests[key]);
       }
   }

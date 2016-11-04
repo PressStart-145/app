@@ -51,12 +51,13 @@ exports.view = function(req, res) {
 
      */
 
+
      res.render('castle', {
          'name': "John",
          'castleName': "Castle 1",
          'monsterName': "Kraken",
-         'castleHealth': data.castles[0].game["monsterHealth"],
-         'monsterHealth': data.castles[0].game["castleHealth"]
+         'castleHealth': data.castles[0].game["castleHealth"],
+         'monsterHealth': data.castles[0].game["monsterHealth"]
      });
 };
 
