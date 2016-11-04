@@ -27,9 +27,16 @@
 				<h1>Team {{castleName}}</h1>
 			</div>
 			<div class="row" id='rankingAchievmentButtonRow'>
-				<a href="#" id='rankingsButton' class="selected btn">Rankings</a> <a href="#" id='achievementsButton' class="btn">Achievements</a>
+				<a href="#" id='usersButton' class="btn selected">Members</a> <a href="#" id='rankingsButton' class="btn">Rankings</a> <a href="#" id='achievementsButton' class="btn">Achievements</a>
 			</div>
-			<div id="rankingDiv">
+			<div id="userDiv">
+				{{#each users}}
+				<div class="userRowDiv">
+					<img src="/images/PersonalAccount-01-01.png"/> {{username}}
+				</div>
+				{{/each}}
+			</div>
+			<div id="rankingDiv" class="hidden">
 				{{#each rankings}}
 				<div class="rankingRowDiv">
 					<img src="/images/{{image}}"/> {{name}}
@@ -101,20 +108,32 @@
 	$("#rankingsButton").click(function(e) {
 			e.preventDefault();
 			$("#achievementDiv").addClass("hidden");
+			$("#userDiv").addClass("hidden");
 			$("#rankingDiv").removeClass("hidden");
-			$("#rankingsButton").removeClass("unselected");
-			$("#achievementsButton").addClass("unselected");
+
 			$("#achievementsButton").removeClass("selected");
+			$("#usersButton").removeClass("selected");
 			$("#rankingsButton").addClass("selected");
 	});
 	$("#achievementsButton").click(function(e) {
 			e.preventDefault();
-			$("#achievementDiv").removeClass("hidden");
 			$("#rankingDiv").addClass("hidden");
-			$("#achievementsButton").removeClass("unselected");
-			$("#rankingsButton").addClass("unselected");
+			$("#userDiv").addClass("hidden");
+			$("#achievementDiv").removeClass("hidden");
+
 			$("#rankingsButton").removeClass("selected");
+			$("#usersButton").removeClass("selected");
 			$("#achievementsButton").addClass("selected");
+	});
+	$("#usersButton").click(function(e) {
+			e.preventDefault();
+			$("#rankingDiv").addClass("hidden");
+			$("#achievementDiv").addClass("hidden");
+			$("#userDiv").removeClass("hidden");
+
+			$("#rankingsButton").removeClass("selected");
+			$("#achievementsButton").removeClass("selected");
+			$("#usersButton").addClass("selected");
 	});
 	</script>
 </body>
