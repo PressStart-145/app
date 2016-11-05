@@ -11,3 +11,8 @@ $(".sidebarToggleButton").click(function(e) {
     e.preventDefault();
     $("#sidebarDiv").toggleClass("toggled");
 });
+
+$('#forgotPassword').click(function(e){
+  e.preventDefault();
+  $.post( "/login/forgotPassword", {},function(data){});
+});

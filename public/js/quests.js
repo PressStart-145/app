@@ -3,12 +3,11 @@ $("#questList .currentTaskRow .btn").click(function(e) {
     //$(".confirm").show();
     //console.log($(this).parent());
     var txt = $(this).parent()[0].children[0].textContent.trim();
-    console.log(txt);
+    //console.log(txt);
 
     $("#taskTitle").text(txt); //txt.trim());
     //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
-    $.post( "/account/completeTask", {'taskName': txt},function(data){});
-    location.reload();
+    $.post( "/account/completeTask", {'taskName': txt},function(data){location.reload();});
 });
 
 $("#questList .doneTaskRow .btn").click(function(e) {
@@ -16,14 +15,26 @@ $("#questList .doneTaskRow .btn").click(function(e) {
     //$(".confirm").show();
     //console.log($(this).parent());
     var txt = $(this).parent()[0].children[0].textContent.trim();
-    console.log(txt);
+    //console.log(txt);
 
     $("#taskTitle").text(txt); //txt.trim());
 
 
     //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
-    $.post( "/account/reopenTask", {'taskName': txt},function(data){});
-    location.reload(); //TODO doesnt reload in completed tasks
+    $.post( "/account/reopenTask", {'taskName': txt},function(data){
+      location.reload();
+      /*
+      $(document).ready(function(){
+        alert('done refreshing and document is ready');
+        $('#completedQuestsBtn').click();
+      });
+      */ //TODO doesnt reload in completed tasks
+    });
+
+});
+
+$('#completedQuestsBtn').click(function(e){
+  console.log("waddup");
 });
 
 $("#yesDone").click(function(e) {

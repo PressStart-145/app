@@ -50,13 +50,12 @@ exports.taskDone = function(req, res) {
 
 exports.account = function(req, res) {
     var currentUser = dataUsers.users[2].username; //TODO lookup in dataUsers
+    var currentUsername = req.app.locals.currentUsername; //TODO use this instead
+    console.log(currentUsername);
     var currentCastle = data.castles[0]; //TODO harcoded
     var todoTaskList = [];
     var doneTaskList = [];
     var completedTask = 0;
-
-    console.log(currentUser);
-
 
     for (var key in currentCastle.quests) {
         if ((currentCastle.quests[key].takenBy === currentUser) && !currentCastle.quests[key].completed) {

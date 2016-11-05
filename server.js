@@ -34,6 +34,7 @@ if('development' == app.get('env')) {
 }
 
 // Add routes here
+app.post('/login/forgotPassword', users.sendPassword);
 app.post('/signup/add', users.add);
 app.post('/account/completeTask', quests.completeTask);
 app.post('/account/reopenTask', quests.reopenTask);
