@@ -6,7 +6,7 @@
 <head>
 	<title>Select a Castle</title>
 	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
@@ -14,26 +14,20 @@
 </head>
 
 <body>
-	<!-- Handlebars Helper -->
-	<script>
-		var slideCount = 0;
-		Handlebars.registerHelper("getIndex", function() {
-			slideCount++;
-			return slideCount - 1;
-		});
-	</script>
 	<div class="container">
 		<div id="carousel" class="carousel slide">
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
 				{{#each castles}}
 					{{#if @first}}
-						<li data-target="#carousel" data-slide-to="{{getIndex}}" class="active"></li>
+						<li data-target="#carousel" data-slide-to="{{@index}}" class="active"></li>
 					{{else}}
-						<li data-target="#carousel" data-slide-to="{{getIndex}}"></li>
+						<li data-target="#carousel" data-slide-to="{{@index}}"></li>
+					{{/if}}
+					{{#if @last}}
+						<li id="lastSlide" data-target="#carousel" data-slide-to="({{@index}} + 1)"></li>
 					{{/if}}
 				{{/each}}
-				<li id="lastSlide" data-target="#carousel" data-slide-to="{{getIndex}}"></li>
 			</ol>
 
 			<!-- Wrapper for slides -->
@@ -69,8 +63,20 @@
 		<div id="logout" class="footer"><a href="/">Log Out</a></div>
 	</div>
 
+	<script src="/js/hammer.min.js"></script>
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/app.js"></script>
+	<script>
+		var myElem = $("#carousel");
+		var hammer = new Hammer(myElem[0]);
+		hammer.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+		hammer.on('swiperight', function(e) {
+			$(".left").click();
+		});
+		hammer.on('swipeleft', function(e) {
+			$(".right").click();
+		});
+	</script>
 </body>
 </html>
