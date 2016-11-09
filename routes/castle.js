@@ -9,6 +9,7 @@ exports.select = function(req,res) {
 }
 
 exports.view = function(req, res) {
+    req.app.locals.currentCastle = req.query.name;
     /*var nameToShow = req.params.userName;
     var castleName = req.params.castleName;
     res.render('castle', {
@@ -19,7 +20,7 @@ exports.view = function(req, res) {
 
      res.render('castle', {
          'name': "John",
-         'castleName': "Castle 1",
+         'castleName': req.app.locals.currentCastle,
          'monsterName': "Kraken",
          'castleHealth': data.castles[0].game["castleHealth"],
          'monsterHealth': data.castles[0].game["monsterHealth"]
