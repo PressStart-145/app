@@ -9,6 +9,7 @@ var formInfo;
 var memList;
 var toAdd = [];
 var isOriginal = true;
+var viewList = []; //Search results list
 
 var formResults = function() {
     formInfo = $("form").serializeArray();
@@ -17,7 +18,6 @@ var formResults = function() {
         memList = memList.substring(8, memList.length - 10).split("</li><li>");
         isOriginal = false;
     }
-    var viewList = [];
     for(s in memList) {
         if(memList[s].toUpperCase().includes(formInfo[1].value.toUpperCase())) {
             viewList.push(memList[s]);
@@ -27,17 +27,21 @@ var formResults = function() {
     if(viewList.length == 0) {
         $("#mapMem").html( "<p>No matches were found.</p>");
     } else {
-        var newHtml = "<ul id='results'>";
-        for(s in viewList) {
-            if(toAdd.indexOf(viewList[s]) >= 0) {
-                newHtml += "<li class='taken'>" + viewList[s] + "</li>";
-            } else {
-                newHtml += "<li>" + viewList[s] + "</li>";
-            }
-        }
-        $("#mapMem").html( newHtml + "</ul>");
+        populateResults();
     }
     $("#mapMem").show();
+}
+
+var populateResults = function() {
+    var newHtml = "<ul id='results'>";
+    for(s in viewList) {
+        if(toAdd.indexOf(viewList[s]) >= 0) {
+            newHtml += "<li class='taken'>" + viewList[s] + "</li>";
+        } else {
+            newHtml += "<li>" + viewList[s] + "</li>";
+        }
+    }
+    $("#mapMem").html( newHtml + "</ul>");
 }
 
 $("#mapMem").on('click', 'li', function() {
@@ -48,9 +52,19 @@ $("#mapMem").on('click', 'li', function() {
     } else {
         toAdd.splice(index, 1);
     }
-    console.log(toAdd);
     $(this).toggleClass("taken");
     updateSelected();
+});
+
+$("#selectedMem").on('click', 'div', function() {
+    var username = $(this).text();
+    var index = toAdd.indexOf(username);
+    if(index >= 0){
+        toAdd.splice(index, 1);
+    }
+    $(this).toggleClass("taken");
+    updateSelected();
+    populateResults();
 });
 
 var updateSelected = function() {
