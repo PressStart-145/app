@@ -15,34 +15,32 @@
 
 <body>
 	<div class="container vertical-center">
-        <div id="nameForm">
-            <form id="nameCastle">
-                <p>Name your castle, my lord.</p>
-                <input type="text" name="name" placeholder="Castle Name">
-                <a href="#" id="nameCastle" class="btn">Build</a>
+		<form id="inputSearch" onsubmit="formResults()" target="formresponse">
+	        <div id="nameForm">
+	            <p>Name your castle, my lord.</p>
+	            <input type="text" name="name" placeholder="Castle Name" autofocus>
+	            <a href="#" id="nameCastle" class="btn">Build</a>
 				<a href="../../castle/select" class="backBtn btn">Cancel</a>
-            </form>
-        </div>
-        <div id="addMembers" style="display: none;">
-            <p>Summon your knights.</p>
-            <form id="inputSearch" onsubmit="formResults()" target="formresponse">
-				<input type="text" name="searchPhrase" placeholder="Username">
-				<div class="row">
-					<div class="col-xs-6 trim">
-			            <input type="submit" id="searchMem" class="btn" value="Search">
-					</div><div class="col-xs-6 trim">
-			            <a href="../../castle/select" id="doneMem" class="btn">Done</a>
+	        </div>
+	        <div id="addMembers" style="display: none;">
+	            <p>Summon your knights.</p>
+					<input type="text" name="searchPhrase" placeholder="Username">
+					<div class="row">
+						<div class="col-xs-6 trim">
+				            <input type="submit" id="searchMem" class="btn" value="Search">
+						</div><div class="col-xs-6 trim">
+				            <a href="../../castle/select" id="doneMem" class="btn">Done</a>
+						</div>
 					</div>
-				</div>
-			</form>
-            <div id="mapMem" style="display: none;">
-				<ul>
-	                {{#each users}}
-						<li>{{username}}</li>
-					{{/each}}
-				</ul>
-            </div>
-        </div>
+	            <div id="mapMem" style="display: none;">
+					<ul>
+		                {{#each users}}
+							<li>{{username}}</li>
+						{{/each}}
+					</ul>
+	            </div>
+	        </div>
+		</form>
 		<iframe name='formresponse' style="display: none;"></iframe>
 	</div>
 

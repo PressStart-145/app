@@ -5,10 +5,12 @@ $("#nameCastle").click(function(e) {
     $("#addMembers").show();
 });
 
+/*
 window.onload = function() {
     document.forms['nameCastle'].target='_self';
     document.forms['inputSearch'].target='formresponse';
 }
+*/
 
 var formInfo;
 var memList;
@@ -27,11 +29,16 @@ var formResults = function() {
             viewList.push(memList[s]);
         }
     }
-    var newHtml = "<ul>";
-    for(s in viewList) {
-        newHtml += "<li>" + viewList[s] + "</li>";
+
+    if(viewList.length == 0) {
+        $("#mapMem").html( "<p>No matches were found.</p>");
+    } else {
+        var newHtml = "<ul>";
+        for(s in viewList) {
+            newHtml += "<li>" + viewList[s] + "</li>";
+        }
+        $("#mapMem").html( newHtml + "</ul>");
     }
-    $("#mapMem").html( newHtml + "</ul>");
     $("#mapMem").show();
 }
 
