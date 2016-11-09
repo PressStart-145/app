@@ -49,6 +49,7 @@
 }
 
 .castleSlide {
+    padding-top: 58% !important;
     background-image: url("../images/Castle.png");
 }
 
@@ -61,8 +62,10 @@
 }
 
 .btn {
-    width: 50%;
+    min-width: 50%;
+    max-width: 80%;
     background-color: var(--yellow);
     font-size: 100%;
     font-weight: bold;
+    overflow: scroll;
 }
