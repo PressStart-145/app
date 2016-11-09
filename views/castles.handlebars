@@ -14,19 +14,41 @@
 </head>
 
 <body>
+	<!-- Handlebars Helper -->
+	<script>
+		var slideCount = 0;
+		Handlebars.registerHelper("getIndex", function() {
+			slideCount++;
+			return slideCount - 1;
+		});
+	</script>
 	<div class="container">
 		<div id="carousel" class="carousel slide">
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
-				<li data-target="#carousel" data-slide-to="0" class="active"></li>
-				<li data-target="#carousel" data-slide-to="1"></li>
+				{{#each castles}}
+					{{#if @first}}
+						<li data-target="#carousel" data-slide-to="{{getIndex}}" class="active"></li>
+					{{else}}
+						<li data-target="#carousel" data-slide-to="{{getIndex}}"></li>
+					{{/if}}
+				{{/each}}
+				<li id="lastSlide" data-target="#carousel" data-slide-to="{{getIndex}}"></li>
 			</ol>
 
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
-				<div class="item active">
-					<div id="castle1"><a href="../castle/">Castle 1</a></div>
-				</div>
+				{{#each castles}}
+					{{#if @first}}
+						<div class="item active">
+							<div class="castleSlide"><a href="../castle/">{{name}}</a></div>
+						</div>
+					{{else}}
+						<div class="item">
+							<div class="castleSlide"><a href="../castle/">{{name}}</a></div>
+						</div>
+					{{/if}}
+				{{/each}}
 				<div class="item">
 					<div id="noCastle">
 						<div class="row">

@@ -5,7 +5,7 @@
  var castleHealth = data.castles[0].game["castleHealth"];
 
 exports.select = function(req,res) {
-    res.render('castles');
+    res.render('castles', data);
 }
 
 exports.view = function(req, res) {
