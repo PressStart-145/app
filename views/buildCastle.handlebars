@@ -10,31 +10,40 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/build.css">
 </head>
 
 <body>
-	<div class="container">
-        <a href="../../castle/select" class="backBtn">Cancel</a>
+	<div class="container vertical-center">
         <div id="nameForm">
-            <form>
+            <form id="nameCastle">
                 <p>Name your castle, my lord.</p>
-                <input type="text" placeholder="Castle Name">
-                <a href="#" id="nameCastle">Build</a>
+                <input type="text" name="name" placeholder="Castle Name">
+                <a href="#" id="nameCastle" class="btn">Build</a>
+				<a href="../../castle/select" class="backBtn btn">Cancel</a>
             </form>
         </div>
         <div id="addMembers" style="display: none;">
             <p>Summon your knights.</p>
-            <form><input type="text" placeholder="Username"></form>
-            <a href="#" id="searchMem">Search</a>
-            <a href="../../castle/select" id="doneMem">Done</a>
+            <form id="inputSearch" onsubmit="formResults()" target="formresponse">
+				<input type="text" name="searchPhrase" placeholder="Username">
+				<div class="row">
+					<div class="col-xs-6 trim">
+			            <input type="submit" id="searchMem" class="btn" value="Search">
+					</div><div class="col-xs-6 trim">
+			            <a href="../../castle/select" id="doneMem" class="btn">Done</a>
+					</div>
+				</div>
+			</form>
             <div id="mapMem" style="display: none;">
-                <ul>
-                    <li>user 1</li>
-                    <li>user 2</li>
-                    <li>user 3</li>
-                </ul>
+				<ul>
+	                {{#each users}}
+						<li>{{username}}</li>
+					{{/each}}
+				</ul>
             </div>
         </div>
+		<iframe name='formresponse' style="display: none;"></iframe>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>

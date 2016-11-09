@@ -1,0 +1,46 @@
+body {
+    background-color: var(--blue);
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    color: white;
+}
+
+a {
+    color: var(--blue);
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+}
+
+.container {
+    text-align: center;
+}
+
+.btn {
+    width: 80%;
+    margin-top: 10px;
+}
+
+.trim {
+    padding: 0;
+}
+
+.vertical-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.row {
+    margin: auto;
+    margin-bottom: 10px;
+    width: 80%;
+}
+
+.row .btn {
+    width: 90%;
+}
