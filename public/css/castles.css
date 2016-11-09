@@ -69,3 +69,7 @@
     font-weight: bold;
     overflow: scroll;
 }
+
+.carousel-control {
+    padding-top: 75%;
+}
