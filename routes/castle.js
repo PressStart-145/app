@@ -25,6 +25,9 @@ exports.select = function(req,res) {
 
 exports.add = function(req,res) {
     newCastle.name = req.body.name;
+    newCastle.members = req.body.members;
+    //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
+    data.castles.push(newCastle);
 }
 
 exports.view = function(req, res) {

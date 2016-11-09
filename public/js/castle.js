@@ -7,7 +7,7 @@ $("#nameCastle").click(function(e) {
 
 var formInfo;
 var memList;
-var toAdd = [];
+var toAdd = []; //TODO add self to toAdd list
 var isOriginal = true;
 var viewList = []; //Search results list
 
@@ -73,6 +73,16 @@ var updateSelected = function() {
         $("#selectedMem").append("<div>" + toAdd[i] + "</div>");
     }
 }
+
+$("#doneMem").click(function(e) {
+    //e.preventDefault();
+    //Create a castle JSON object with the name and members provided
+    var newCastle = {
+        "name": formInfo[0].value,
+        "members": toAdd
+    };
+    $.post("/castle/add", newCastle);
+});
 
 /* Join Castle JS */
 $("#resultsList a").click(function(e) {
