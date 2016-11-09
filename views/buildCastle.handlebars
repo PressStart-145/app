@@ -24,14 +24,14 @@
 	        </div>
 	        <div id="addMembers" style="display: none;">
 	            <p>Summon your knights.</p>
-					<input type="text" name="searchPhrase" placeholder="Username">
-					<div class="row">
-						<div class="col-xs-6 trim">
-				            <input type="submit" id="searchMem" class="btn" value="Search">
-						</div><div class="col-xs-6 trim">
-				            <a href="../../castle/select" id="doneMem" class="btn">Done</a>
-						</div>
+				<input type="text" name="searchPhrase" placeholder="Username">
+				<div class="row" style="margin-top: 0px;">
+					<div class="col-xs-6 trim">
+			            <input type="submit" id="searchMem" class="btn" value="Search">
+					</div><div class="col-xs-6 trim">
+			            <a href="../../castle/select" id="doneMem" class="btn">Done</a>
 					</div>
+				</div>
 	            <div id="mapMem" style="display: none;">
 					<ul>
 		                {{#each users}}
@@ -39,6 +39,12 @@
 						{{/each}}
 					</ul>
 	            </div>
+				<div class="frame">
+					<div class="row">
+						<p>Summoned:</p>
+					</div>
+					<div id="selectedMem" class="row"></div>
+				</div>
 	        </div>
 		</form>
 		<iframe name='formresponse' style="display: none;"></iframe>

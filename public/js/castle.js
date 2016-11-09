@@ -5,15 +5,9 @@ $("#nameCastle").click(function(e) {
     $("#addMembers").show();
 });
 
-/*
-window.onload = function() {
-    document.forms['nameCastle'].target='_self';
-    document.forms['inputSearch'].target='formresponse';
-}
-*/
-
 var formInfo;
 var memList;
+var toAdd = [];
 var isOriginal = true;
 
 var formResults = function() {
@@ -33,26 +27,38 @@ var formResults = function() {
     if(viewList.length == 0) {
         $("#mapMem").html( "<p>No matches were found.</p>");
     } else {
-        var newHtml = "<ul>";
+        var newHtml = "<ul id='results'>";
         for(s in viewList) {
-            newHtml += "<li>" + viewList[s] + "</li>";
+            if(toAdd.indexOf(viewList[s]) >= 0) {
+                newHtml += "<li class='taken'>" + viewList[s] + "</li>";
+            } else {
+                newHtml += "<li>" + viewList[s] + "</li>";
+            }
         }
         $("#mapMem").html( newHtml + "</ul>");
     }
     $("#mapMem").show();
 }
 
-/*
-$("#searchMem").click(function(e) {
-    var memList = $("#mapMem").html().replace(/\s/g,'');
-    memList = memList.substring(8, memList.length - 10).split("</li><li>");
-    for(s in memList) {
-        if(s.includes(formInfo[1].value)) {
-            console.log(s);
-        }
+$("#mapMem").on('click', 'li', function() {
+    var username = $(this).text();
+    var index = toAdd.indexOf(username);
+    if(index < 0){
+        toAdd.push(username);
+    } else {
+        toAdd.splice(index, 1);
     }
+    console.log(toAdd);
+    $(this).toggleClass("taken");
+    updateSelected();
 });
-*/
+
+var updateSelected = function() {
+    $("#selectedMem").html("");
+    for(i in toAdd) {
+        $("#selectedMem").append("<div>" + toAdd[i] + "</div>");
+    }
+}
 
 /* Join Castle JS */
 $("#resultsList a").click(function(e) {
