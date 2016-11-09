@@ -10,15 +10,16 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/join.css">
 </head>
 
 <body>
-	<div class="container">
+	<div class="container vertical-center">
         <div id="search">
             <form>
                 <p>Find your castle!</p>
                 <input type="text" placeholder="Castle Name"></input>
-                <a href="#" id="findCastle">Search</a>
+                <div class="row"><a href="#" id="findCastle" class="btn">Search</a></div>
                 <div id="resultsList">
                     <ul>
                         <li><a href="#">Castle 1</a></li>
@@ -32,7 +33,7 @@
             <a href="../../castle/select">Yes</a>
             <a href="#" id="noJoin">No</a>
         </div>
-        <a href="../../castle/select">Cancel</a>
+        <a href="../../castle/select" class="btn">Cancel</a>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>

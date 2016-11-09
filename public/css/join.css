@@ -1,0 +1,17 @@
+body {
+    background-color: var(--blue);
+    display: table;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+
+    color: white;
+}
+
+a {
+    color: var(--yellow)
+}
+
+.container {
+    text-align: center;
+}

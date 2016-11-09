@@ -30,3 +30,8 @@ a {
 .btn {
     background-color: var(--pink);
 }
+
+.vertical-center {
+    display: table-cell;
+    vertical-align: middle;
+}

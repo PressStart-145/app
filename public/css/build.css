@@ -38,11 +38,6 @@ p {
     padding: 0;
 }
 
-.vertical-center {
-    display: table-cell;
-    vertical-align: middle;
-}
-
 .row {
     margin: auto;
     margin-top: 10px;
