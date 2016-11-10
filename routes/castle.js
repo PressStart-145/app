@@ -1,8 +1,9 @@
  var data = require("../data/castles.json");
  var dataUsers = require("../data/castles.json");
- var quests = data.castles[0].quests;
- var monsterHealth = data.castles[0].game["monsterHealth"];
- var castleHealth = data.castles[0].game["castleHealth"];
+ var currCastle = req.app.locals.currentCastle;
+ var quests = data.currCastle.quests;
+ var monsterHealth = data.currCastle.game["monsterHealth"];
+ var castleHealth = data.currCastle.game["castleHealth"];
 
  var users = require("../data/users.json");
 
@@ -50,7 +51,7 @@ exports.view = function(req, res) {
 };
 
 exports.join = function(req, res){
-    res.render('joinCastle');
+    res.render('joinCastle', data);
 };
 
 exports.build = function(req, res){

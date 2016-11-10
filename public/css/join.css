@@ -12,6 +12,19 @@ a {
     color: var(--yellow)
 }
 
+input {
+    width: 80%;
+}
+
 .container {
     text-align: center;
+}
+
+.btn {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    color: var(--blue);
 }

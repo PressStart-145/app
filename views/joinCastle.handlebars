@@ -16,17 +16,19 @@
 <body>
 	<div class="container vertical-center">
         <div id="search">
-            <form>
+            <form onsubmit="searchCastles()" target="formresponse">
                 <p>Find your castle!</p>
-                <input type="text" placeholder="Castle Name"></input>
-                <div class="row"><a href="#" id="findCastle" class="btn">Search</a></div>
-                <div id="resultsList">
+                <input type="text" name="name" placeholder="Castle Name" autofocus="">
+                <input type="submit" id="findCastle" class="btn" value="Search">
+                <div id="resultsList" style="display: none;">
                     <ul>
-                        <li><a href="#">Castle 1</a></li>
-                        <li><a href="#">Castle 2</a></li>
+						{{#each castles}}
+							<li>{{name}}</li>
+						{{/each}}
                     </ul>
                 </div>
             </form>
+			<iframe name='formresponse' style="display: none;"></iframe>
         </div>
         <div class="confirm">
             <p></p>
@@ -39,6 +41,6 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/app.js"></script>
-    <script src="/js/castle.js"></script>
+    <script src="/js/joinCastle.js"></script>
 </body>
 </html>
