@@ -50,6 +50,7 @@ app.get('/account', quests.account)
 app.post('/wizard/add', quests.add);
 app.get('/wizard', quests.view);
 app.get('/complete', quests.taskDone);
+app.get('/signup', users.signup);
 // Example route
 // app.get('/users', user.list);
 
