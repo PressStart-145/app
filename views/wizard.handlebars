@@ -28,7 +28,7 @@
 						<div class="col-xs-4">
 							<img src="/images/characters/wizardTransparent.png" height="100px">
 						</div>
-						<div class="col-xs-6 vertical-align">
+						<div class="col-xs-6 vertical-center">
 							<div id="greedingDiv">
 								<div>Howdy Traveler</div>
 								<a href="/newQuest" class="btn">Make a new Quest</a>
@@ -64,8 +64,13 @@
 					{{/each}}
 					{{#each todoTaskList}}
 						<div class="row todoTaskRow">
-							<div class="col-xs-5">{{title}}</div>
-							<div class="col-xs-3">{{level}} pts</div>
+							<div class="col-xs-5">
+								{{title}}
+								<div class="subtitle">{{deadline}}</div>
+							</div>
+							<div class="col-xs-3 vertical-center" id="levelField">
+								<div>{{level}} pts</div>
+							</div>
 							<div class="col-xs-4 btn">Accept</div>
 						</div>
 					{{/each}}

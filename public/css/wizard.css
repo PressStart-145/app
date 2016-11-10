@@ -47,3 +47,7 @@ body {
 .list div.row {
   margin-bottom: 3% !important;
 }
+
+#levelField {
+    margin-top: 2% !important;
+}
