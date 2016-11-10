@@ -17,14 +17,15 @@
 	<div class="container">
 		<div class="container-fluid">
 			<div class="header"><h2>New Quest:</h2></div>
-			<form method="post" action="/quests/add">
-				<input type="text" name="title" placeholder="Quest Name">
+			<form name="questForm" method="post" action="/wizard/add" onsubmit="return validateForm()">
+				<input type="text" name="title" placeholder="Quest Name" required>
 				<input type="text" name="description" placeholder="Description">
-				<input type="text" name="deadline" placeholder="Deadline">
+				<input type="text" name="deadline" placeholder="Deadline (mm/dd/yyyy)" required>
+				<div id="dateAlert" style="display: none;">Date is invalid: mm/dd/yyyy</div>
 				<div class="row vertical-center">
 					<div class="col-xs-6"><h2>Reward:</h2></div>
 					<div class="col-xs-6">
-						<input type="text" name="level" placeholder="1-10"> points
+						<input type="text" name="level" placeholder="1-10" required> points
 					</div>
 				</div>
 				<input type="submit" class="btn" value="Create">
@@ -36,5 +37,6 @@
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/js/app.js"></script>
+	<script src="/js/newQuest.js"></script>
 </body>
 </html>

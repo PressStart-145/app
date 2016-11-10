@@ -47,7 +47,7 @@ app.get('/castle/join', castle.join);
 app.get('/castle/build', castle.build);
 app.get('/castle/team', team.view);
 app.get('/account', quests.account)
-app.post('/quests/add', quests.add);
+app.post('/wizard/add', quests.add);
 app.get('/wizard', quests.view);
 app.get('/complete', quests.taskDone);
 // Example route
