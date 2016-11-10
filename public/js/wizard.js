@@ -32,10 +32,6 @@ $("#completedQuestsBtn").click(function(e) {
 });
 
 $(".showDesc").click(function(e) {
-    /*var par = ($(this).closest(".row").find(".title"));
-    console.log(par.text());
-    var txt = par.children()[0].textContent.trim();
-    console.log(txt);*/
     $(this).closest(".row").next().slideToggle();
 });
 
