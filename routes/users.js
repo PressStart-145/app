@@ -5,17 +5,37 @@
 
 var data = require("../data/users.json");
 
+
+exports.signup = function(req, res) {
+
+  res.render('signup');
+}
+
 exports.add = function(req, res){
-    var newUser = {
-        "name": req.body.fullname,
-        "username": req.body.username,
-        "password": req.body.password,
-        "email": req.body.email,
-        "imageURL": req.body.image
-    };
-    data.users.push(newUser);
-    //console.log(data);
-    res.render('login');
+    var usernameTaken = false;
+    data.users.forEach(function(userJson){
+      if(userJson.username === req.body.username) {
+        usernameTaken = true;
+      }
+    });
+    if(usernameTaken) {
+      var errMsg = "Username " + req.body.username + " taken";
+      res.render('signup', {
+        'err': true,
+        'errMsg': errMsg
+      });
+    } else {
+      var newUser = {
+          "name": req.body.fullname,
+          "username": req.body.username,
+          "password": req.body.password,
+          "email": req.body.email,
+          "imageURL": req.body.image
+      };
+      data.users.push(newUser);
+      //console.log(data);
+      res.redirect('login');
+    }
 };
 
 exports.login = function(req, res){
