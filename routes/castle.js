@@ -7,19 +7,6 @@
 
  var users = require("../data/users.json");
 
- var newCastle = {
-    "name": "",
-    "admin": "",
-    "members": [],
-    "quests": [],
-    "numCompleted": 0,
-    "game": {
-        "castleHealth": 100,
-        "monsterHealth": 100,
-        "items": []
-    }
- };
-
  var newMem = {
      //"username": req.app.locals.userName, TODO
      "username": "snot",
@@ -31,7 +18,22 @@ exports.select = function(req,res) {
 }
 
 exports.add = function(req,res) {
+    console.log(req.body.type);
+    console.log("before");
+    console.log(data.castles);
     if(req.body.type === "castle") {
+        var newCastle = {
+           "name": "",
+           "admin": "",
+           "members": [],
+           "quests": [],
+           "numCompleted": 0,
+           "game": {
+               "castleHealth": 100,
+               "monsterHealth": 100,
+               "items": []
+           }
+        };
         newCastle.name = req.body.value.name;
         newCastle.members = req.body.value.members;
         //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
@@ -45,6 +47,8 @@ exports.add = function(req,res) {
             }
         }
     }
+    console.log("after");
+    console.log(data.castles);
 }
 
 exports.view = function(req, res) {
@@ -52,11 +56,11 @@ exports.view = function(req, res) {
     var index;
     req.app.locals.currentCastle = req.query.name;
     for(s in data.castles) {
-        if(name != null && data.castles[s].name.replace(/\s/g,'') === name) {
+        if(name != null && data.castles[s].name == name) {
             index = s;
         }
     }
-    if(s == null) {
+    if(data.castles[index] == undefined || index == null) {
         console.log("Failed to find castle.");
         return;
     }
@@ -74,8 +78,8 @@ exports.view = function(req, res) {
 
 
      res.render('castle', {
-         'name': "John",
-         'castleName': req.app.locals.currentCastle,
+         'name': "John", //TODO use global
+         'castleName': name,
          'monsterName': "Kraken",
          'castleHealth': castleHealth,
          'monsterHealth': monsterHealth

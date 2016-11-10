@@ -77,6 +77,7 @@ var updateSelected = function() {
 $("#doneMem").click(function(e) {
     //e.preventDefault();
     //Create a castle JSON object with the name and members provided
+    formInfo = $("form").serializeArray();
     var data = {
         "type": "castle",
         "value": {
