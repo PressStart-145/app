@@ -31,11 +31,18 @@ $("#completedQuestsBtn").click(function(e) {
     //$("#ranks").show();
 });
 
+$(".showDesc").click(function(e) {
+    /*var par = ($(this).closest(".row").find(".title"));
+    console.log(par.text());
+    var txt = par.children()[0].textContent.trim();
+    console.log(txt);*/
+    $(this).closest(".row").next().slideToggle();
+});
+
 $(".todoTaskRow .btn").click(function(e) {
   e.preventDefault();
-  var txt = $(this).parent()[0].children[0].textContent.trim();
+  var txt = $(".showDesc")[0].children[0].children[0].textContent.trim();
   console.log(txt);
-
 
   $.post( "/wizard/acceptTask", {'taskName': txt, 'username': "user"},function(data){});
   location.reload();

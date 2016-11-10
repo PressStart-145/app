@@ -48,6 +48,26 @@ body {
   margin-bottom: 3% !important;
 }
 
+.descRow {
+    background-color: var(--purple);
+    color: white;
+    padding: 1%;
+    margin: 0px 0px 3% 0px !important;
+}
+
+.info {
+    padding: 0;
+}
+
+.taskList {
+    width: 90%;
+    margin-left: 5% !important;
+}
+
+.extra {
+    text-align: center;
+}
+
 #levelField {
     margin-top: 2% !important;
 }

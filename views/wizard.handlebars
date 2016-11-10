@@ -48,32 +48,41 @@
 							<h6 id="completedQuestsBtn" class="btn">Done</h6>
 						</div>
 					</div>
-					{{#each inProgressTaskList}}
-						<div class="row inProgressTaskList hidden">
-							<div class="col-xs-5">{{title}}</div>
-							<div class="col-xs-3">{{level}} pts</div>
-							<div class="col-xs-4">{{takenBy}}</div>
-						</div>
-					{{/each}}
-					{{#each doneTaskList}}
-						<div class="row doneTaskRow hidden">
-							<div class="col-xs-5">{{title}}</div>
-							<div class="col-xs-3">{{level}} pts</div>
-							<div class="col-xs-4">{{takenBy}}</div>
-						</div>
-					{{/each}}
-					{{#each todoTaskList}}
-						<div class="row todoTaskRow">
-							<div class="col-xs-5">
-								{{title}}
-								<div class="subtitle">{{deadline}}</div>
+					<div class="row taskList">
+						{{#each inProgressTaskList}}
+							<div class="row inProgressTaskList hidden">
+								<div class="col-xs-5">{{title}}</div>
+								<div class="col-xs-3">{{level}} pts</div>
+								<div class="col-xs-4">{{takenBy}}</div>
 							</div>
-							<div class="col-xs-3 vertical-center" id="levelField">
-								<div>{{level}} pts</div>
+						{{/each}}
+						{{#each doneTaskList}}
+							<div class="row doneTaskRow hidden">
+								<div class="col-xs-5">{{title}}</div>
+								<div class="col-xs-3">{{level}} pts</div>
+								<div class="col-xs-4">{{takenBy}}</div>
 							</div>
-							<div class="col-xs-4 btn">Accept</div>
-						</div>
-					{{/each}}
+						{{/each}}
+						{{#each todoTaskList}}
+							<div class="row todoTaskRow">
+								<div class="showDesc">
+									<div class="col-xs-5 info">
+										<div class="title">{{title}}</div>
+										<div class="subtitle">{{deadline}}</div>
+									</div>
+									<div class="col-xs-3 vertical-center" id="levelField">
+										<div>{{level}} pts</div>
+									</div>
+								</div>
+								<p class="col-xs-4 btn">Accept</p>
+							</div>
+							<div class="row descRow" style="display: none;">
+								<div class="col-xs-12">
+									<div class="description">{{description}}</div>
+								</div>
+							</div>
+						{{/each}}
+					</div>
 				</div>
 			</div>
 		</div>
