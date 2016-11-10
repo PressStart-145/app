@@ -1,10 +1,29 @@
-$("#results li").click(function(e) {
-    e.preventDefault();
+var selectedCastle;
+var formInfo;
+var castleList;
+var isOriginal = true;
+var viewList = [];
+
+$("#resultsList").on('click', 'li', function() {
     $("#search").hide();
     $(".confirm").show();
     $(".confirm p").append("Are you sure you want to join ");
+    selectedCastle = $(this).text();
     $(".confirm p").append($(this).text());
     $(".confirm p").append("?");
+});
+
+$("#yesJoin").click(function(e) {
+    //e.preventDefault();
+    //Create a castle JSON object with the name and members provided
+
+    var data = {
+        "type": "member",
+        "value": {
+            "name": selectedCastle
+        }
+    };
+    $.post("/castle/add", data);
 });
 
 $("#noJoin").click(function(e) {
@@ -12,11 +31,6 @@ $("#noJoin").click(function(e) {
     $("#search").show();
     $(".confirm p").text("");
 });
-
-var formInfo;
-var castleList;
-var isOriginal = true;
-var viewList = [];
 
 var searchCastles = function() {
     formInfo = $("form").serializeArray();
@@ -47,11 +61,3 @@ var populateResults = function() {
     }
     $("#resultsList").html( newHtml + "</ul>");
 }
-
-$("#resultsList").on('click', 'li', function() {
-    $("#search").hide();
-    $(".confirm").show();
-    $(".confirm p").append("Are you sure you want to join ");
-    $(".confirm p").append($(this).text());
-    $(".confirm p").append("?");
-});

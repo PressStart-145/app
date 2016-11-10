@@ -77,9 +77,17 @@ var updateSelected = function() {
 $("#doneMem").click(function(e) {
     //e.preventDefault();
     //Create a castle JSON object with the name and members provided
+    var data = {
+        "type": "castle",
+        "value": {
+            "name": formInfo[0].value,
+            "members": toAdd
+        }
+    };
+    /*
     var newCastle = {
         "name": formInfo[0].value,
         "members": toAdd
-    };
-    $.post("/castle/add", newCastle);
+    };*/
+    $.post("/castle/add", data);
 });

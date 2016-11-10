@@ -28,3 +28,7 @@ input {
     margin: 0 auto;
     color: var(--blue);
 }
+
+.confirm .btn {
+    background-color: var(--yellow);
+}

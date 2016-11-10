@@ -1,9 +1,9 @@
  var data = require("../data/castles.json");
  var dataUsers = require("../data/castles.json");
- var currCastle = req.app.locals.currentCastle;
- var quests = data.currCastle.quests;
- var monsterHealth = data.currCastle.game["monsterHealth"];
- var castleHealth = data.currCastle.game["castleHealth"];
+ var currCastle;
+ var quests;
+ var monsterHealth;
+ var castleHealth;
 
  var users = require("../data/users.json");
 
@@ -20,19 +20,51 @@
     }
  };
 
+ var newMem = {
+     //"username": req.app.locals.userName, TODO
+     "username": "snot",
+     "numCompleted": 0
+ }
+
 exports.select = function(req,res) {
     res.render('castles', data);
 }
 
 exports.add = function(req,res) {
-    newCastle.name = req.body.name;
-    newCastle.members = req.body.members;
-    //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
-    data.castles.push(newCastle);
+    if(req.body.type === "castle") {
+        newCastle.name = req.body.value.name;
+        newCastle.members = req.body.value.members;
+        //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
+        data.castles.push(newCastle);
+    } else if(req.body.type === "member") {
+        var name = req.body.value.name;
+        for(s in data.castles) {
+            if(name != null && data.castles[s].name.replace(/\s/g,'') === name) {
+                data.castles[s].members.push(newMem);
+                return;
+            }
+        }
+    }
 }
 
 exports.view = function(req, res) {
+    var name = req.query.name;
+    var index;
     req.app.locals.currentCastle = req.query.name;
+    for(s in data.castles) {
+        if(name != null && data.castles[s].name.replace(/\s/g,'') === name) {
+            index = s;
+        }
+    }
+    if(s == null) {
+        console.log("Failed to find castle.");
+        return;
+    }
+    //currCastle = req.app.locals.currentCastle;
+    currCastle = data.castles[index];
+    quests = currCastle.quests;
+    monsterHealth = currCastle.game["monsterHealth"];
+    castleHealth = currCastle.game["castleHealth"];
     /*var nameToShow = req.params.userName;
     var castleName = req.params.castleName;
     res.render('castle', {
@@ -45,8 +77,8 @@ exports.view = function(req, res) {
          'name': "John",
          'castleName': req.app.locals.currentCastle,
          'monsterName': "Kraken",
-         'castleHealth': data.castles[0].game["castleHealth"],
-         'monsterHealth': data.castles[0].game["monsterHealth"]
+         'castleHealth': castleHealth,
+         'monsterHealth': monsterHealth
      });
 };
 
