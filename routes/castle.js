@@ -45,7 +45,17 @@
          req.app.locals.currentUser = currentUser;
 
          //TODO prep data to have only the castle where req.body.username is
-         res.render('castles', data);
+         var userCastles = {
+            "castles": []
+         };
+         for(key in data.castles) {
+             for(mem in data.castles[key].members) {
+                 if(data.castles[key].members[mem].username === req.app.locals.currentUser) {
+                     userCastles.castles.push(data.castles[key]);
+                 }
+             }
+         }
+         res.render('castles', userCastles);
      }
  }
 

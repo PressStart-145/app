@@ -32,35 +32,47 @@
 
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
-				{{#each castles}}
-					{{#if @first}}
-						<div class="item active">
-							<div class="castleSlide"><a href="../castle?name={{name}}" class="btn">Enter {{name}}</a></div>
-						</div>
-					{{else}}
-						<div class="item">
-							<div class="castleSlide"><a href="../castle?name={{name}}" class="btn">Enter {{name}}</a></div>
-						</div>
-					{{/if}}
-				{{/each}}
-				<div class="item">
-					<div id="noCastle">
-						<div class="row">
-							<a href="../castle/build" class="btn">Build</a>
-						</div><div class="row">
-							<a href="../castle/join" class="btn">Join</a>
+				{{#if castles}}
+					{{#each castles}}
+						{{#if @first}}
+							<div class="item active">
+								<div class="castleSlide"><a href="../castle?name={{name}}" class="btn">Enter {{name}}</a></div>
+							</div>
+						{{else}}
+							<div class="item">
+								<div class="castleSlide"><a href="../castle?name={{name}}" class="btn">Enter {{name}}</a></div>
+							</div>
+						{{/if}}
+					{{/each}}
+					<div class="item">
+						<div id="noCastle">
+							<div class="row">
+								<a href="../castle/build" class="btn">Build</a>
+							</div><div class="row">
+								<a href="../castle/join" class="btn">Join</a>
+							</div>
 						</div>
 					</div>
-				</div>
+					<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+						<span class="arrow"><</span>
+						<span class="sr-only">Previous</span>
+					</a>
+					<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+						<span class="arrow">></span>
+						<span class="sr-only">Next</span>
+					</a>
+				{{else}}
+					<div class="item active">
+						<div id="noCastle">
+							<div class="row">
+								<a href="../castle/build" class="btn">Build</a>
+							</div><div class="row">
+								<a href="../castle/join" class="btn">Join</a>
+							</div>
+						</div>
+					</div>
+				{{/if}}
 			</div>
-			<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
-				<span class="arrow"><</span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="right carousel-control" href="#carousel" role="button" data-slide="next">
-				<span class="arrow">></span>
-				<span class="sr-only">Next</span>
-			</a>
 		</div>
 		<div id="logout" class="footer"><a href="/">Log Out</a></div>
 	</div>
