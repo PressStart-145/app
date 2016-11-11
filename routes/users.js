@@ -40,7 +40,12 @@ exports.add = function(req, res){
 
 exports.login = function(req, res){
     req.app.locals.currentUsername = 'user'; //TODO get actual username
-    res.render('login');
+    var err = req.app.locals.err;
+    var errMsg = req.app.locals.errMsg;
+    req.app.locals.err = null;
+    req.app.locals.errMsg = null;
+
+    res.render('login', {'err': err, 'errMsg': errMsg});
 };
 
 exports.sendPassword = function(req, res) {

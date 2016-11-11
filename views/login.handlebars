@@ -20,20 +20,27 @@
 				<div class="row">
 					<h1>CREWsades</h1>
 				</div>
-		        <form>
+		        <form method="post" action="castle/select">
 					<div class="row">
-		            	<input type="text" placeholder="Username">
+		            	<input type="text" name="username" placeholder="Username">
 					</div> <div class="row">
-		            	<input type="password" placeholder="Password">
+		            	<input type="password" name="password" placeholder="Password">
 					</div> <div class="row">
-		            	<a href="castle/select" class="btn" id="loginBtn">Login</a>
+		            	<a href="castle/select" class="btn" id="loginBtn"><input type="submit" value="Login"></a>
 					</div>
 		        </form>
+
 				<div class="row extra">
 		        	<a href="#" id="forgotPassword" class="btn">Forgot your password?</a>
-				</div> <div class="row extra">
+				</div>
+				<div class="row extra">
 					<a href="/signup" class="btn" id="makeAccount">Don't have an account?</a>
 				</div>
+				{{#if err}}
+				<div>
+					{{errMsg}}
+				</div>
+				{{/if}}
 			</div>
 		</div>
 	</div>
