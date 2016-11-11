@@ -102,28 +102,28 @@ exports.account = function(req, res) {
 
 exports.acceptTask = function(req, res) {
     var acceptedTaskName = req.body.taskName;
-    var accepteeUsername = req.body.username;
-    //var currentCastle = data.castles[0]; //TODO harcoded
+    var accepteeUsername = req.app.locals.currentUser.username;
+    var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
     var inProgressTaskList = [];
     var doneTaskList = [];
 
 
-    for (var key in data.castles[0].quests) {
-      if (data.castles[0].quests[key].title === acceptedTaskName) {
-          data.castles[0].quests[key].takenBy = accepteeUsername;
+    for (var key in currentCastle.quests) {
+      if (currentCastle.quests[key].title === acceptedTaskName) {
+          currentCastle.quests[key].takenBy = accepteeUsername;
           //TODO handle dup task titles
           //TODO idea: use quests index number to handle assignment
       }
     }
 
-    for (var key in data.castles[0].quests) {
-        if (data.castles[0].quests[key].completed) {
-            doneTaskList.push(data.castles[0].quests[key]);
-        } else if (data.castles[0].quests[key].takenBy === "") {
-            todoTaskList.push(data.castles[0].quests[key]);
+    for (var key in currentCastle.quests) {
+        if (currentCastle.quests[key].completed) {
+            doneTaskList.push(currentCastle.quests[key]);
+        } else if (currentCastle.quests[key].takenBy === "") {
+            todoTaskList.push(currentCastle.quests[key]);
         } else {
-            inProgressTaskList.push(data.castles[0].quests[key]);
+            inProgressTaskList.push(currentCastle.quests[key]);
         }
     }
 
@@ -180,8 +180,8 @@ exports.completeTask = function(req, res) {
 
   for (var key in currentCastle.quests) {
       if (currentCastle.quests[key].title === completedTaskName) {
-          data.castles[0].quests[key].completed = true;
-          data.castles[0].game.monsterHealth -= data.castles[0].quests[key].level;
+          currentCastle.quests[key].completed = true;
+          currentCastle.game.monsterHealth -= currentCastle.quests[key].level;
           //completedTaskList.push(currentCastle.quests[key]);
       }
   }
@@ -226,7 +226,7 @@ exports.reopenTask = function(req, res) {
 
   for (var key in currentCastle.quests) {
       if (currentCastle.quests[key].title === completedTaskName) {
-          data.castles[0].quests[key].completed = false;
+          currentCastle.quests[key].completed = false;
           //completedTaskList.push(currentCastle.quests[key]);
       }
   }
@@ -250,6 +250,6 @@ exports.reopenTask = function(req, res) {
       'currentTaskList': todoTaskList,
       'doneTaskList': doneTaskList,
       'onlyOneCompleted': onlyOneCompleted,
-      'user': dataUsers.users[2]
+      'user': currentUser
   });
 }
