@@ -89,7 +89,6 @@
                  "numCompleted": 0
              });
          }
-
          //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
          data.castles.push(newCastle);
      } else if (req.body.type === "member") {
