@@ -105,6 +105,7 @@
          req.app.locals.currentCastle.game.castleHealth -= 3;
          if(req.app.locals.currentCastle.game.castleHealth < 0) {
              req.app.locals.currentCastle.game.castleHealth = 0;
+             console.log("Your castle is falling!!!");
          }
      }
 
