@@ -86,26 +86,26 @@
  exports.view = function(req, res) {
      if(req.query.name != undefined) {
          name = req.query.name;
+         var index;
+         for (s in data.castles) {
+             if (name != null && data.castles[s].name == name) {
+                 index = s;
+             }
+         }
+         if (data.castles[index] == undefined || index == null) {
+             console.log("Failed to find castle ");
+             return;
+         }
+         currCastle = data.castles[index];
+         req.app.locals.currentCastle = currCastle;
      } else {
          name = req.app.locals.currentCastle.name;
+         currCastle = req.app.locals.currentCastle;
      }
 
-     var index;
-     for (s in data.castles) {
-         if (name != null && data.castles[s].name == name) {
-             index = s;
-         }
-     }
-     if (data.castles[index] == undefined || index == null) {
-         console.log("Failed to find castle ");
-         return;
-     }
-     //currCastle = req.app.locals.currentCastle;
-     currCastle = data.castles[index];
      quests = currCastle.quests;
      monsterHealth = currCastle.game["monsterHealth"];
      castleHealth = currCastle.game["castleHealth"];
-     req.app.locals.currentCastle = currCastle;
      /*var nameToShow = req.params.userName;
     var castleName = req.params.castleName;
     res.render('castle', {
@@ -117,7 +117,7 @@
      console.log(req.app.locals.currentCastle);
 
      res.render('castle', {
-         'name': req.app.locals.currentUser.name, //TODO use global
+         'name': req.app.locals.currentUser.name, 
          'castleName': name,
          'monsterName': "Kraken",
          'castleHealth': castleHealth,
