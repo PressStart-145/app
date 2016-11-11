@@ -6,9 +6,6 @@ exports.view = function(req, res) {
     var users = castle.members;
     var currentUser = req.app.locals.currentUser;
 
-
-
-
     var tmpUsers = [];
 
     users.forEach(function(e){
@@ -23,7 +20,6 @@ exports.view = function(req, res) {
 
       if(currentUser != null) {
         if(currentUser.username === e.username) {
-          console.log("true");
           user.currUser = true;
         }
       }
@@ -37,15 +33,6 @@ exports.view = function(req, res) {
       if(user.image === "") {
         user.image = "PersonalAccount-01-01.png";
       }
-      // var ncTmp = e.numCompleted;
-      // var nc;
-      // if(ncTmp < 10) {
-      //   nc = String.fromCharCode(160) + String.fromCharCode(160) + String.fromCharCode(160) + "(" + e.numCompleted + ")"
-      // } else if (ncTmp < 100) {
-      //   nc = String.fromCharCode(160) + "(" + e.numCompleted + ")"
-      // } else {
-      //   nc = "(" + e.numCompleted + ")"
-      // }
       user.numCompleted = e.numCompleted;
 
       castle.quests.forEach(function(q) {
@@ -93,9 +80,13 @@ exports.view = function(req, res) {
         return 1;
       return 0;
     }
-    rankings = tmpUsers.sort(compareCompleted);
 
-    users = tmpUsers.sort(compareName);
+    users = tmpUsers.slice();
+    users.sort(compareName);
+
+    rankings = tmpUsers.slice();
+    rankings.sort(compareCompleted);
+
 
 
     res.render('team', {
