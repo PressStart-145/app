@@ -197,6 +197,7 @@ exports.completeTask = function(req, res) {
               //peaceful mode= no monsters and can heal
               //TODO after monster death, allow grace period for healing
               currentCastle.game.monsterHealth = 100;
+              currentCastle.game.castleHealth = 100;
               console.log("A new monster has been spawned!!!");
           }
           if(currentCastle.game.monsterHealth > 100) {
