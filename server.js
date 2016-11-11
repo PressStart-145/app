@@ -25,10 +25,10 @@ app.locals.currentCastle = dataCastle.castles[0];
 
 app.locals.currentCastle = {
     "name": "Test Castle",
-    "admin": "Test User",
+    "admin": app.locals.currentUser.username,
     "members": [
         {
-            "username": "123",
+            "username": app.locals.currentUser.username,
             "numCompleted": 0
         }
     ],
