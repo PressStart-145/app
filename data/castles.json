@@ -39,7 +39,7 @@
                     "level": "35",
                     "deadline": "11/10/2016",
                     "takenBy": "hon hon",
-                    "completed": true
+                    "completed": false
                 },
                 {
                     "title": "Do a thing",
@@ -63,7 +63,7 @@
                     "level": "25",
                     "deadline": "11/10/2016",
                     "takenBy": "user",
-                    "completed": false
+                    "completed": true
                 }
             ],
             "numCompleted": 1,
