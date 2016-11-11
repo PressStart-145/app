@@ -26,3 +26,25 @@ var validateForm = function() {
     }
     return (isDeadline && isLevel);
 }
+
+var sendTaskData = function() {
+    //Create a castle JSON object with the name and members provided
+    formInfo = $("form").serializeArray();
+    var data = {
+        "title": formInfo[0].value,
+        "description": formInfo[1].value,
+        "level": formInfo[3].value,
+        "deadline": formInfo[2].value,
+        "takenBy": "",
+        "completed": false
+    };
+    console.log(data);
+    /*
+    var newCastle = {
+        "name": formInfo[0].value,
+        "members": toAdd
+    };*/
+    $.post("/wizard/add", data, function(data, status) {
+        window.location = "/wizard";
+    });
+}

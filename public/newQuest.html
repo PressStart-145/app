@@ -17,7 +17,7 @@
 	<div class="container">
 		<div class="container-fluid">
 			<div class="header"><h2>New Quest:</h2></div>
-			<form name="questForm" method="post" action="/wizard/add" onsubmit="return validateForm()">
+			<form name="questForm" method="post" action="javascript:sendTaskData()" onsubmit="return validateForm()">
 				<input type="text" name="title" placeholder="Quest Name" required>
 				<input type="text" name="description" placeholder="Description">
 				<input type="text" name="deadline" placeholder="Deadline (mm/dd/yyyy)" required>
