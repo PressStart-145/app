@@ -11,15 +11,17 @@ var toAdd = []; //TODO add self to toAdd list
 var isOriginal = true;
 var viewList = []; //Search results list
 
-var currUser = $("#mapMem ul").children()[0].innerText;
+var currUser;
 
 var formResults = function() {
     formInfo = $("form").serializeArray();
     if (isOriginal) {
         memList = $("#mapMem").html().replace(/\s/g, '');
         memList = memList.substring(8, memList.length - 10).split("</li><li>");
+        currUser = $("#mapMem ul").children()[0].innerText;
         isOriginal = false;
     }
+    viewList = [];
     for (s in memList) {
         if (memList[s].toUpperCase().includes(formInfo[1].value.toUpperCase())) {
             if(memList[s] !== currUser) {

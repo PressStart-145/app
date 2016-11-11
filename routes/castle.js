@@ -77,8 +77,19 @@
              }
          };
          newCastle.name = req.body.value.name;
-         newCastle.admin = req.app.locals.currentUser;
-         newCastle.members = req.body.value.members;
+         newCastle.admin = req.app.locals.currentUser.username;
+         //newCastle.members = req.body.value.members;
+         newCastle.members.push({
+             "username": req.app.locals.currentUser,
+             "numCompleted": 0
+         });
+         for(key in req.body.value.members) {
+             newCastle.members.push({
+                 "username": req.body.value.members[key],
+                 "numCompleted": 0
+             });
+         }
+         console.log(newCastle.members);
          //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
          data.castles.push(newCastle);
      } else if (req.body.type === "member") {
