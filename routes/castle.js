@@ -176,15 +176,20 @@
      var userCastles = {
          "castles": []
      };
+     var canJoin = true;
      for (key in data.castles) {
+         canJoin = true;
          for (mem in data.castles[key].members) {
              if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-                 continue;
+                 canJoin = false;
              }
+         }
+         if(canJoin) {
              userCastles.castles.push(data.castles[key]);
          }
      }
-     res.render('joinCastle', data);
+     console.log(userCastles);
+     res.render('joinCastle', userCastles);
  };
 
  exports.build = function(req, res) {
