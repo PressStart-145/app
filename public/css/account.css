@@ -8,6 +8,20 @@ body {
     color: #D8CBEB;
 }
 
+.btn input {
+  width: 100%;
+  padding: 6px 12px;
+  color: #2a6496;
+}
+
+.btn input:hover {
+  color: #333333;
+}
+
+.accountDetailLabelDiv {
+  margin-top: 3% !important;
+}
+
 .currentTaskRow.hidden {
   visibility: hidden;
 }
