@@ -14,8 +14,6 @@ exports.add = function(req, res) {
     };
     data.castles[0].quests.push(newQuest);
 
-    console.log(req.app.locals.currentUser);
-    console.log(req.app.locals.currentCastle);
 
     var currentCastle = data.castles[0]; //TODO harcoded
     var todoTaskList = [];
@@ -72,20 +70,18 @@ var spawnMonster = function() {
 
 
 exports.account = function(req, res) {
-    var currentUser = dataUsers.users[2].username; //TODO lookup in dataUsers
-    var currentUsername = req.app.locals.currentUsername; //TODO use this instead
-    console.log(currentUsername);
+    var currentUser = req.app.locals.currentUser;
     var currentCastle = data.castles[0]; //TODO harcoded
     var todoTaskList = [];
     var doneTaskList = [];
     var completedTask = 0;
 
     for (var key in currentCastle.quests) {
-        if ((currentCastle.quests[key].takenBy === currentUser) && !currentCastle.quests[key].completed) {
+        if ((currentCastle.quests[key].takenBy === currentUser.username) && !currentCastle.quests[key].completed) {
             //console.log('To do: ' + currentCastle.quests[key].title);
             todoTaskList.push(currentCastle.quests[key])
         }
-        if ((currentCastle.quests[key].takenBy === currentUser) && currentCastle.quests[key].completed) {
+        if ((currentCastle.quests[key].takenBy === currentUser.username) && currentCastle.quests[key].completed) {
             //console.log('Done: ' + currentCastle.quests[key].title);
             doneTaskList.push(currentCastle.quests[key])
         }
@@ -99,7 +95,7 @@ exports.account = function(req, res) {
         'currentTaskList': todoTaskList,
         'doneTaskList': doneTaskList,
         'onlyOneCompleted': onlyOneCompleted,
-        'user': dataUsers.users[2]
+        'user': currentUser
     });
 };
 
@@ -164,14 +160,23 @@ exports.view = function(req, res) {
 };
 
 exports.completeTask = function(req, res) {
-  console.log(req.body.taskName);
   var completedTaskName = req.body.taskName;
-  var currentUser = dataUsers.users[2].username; //TODO harcoded
-  var currentCastle = data.castles[0]; //TODO harcoded
+  var currentUser = req.app.locals.currentUser;
+  var currentCastle = req.app.locals.currentCastle;
   var completedTaskList = [];
   var todoTaskList = [];
   var doneTaskList = [];
   var completedTask = 0;
+
+  currentCastle.members.forEach(function(u) {
+    if(u.username == currentUser.username) {
+      if(u.numCompleted == null) {
+        u.numCompleted = 1;
+      } else {
+        u.numCompleted++;
+      }
+    }
+  });
 
   for (var key in currentCastle.quests) {
       if (currentCastle.quests[key].title === completedTaskName) {
@@ -180,14 +185,13 @@ exports.completeTask = function(req, res) {
           //completedTaskList.push(currentCastle.quests[key]);
       }
   }
-  completedTask.completed = true;
 
   for (var key in currentCastle.quests) {
-      if ((currentCastle.quests[key].takenBy === currentUser) && !currentCastle.quests[key].completed) {
+      if ((currentCastle.quests[key].takenBy === currentUser.username) && !currentCastle.quests[key].completed) {
           //console.log('To do: ' + currentCastle.quests[key].title);
           todoTaskList.push(currentCastle.quests[key])
       }
-      if ((currentCastle.quests[key].takenBy === currentUser) && currentCastle.quests[key].completed) {
+      if ((currentCastle.quests[key].takenBy === currentUser.username) && currentCastle.quests[key].completed) {
           //console.log('Done: ' + currentCastle.quests[key].title);
           doneTaskList.push(currentCastle.quests[key])
       }
@@ -201,19 +205,24 @@ exports.completeTask = function(req, res) {
       'currentTaskList': todoTaskList,
       'doneTaskList': doneTaskList,
       'onlyOneCompleted': onlyOneCompleted,
-      'user': dataUsers.users[2]
+      'user': currentUser
   });
 }
 
 exports.reopenTask = function(req, res) {
-  console.log(req.body.taskName);
   var completedTaskName = req.body.taskName;
-  var currentUser = dataUsers.users[2].username; //TODO harcoded
-  var currentCastle = data.castles[0]; //TODO harcoded
+  var currentUser = req.app.locals.currentUser;
+  var currentCastle = req.app.locals.currentCastle;
   var completedTaskList = [];
   var todoTaskList = [];
   var doneTaskList = [];
   var completedTask = 0;
+
+  currentCastle.members.forEach(function(u) {
+    if(u.username == currentUser.username) {
+      u.numCompleted--;
+    }
+  });
 
   for (var key in currentCastle.quests) {
       if (currentCastle.quests[key].title === completedTaskName) {

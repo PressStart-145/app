@@ -18,13 +18,10 @@ var quests = require('./routes/quests');
 var port = process.env.PORT || PORT;
 
 
-app.locals.currentUser = {
-    "name": "Test User",
-    "username": "123",
-    "password": "123",
-    "email": "123@mail.com",
-    "imageURL": ""
-};
+var dataCastle = require("./data/castles.json");
+var dataUsers = require("./data/users.json");
+app.locals.currentUser = dataUsers.users[0];
+app.locals.currentCastle = dataCastle.castles[0];
 
 app.locals.currentCastle = {
     "name": "Test Castle",
