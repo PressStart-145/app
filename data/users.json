@@ -1,6 +1,13 @@
 {
     "users": [
         {
+            "name": "Test User",
+            "username": "123",
+            "password": "123",
+            "email": "123@mail.com",
+            "imageURL": ""
+        },
+        {
             "name": "John Smith",
             "username": "username",
             "password": "password",
