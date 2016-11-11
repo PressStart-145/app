@@ -15,9 +15,13 @@ exports.update = function(req, res) {
     req.app.locals.currentUser.name = req.body.name;
   }
   if(req.body.email !== "") {
-    req.app.locals.currentUser.email = req.boby.email;
+    req.app.locals.currentUser.email = req.body.email;
+  }
+  if(req.body.password !== "") {
+    req.app.locals.currentUser.password = req.body.password;
   }
 
+  req.app.locals.success = true;
   res.redirect('account');
 }
 
