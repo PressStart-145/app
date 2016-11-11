@@ -26,7 +26,7 @@ app.locals.currentUser = {
     "imageURL": ""
 };
 
-app.locals.currentUser = {
+app.locals.currentCastle = {
     "name": "Test Castle",
     "admin": "Test User",
     "members": [
