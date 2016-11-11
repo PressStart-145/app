@@ -3,6 +3,15 @@ var formInfo;
 var castleList;
 var isOriginal = true;
 var viewList = [];
+var data;
+var input;
+
+window.onload = function() {
+    var inputType = $("<input>")
+               .attr("type", "hidden")
+               .attr("name", "type").val("member");
+    inputType.appendTo("#sendJoin");
+}
 
 $("#resultsList").on('click', 'li', function() {
     $("#search").hide();
@@ -11,20 +20,24 @@ $("#resultsList").on('click', 'li', function() {
     selectedCastle = $(this).text();
     $(".confirm p").append($(this).text());
     $(".confirm p").append("?");
+    if($("#hasData")) {
+        $("#hasData").remove();
+    }
+   input = $("<input>")
+              .attr("id", "hasData")
+              .attr("type", "hidden")
+              .attr("name", "name").val(selectedCastle);
+    input.appendTo("#sendJoin");
+    console.log("gdgf");
 });
 
+/*
 $("#yesJoin").click(function(e) {
-    //e.preventDefault();
+    e.preventDefault();
     //Create a castle JSON object with the name and members provided
-
-    var data = {
-        "type": "member",
-        "value": {
-            "name": selectedCastle
-        }
-    };
     $.post("/castle/add", data);
 });
+*/
 
 $("#noJoin").click(function(e) {
     $(".confirm").hide();

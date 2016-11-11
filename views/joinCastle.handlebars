@@ -1,5 +1,3 @@
-<!-- Join castle screen. -->
-
 <!doctype html>
 
 <html>
@@ -31,8 +29,10 @@
 			<iframe name='formresponse' style="display: none;"></iframe>
         </div>
         <div class="confirm">
-            <p></p>
-            <a href="../../castle/select" id="yesJoin" class="btn">Yes</a>
+			<form id="sendJoin" method="post" action="/castle/add">
+	            <p></p>
+	            <input type="submit" id="yesJoin" class="btn" value="Yes">
+			</form>
             <a href="#" id="noJoin" class="btn">No</a>
         </div>
         <a href="../../castle/select" class="btn">Cancel</a>

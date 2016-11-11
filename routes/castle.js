@@ -19,44 +19,51 @@
      var errMsg = "";
      var currentUser;
 
-     users.users.forEach(function(userJson) {
-         if (userJson.username === req.body.username) {
-             usernameInexistant = false;
-             if (userJson.password === req.body.password) {
-                 wrongPassword = false;
-                 currentUser = userJson;
-             }
-         }
-     });
-
-     if (usernameInexistant) {
-         err = true;
-         errMsg = "Username " + req.body.username + " does not exist";
-     } else if (wrongPassword) {
-         err = true;
-         errMsg = "Wrong password";
+     var reqSize = 0;
+     for(i in req.body) {
+         reqSize++;
      }
-
-     if (err) {
-         req.app.locals.err = true;
-         req.app.locals.errMsg = errMsg;
-         res.redirect('login');
+     console.log(reqSize);
+     if(reqSize == 0) {
+         currentUser = req.app.locals.currentUser.username;
      } else {
-         req.app.locals.currentUser = currentUser;
-
-         //TODO prep data to have only the castle where req.body.username is
-         var userCastles = {
-            "castles": []
-         };
-         for(key in data.castles) {
-             for(mem in data.castles[key].members) {
-                 if(data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-                     userCastles.castles.push(data.castles[key]);
+         users.users.forEach(function(userJson) {
+             if (userJson.username === req.body.username) {
+                 usernameInexistant = false;
+                 if (userJson.password === req.body.password) {
+                     wrongPassword = false;
+                     currentUser = userJson;
                  }
              }
+         });
+
+         if (usernameInexistant) {
+             err = true;
+             errMsg = "Username " + req.body.username + " does not exist";
+         } else if (wrongPassword) {
+             err = true;
+             errMsg = "Wrong password";
          }
-         res.render('castles', userCastles);
+
+         if (err) {
+             req.app.locals.err = true;
+             req.app.locals.errMsg = errMsg;
+             res.redirect('login');
+         } else {
+             req.app.locals.currentUser = currentUser;
+         }
      }
+     var userCastles = {
+        "castles": []
+     };
+     for(key in data.castles) {
+         for(mem in data.castles[key].members) {
+             if(data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+                 userCastles.castles.push(data.castles[key]);
+             }
+         }
+     }
+     res.render('castles', userCastles);
  }
 
  exports.add = function(req, res) {
@@ -92,13 +99,14 @@
          //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
          data.castles.push(newCastle);
      } else if (req.body.type === "member") {
-         var name = req.body.value.name;
+         var name = req.body.name;
          for (s in data.castles) {
              if (name != null && data.castles[s].name.replace(/\s/g, '') === name) {
                  data.castles[s].members.push(newMem);
-                 return;
+                 break;
              }
          }
+         res.render('castles', data);
      }
      console.log("after");
      console.log(data.castles);
