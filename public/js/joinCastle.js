@@ -48,13 +48,16 @@ $("#noJoin").click(function(e) {
 var searchCastles = function() {
     formInfo = $("form").serializeArray();
     if(isOriginal) {
-        castleList = $("#resultsList").html().replace(/\s/g,'');
+        castleList = $("#resultsList").html().replace(/\>\s+\</g,'><').trim();
         castleList = castleList.substring(8, castleList.length - 10).split("</li><li>");
         isOriginal = false;
+        console.log(castleList);
     }
     viewList = [];
     for(s in castleList) {
         if(castleList[s].toUpperCase().includes(formInfo[0].value.toUpperCase())) {
+            viewList.push(castleList[s]);
+        } else if(castleList[s].replace(/\s/g,'').toUpperCase().includes(formInfo[0].value.toUpperCase())) {
             viewList.push(castleList[s]);
         }
     }
