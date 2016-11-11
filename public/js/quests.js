@@ -34,7 +34,6 @@ $("#questList .doneTaskRow .btn").click(function(e) {
 });
 
 $('#completedQuestsBtn').click(function(e){
-  console.log("waddup");
 });
 
 $("#yesDone").click(function(e) {

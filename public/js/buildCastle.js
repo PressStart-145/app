@@ -13,19 +13,19 @@ var viewList = []; //Search results list
 
 var formResults = function() {
     formInfo = $("form").serializeArray();
-    if(isOriginal) {
-        memList = $("#mapMem").html().replace(/\s/g,'');
+    if (isOriginal) {
+        memList = $("#mapMem").html().replace(/\s/g, '');
         memList = memList.substring(8, memList.length - 10).split("</li><li>");
         isOriginal = false;
     }
-    for(s in memList) {
-        if(memList[s].toUpperCase().includes(formInfo[1].value.toUpperCase())) {
+    for (s in memList) {
+        if (memList[s].toUpperCase().includes(formInfo[1].value.toUpperCase())) {
             viewList.push(memList[s]);
         }
     }
 
-    if(viewList.length == 0) {
-        $("#mapMem").html( "<p>No matches were found.</p>");
+    if (viewList.length == 0) {
+        $("#mapMem").html("<p>No matches were found.</p>");
     } else {
         populateResults();
     }
@@ -34,20 +34,20 @@ var formResults = function() {
 
 var populateResults = function() {
     var newHtml = "<ul id='results'>";
-    for(s in viewList) {
-        if(toAdd.indexOf(viewList[s]) >= 0) {
+    for (s in viewList) {
+        if (toAdd.indexOf(viewList[s]) >= 0) {
             newHtml += "<li class='taken'>" + viewList[s] + "</li>";
         } else {
             newHtml += "<li>" + viewList[s] + "</li>";
         }
     }
-    $("#mapMem").html( newHtml + "</ul>");
+    $("#mapMem").html(newHtml + "</ul>");
 }
 
 $("#mapMem").on('click', 'li', function() {
     var username = $(this).text();
     var index = toAdd.indexOf(username);
-    if(index < 0){
+    if (index < 0) {
         toAdd.push(username);
     } else {
         toAdd.splice(index, 1);
@@ -59,7 +59,7 @@ $("#mapMem").on('click', 'li', function() {
 $("#selectedMem").on('click', 'div', function() {
     var username = $(this).text();
     var index = toAdd.indexOf(username);
-    if(index >= 0){
+    if (index >= 0) {
         toAdd.splice(index, 1);
     }
     $(this).toggleClass("taken");
@@ -69,7 +69,7 @@ $("#selectedMem").on('click', 'div', function() {
 
 var updateSelected = function() {
     $("#selectedMem").html("");
-    for(i in toAdd) {
+    for (i in toAdd) {
         $("#selectedMem").append("<div>" + toAdd[i] + "</div>");
     }
 }
