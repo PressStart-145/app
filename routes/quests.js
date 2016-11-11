@@ -145,7 +145,7 @@ exports.acceptTask = function(req, res) {
 };
 
 exports.view = function(req, res) {
-    var currentCastle = data.castles[0]; //TODO harcoded
+    var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
     var inProgressTaskList = [];
     var doneTaskList = [];
