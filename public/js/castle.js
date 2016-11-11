@@ -102,6 +102,7 @@ $("#noJoin").click(function(e) {
 /* Game Castle JS */
 window.onload = function() {
     dmgMonster();
+    dmgCastle();
 };
 
 var dmgMonster = function() {
@@ -110,7 +111,17 @@ var dmgMonster = function() {
         var monsterHealth = str.substring(2, str.length - 1);
         var fraction = monsterHealth / 100;
         var width = fraction * 50;
-        $("#monsterHealth").css('width', (fraction * width) + "%");
+        $("#monsterHealth").css('width', width + "%");
+    }
+};
+
+var dmgCastle = function() {
+    if($("#castleHP")[0]){
+        var str = $("#castleHP").text().match(/:.*?\//g)[0];
+        var castleHealth = str.substring(2, str.length - 1);
+        var fraction = castleHealth / 100;
+        var width = fraction * 50;
+        $("#castleHealth").css('width', width + "%");
     }
 };
 

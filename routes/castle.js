@@ -109,6 +109,7 @@
      quests = currCastle.quests;
      monsterHealth = currCastle.game["monsterHealth"];
      castleHealth = currCastle.game["castleHealth"];
+
      /*var nameToShow = req.params.userName;
     var castleName = req.params.castleName;
     res.render('castle', {
