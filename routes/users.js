@@ -6,6 +6,21 @@
 var data = require("../data/users.json");
 
 
+exports.details = function(req, res) {
+  res.render('accountDetails', {'user': req.app.locals.currentUser});
+}
+
+exports.update = function(req, res) {
+  if(req.body.name !== "") {
+    req.app.locals.currentUser.name = req.body.name;
+  }
+  if(req.body.email !== "") {
+    req.app.locals.currentUser.email = req.boby.email;
+  }
+
+  res.redirect('account');
+}
+
 exports.signup = function(req, res) {
 
   res.render('signup');

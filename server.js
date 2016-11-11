@@ -44,6 +44,8 @@ app.post('/login/forgotPassword', users.sendPassword);
 app.post('/signup/add', users.add);
 app.post('/account/completeTask', quests.completeTask);
 app.post('/account/reopenTask', quests.reopenTask);
+app.get('/account/details', users.details);
+app.post('/account/update', users.update);
 app.post('/wizard/acceptTask', quests.acceptTask);
 app.get('/login', users.login);
 app.post('/castle/add', castle.add);
