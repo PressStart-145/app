@@ -26,6 +26,72 @@ app.locals.currentUser = {
     "imageURL": ""
 };
 
+app.locals.currentUser = {
+    "name": "Test Castle",
+    "admin": "Test User",
+    "members": [
+        {
+            "username": "123",
+            "numCompleted": 0
+        }
+    ],
+    "quests": [
+        {
+            "title": "Test task",
+            "description": "test description",
+            "level": "99",
+            "deadline": "11/10/2016",
+            "takenBy": "",
+            "completed": false
+        },
+        {
+            "title": "Test task",
+            "description": "test description",
+            "level": "100",
+            "deadline": "11/10/2016",
+            "takenBy": "",
+            "completed": false
+        },
+        {
+            "title": "Test task",
+            "description": "test description",
+            "level": "10",
+            "deadline": "11/10/2016",
+            "takenBy": "",
+            "completed": false
+        },
+        {
+            "title": "Test task",
+            "description": "test description",
+            "level": "1",
+            "deadline": "11/10/2016",
+            "takenBy": "",
+            "completed": false
+        },
+        {
+            "title": "Test task",
+            "description": "test description",
+            "level": "2",
+            "deadline": "11/10/2016",
+            "takenBy": "",
+            "completed": false
+        },
+        {
+            "title": "Test task",
+            "description": "test description",
+            "level": "-100",
+            "deadline": "11/10/2016",
+            "takenBy": "",
+            "completed": false
+        }
+    ],
+    "numCompleted": 0,
+    "game": {
+        "castleHealth": 100,
+        "monsterHealth": 100,
+        "items": []
+};
+
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
