@@ -53,6 +53,8 @@ exports.add = function(req, res){
       };
       data.users.push(newUser);
       //console.log(data);
+
+      req.app.locals.createdUserSuccess = true;
       res.redirect('login');
     }
 };
@@ -60,10 +62,12 @@ exports.add = function(req, res){
 exports.login = function(req, res){
     var err = req.app.locals.err;
     var errMsg = req.app.locals.errMsg;
+    var success = req.app.locals.createdUserSuccess;
     req.app.locals.err = null;
     req.app.locals.errMsg = null;
+    req.app.locals.createdUserSuccess = null;
 
-    res.render('login', {'err': err, 'errMsg': errMsg});
+    res.render('login', {'err': err, 'errMsg': errMsg, 'success': success});
 };
 
 exports.sendPassword = function(req, res) {
