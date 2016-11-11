@@ -54,7 +54,7 @@ exports.taskDone = function(req, res) {
                 //Else, enter peaceful mode
                 //peaceful mode= no monsters and can heal
                 //TODO after monster death, allow grace period for healing
-                spawnMonster();
+                spawnMonster(req);
             }
             if(monsterHealth > 100) {
                 monsterHealth = 100;
@@ -65,10 +65,9 @@ exports.taskDone = function(req, res) {
     });
 }
 
-var spawnMonster = function() {
-    monsterHealth = req.app.locals.currentCastle.game["monsterHealth"];
-    if(monsterHealth == 0) {
-        monsterHealth = 100;
+var spawnMonster = function(req) {
+    if(req.app.locals.currentCastle.monsterHealth == 0) {
+        req.app.locals.currentCastle.monsterHealth = 100;
         console.log("A new monster has been spawned!!!");
     }
 }
@@ -166,7 +165,7 @@ exports.view = function(req, res) {
 };
 
 exports.completeTask = function(req, res) {
-  var completedTaskName = req.body.taskName;
+  var completedTaskIndex = req.body.taskNum;
   var currentUser = req.app.locals.currentUser;
   var currentCastle = req.app.locals.currentCastle;
   var completedTaskList = [];
@@ -185,9 +184,24 @@ exports.completeTask = function(req, res) {
   });
 
   for (var key in currentCastle.quests) {
-      if (currentCastle.quests[key].title === completedTaskName) {
+      if (key === completedTaskIndex) {
           currentCastle.quests[key].completed = true;
-          currentCastle.game.monsterHealth -= currentCastle.quests[key].level;
+          //currentCastle.game.monsterHealth -= currentCastle.quests[key].level;
+          currentCastle.game.monsterHealth -= parseInt(currentCastle.quests[key].level);
+          if(currentCastle.game.monsterHealth <= 0) {
+              currentCastle.game.monsterHealth = 0;
+              //TODO add a victory sound and notify
+              //members that the monster died
+              //Only spawn monster if numQuests>0
+              //Else, enter peaceful mode
+              //peaceful mode= no monsters and can heal
+              //TODO after monster death, allow grace period for healing
+              currentCastle.game.monsterHealth = 100;
+              console.log("A new monster has been spawned!!!");
+          }
+          if(currentCastle.game.monsterHealth > 100) {
+              currentCastle.game.monsterHealth = 100;
+          }
           //completedTaskList.push(currentCastle.quests[key]);
       }
   }

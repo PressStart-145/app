@@ -2,12 +2,12 @@ $("#questList .currentTaskRow .btn").click(function(e) {
     e.preventDefault();
     //$(".confirm").show();
     //console.log($(this).parent());
-    var txt = $(this).parent()[0].children[0].textContent.trim();
-    //console.log(txt);
+    var index = $(this).parent()[0].id.split("#")[1];
+    console.log(index);
 
-    $("#taskTitle").text(txt); //txt.trim());
+    //$("#taskTitle").text(txt); //txt.trim());
     //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
-    $.post( "/account/completeTask", {'taskName': txt},function(data){location.reload();});
+    $.post( "/account/completeTask", {'taskNum': parseInt(index)},function(data){location.reload();});
 });
 
 $("#questList .doneTaskRow .btn").click(function(e) {
