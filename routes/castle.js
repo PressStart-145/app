@@ -19,14 +19,8 @@
      var errMsg = "";
      var currentUser;
 
-     var reqSize = 0;
-     for(i in req.body) {
-         reqSize++;
-     }
-     console.log(reqSize);
-     if(reqSize == 0) {
-         currentUser = req.app.locals.currentUser.username;
-     } else {
+     console.log(req.body);
+     if (req.body.username != null && req.body.username != null) {
          users.users.forEach(function(userJson) {
              if (userJson.username === req.body.username) {
                  usernameInexistant = false;
@@ -44,22 +38,28 @@
              err = true;
              errMsg = "Wrong password";
          }
-
-         if (err) {
-             req.app.locals.err = true;
-             req.app.locals.errMsg = errMsg;
-             res.redirect('login');
-         } else {
-             req.app.locals.currentUser = currentUser;
-         }
+     } else {
+       usernameInexistant = false;
+       wrongPassword = false;
+       currentUser = req.app.locals.currentUser;
      }
-     var userCastles = {
-        "castles": []
-     };
-     for(key in data.castles) {
-         for(mem in data.castles[key].members) {
-             if(data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-                 userCastles.castles.push(data.castles[key]);
+
+     if (err) {
+         req.app.locals.err = true;
+         req.app.locals.errMsg = errMsg;
+         res.redirect('login');
+     } else {
+         req.app.locals.currentUser = currentUser;
+
+         //TODO prep data to have only the castle where req.body.username is
+         var userCastles = {
+             "castles": []
+         };
+         for (key in data.castles) {
+             for (mem in data.castles[key].members) {
+                 if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+                     userCastles.castles.push(data.castles[key]);
+                 }
              }
          }
      }
@@ -90,7 +90,7 @@
              "username": req.app.locals.currentUser.username,
              "numCompleted": 0
          });
-         for(key in req.body.value.members) {
+         for (key in req.body.value.members) {
              newCastle.members.push({
                  "username": req.body.value.members[key],
                  "numCompleted": 0
@@ -113,7 +113,7 @@
  }
 
  exports.view = function(req, res) {
-     if(req.query.name != undefined) {
+     if (req.query.name != undefined) {
          name = req.query.name;
          var index;
          for (s in data.castles) {
@@ -131,7 +131,7 @@
          name = req.app.locals.currentCastle.name;
          currCastle = req.app.locals.currentCastle;
          req.app.locals.currentCastle.game.castleHealth -= 3;
-         if(req.app.locals.currentCastle.game.castleHealth < 0) {
+         if (req.app.locals.currentCastle.game.castleHealth < 0) {
              req.app.locals.currentCastle.game.castleHealth = 0;
              console.log("Your castle is falling!!!");
          }
@@ -167,8 +167,8 @@
 
  exports.build = function(req, res) {
      var data = {
-        "users": users.users,
-        "currUser": req.app.locals.currentUser.username
+         "users": users.users,
+         "currUser": req.app.locals.currentUser.username
      };
      res.render('buildCastle', data);
  };
