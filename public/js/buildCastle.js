@@ -1,9 +1,37 @@
 /* Build Castle JS */
+var castleList = [];
+var originalCastle = true;
+
 $("#nameCastle").click(function(e) {
     e.preventDefault();
+    $("badName").hide();
+    //Check if castle name is unique
+    if(originalCastle) {
+        castleList = $("#mapCastle").html().replace(/\>\s+\</g,'><').trim();
+        castleList = castleList.substring(8, castleList.length - 10).split("</li><li>");
+        originalCastle = false;
+    }
+
+    var name = $("form").serializeArray()[0].value;
+
+    for(s in castleList) {
+        if(castleList[s].toUpperCase().localeCompare(name.toUpperCase()) == 0) {
+            alertName();
+            return;
+        } else if(castleList[s].toUpperCase().replace(/\s/g,'').trim().localeCompare(name.toUpperCase().replace(/\s/g,'').trim()) == 0) {
+            alertName();
+            return;
+        }
+    }
+
     $("#nameForm").hide();
     $("#addMembers").show();
 });
+
+var alertName = function() {
+    console.log("bad name!!!");
+    $("#badName").show();
+}
 
 var formInfo;
 var memList;
@@ -87,7 +115,7 @@ $("#doneMem").click(function(e) {
     var data = {
         "type": "castle",
         "value": {
-            "name": formInfo[0].value,
+            "name": formInfo[0].value.trim(),
             "members": toAdd
         }
     };

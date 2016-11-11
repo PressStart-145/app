@@ -188,9 +188,10 @@
  };
 
  exports.build = function(req, res) {
-     var data = {
+     var userData = {
          "users": users.users,
+         "castles": data.castles,
          "currUser": req.app.locals.currentUser.username
      };
-     res.render('buildCastle', data);
+     res.render('buildCastle', userData);
  };
