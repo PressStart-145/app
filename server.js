@@ -90,6 +90,7 @@ app.locals.currentUser = {
         "castleHealth": 100,
         "monsterHealth": 100,
         "items": []
+    }
 };
 
 app.set('views', path.join(__dirname, 'views'));

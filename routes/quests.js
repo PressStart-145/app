@@ -43,7 +43,7 @@ exports.taskDone = function(req, res) {
     quests.forEach(function(e) {
         if(e["title"] == req.query.task) {
             e["completed"] = true;
-            monsterHealth = monsterHealth - e["level"];
+            monsterHealth = monsterHealth - parseInt(e["level"]);
             if(monsterHealth <= 0) {
                 monsterHealth = 0;
                 //TODO add a victory sound and notify
