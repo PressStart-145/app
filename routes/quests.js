@@ -6,7 +6,7 @@ var monsterHealth;
 exports.add = function(req, res) {
     quests = req.app.locals.currentCastle.quests;
     var newQuest = {
-        "id": quests.length(),
+        "id": quests.length,
         "title": req.body.title,
         "description": req.body.description,
         "level": req.body.level,
@@ -16,6 +16,7 @@ exports.add = function(req, res) {
     };
     req.app.locals.currentCastle.quests.push(newQuest);
 
+    console.log(req.app.locals.currentCastle.quests);
 
     var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
