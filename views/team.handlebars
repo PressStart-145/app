@@ -29,24 +29,43 @@
 			<div class="row" id='rankingAchievmentButtonRow'>
 				<a href="#" id='usersButton' class="btn selected">Members</a> <a href="#" id='rankingsButton' class="btn">Rankings</a> <a href="#" id='achievementsButton' class="btn">Achievements</a>
 			</div>
-			<div id="userDiv">
+
+			<div id="userDiv" class="container-fluid">
 				{{#each users}}
-				<div class="userRowDiv">
-					<img src="/images/PersonalAccount-01-01.png"/> {{username}}
+				<div class="row userRowDiv">
+					<div class="col-xs-2"><img src="/images/{{image}}" class="img-thumbnail"/></div>
+					<div class="col-xs-8">
+						<div class="row">
+							<bold>{{username}}</bold>
+						</div>
+						<div class="row userTaskRowDiv">
+							{{#each taskList}}
+							<div class="row">
+								<div class="col-xs-1"></div>
+								<div class="col-xs-11">{{task}}</div>
+							</div>
+							{{/each}}
+						</div>
+					</div>
 				</div>
 				{{/each}}
 			</div>
-			<div id="rankingDiv" class="hidden">
+			<div id="rankingDiv" class="container-fluid hidden">
 				{{#each rankings}}
-				<div class="rankingRowDiv">
-					<img src="/images/{{image}}"/> {{name}}
+				<div class="row rankingRowDiv">
+					<div class="col-xs-2"><img src="/images/{{image}}" class="img-thumbnail"/></div>
+					<div class="col-xs-8">{{username}}</div>
+					<div class="col-xs-2" style="text-align: right;">{{numCompleted}}</div>
 				</div>
 				{{/each}}
 			</div>
-			<div id="achievementDiv" class="hidden">
+
+			<div id="achievementDiv" class="container-fluid hidden">
 				{{#each achievements}}
-				<div class="achievementRowDiv">
-					<img src="/images/{{image}}"/> {{name}}
+				<div class="row achievementRowDiv">
+					<div class="col-xs-2"><img src="/images/{{image}}" class="img-thumbnail"/></div>
+					<div class="col-xs-8">{{name}}</div>
+					<div class="col-xs-2" style="text-align: right;">{{numCompleted}}</div>
 				</div>
 				{{/each}}
 			</div>
@@ -134,6 +153,16 @@
 			$("#rankingsButton").removeClass("selected");
 			$("#achievementsButton").removeClass("selected");
 			$("#usersButton").addClass("selected");
+	});
+
+	$(".userRowDiv").click(function(e) {
+			e.preventDefault();
+			if($(this).find('.userTaskRowDiv').css('display') === 'none') {
+				$(this).find('.userTaskRowDiv').slideDown();
+			} else {
+				$(this).find('.userTaskRowDiv').slideUp();
+			}
+
 	});
 	</script>
 </body>

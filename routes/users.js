@@ -39,7 +39,6 @@ exports.add = function(req, res){
 };
 
 exports.login = function(req, res){
-    req.app.locals.currentUsername = 'user'; //TODO get actual username
     var err = req.app.locals.err;
     var errMsg = req.app.locals.errMsg;
     req.app.locals.err = null;
