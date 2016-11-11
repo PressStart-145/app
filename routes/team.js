@@ -1,4 +1,5 @@
 var data = require("../data/castles.json");
+var dataUsers = require("../data/users.json");
 
 exports.view = function(req, res) {
     var castle = data.castles[0]
@@ -17,7 +18,16 @@ exports.view = function(req, res) {
       };
       user.username = e.username;
       //loop through user and find img
-      user.image = "duck.gif";
+
+      dataUsers.users.forEach(function(u){
+        if(u.username === e.username) {
+          user.image = u.imageURL;
+        }
+      });
+
+      if(user.image === "") {
+        user.image = "PersonalAccount-01-01.png";
+      }
       // var ncTmp = e.numCompleted;
       // var nc;
       // if(ncTmp < 10) {
@@ -28,8 +38,12 @@ exports.view = function(req, res) {
       //   nc = "(" + e.numCompleted + ")"
       // }
       user.numCompleted = e.numCompleted;
-      user.taskList.push({'task': "task1"});
-      user.taskList.push({'task': "task2"});
+
+      castle.quests.forEach(function(q) {
+        if(q.takenBy === e.username && !q.completed ) {
+          user.taskList.push({'task': q.title});
+        }
+      });
 
       tmpUsers.push(user);
     });
