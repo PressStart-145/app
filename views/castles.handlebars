@@ -18,21 +18,25 @@
 		<div id="carousel" class="carousel slide">
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
-				{{#each castles}}
-					{{#if @first}}
-						<li data-target="#carousel" data-slide-to="{{@index}}" class="active"></li>
+				{{#if castles}}
+					{{#each castles}}
+						{{#if @first}}
+							<li data-target="#carousel" data-slide-to="{{@index}}" class="active"></li>
+						{{else}}
+							<li data-target="#carousel" data-slide-to="{{@index}}"></li>
+						{{/if}}
+						{{#if @last}}
+							<li id="lastSlide" data-target="#carousel" data-slide-to="({{@index}} + 1)"></li>
+						{{/if}}
+					{{/each}}
 					{{else}}
-						<li data-target="#carousel" data-slide-to="{{@index}}"></li>
-					{{/if}}
-					{{#if @last}}
-						<li id="lastSlide" data-target="#carousel" data-slide-to="({{@index}} + 1)"></li>
-					{{/if}}
-				{{/each}}
+						<li id="lastSlide" data-target="#carousel" data-slide-to="0"></li>
+				{{/if}}
 			</ol>
 
 			<!-- Wrapper for slides -->
 			<div class="carousel-inner" role="listbox">
-				{{#if castles}}
+				<!--{{#if castles}}-->
 					{{#each castles}}
 						{{#if @first}}
 							<div class="item active">

@@ -7,7 +7,6 @@
  var castleHealth;
 
  var newMem = {
-     //"username": req.app.locals.userName, TODO
      "username": "snot",
      "numCompleted": 0
  }
@@ -67,6 +66,11 @@
  }
 
  exports.add = function(req, res) {
+     newMem = {
+         "username": req.app.locals.currentUser.username,
+         "numCompleted": 0
+     };
+
      console.log(req.body.type);
      console.log("before");
      console.log(data.castles);
@@ -86,10 +90,7 @@
          newCastle.name = req.body.value.name;
          newCastle.admin = req.app.locals.currentUser.username;
          //newCastle.members = req.body.value.members;
-         newCastle.members.push({
-             "username": req.app.locals.currentUser.username,
-             "numCompleted": 0
-         });
+         newCastle.members.push(newMem);
          for (key in req.body.value.members) {
              newCastle.members.push({
                  "username": req.body.value.members[key],
@@ -171,6 +172,18 @@
  };
 
  exports.join = function(req, res) {
+     //TODO load from userCastles
+     var userCastles = {
+         "castles": []
+     };
+     for (key in data.castles) {
+         for (mem in data.castles[key].members) {
+             if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+                 continue;
+             }
+             userCastles.castles.push(data.castles[key]);
+         }
+     }
      res.render('joinCastle', data);
  };
 
