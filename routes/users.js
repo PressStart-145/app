@@ -18,6 +18,7 @@ exports.update = function(req, res) {
     req.app.locals.currentUser.email = req.boby.email;
   }
 
+  req.app.locals.success = true;
   res.redirect('account');
 }
 

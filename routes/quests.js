@@ -80,6 +80,9 @@ exports.account = function(req, res) {
     var doneTaskList = [];
     var completedTask = 0;
 
+    var success = req.app.locals.success;
+    req.app.locals.success = null;
+
     for (var key in currentCastle.quests) {
         if ((currentCastle.quests[key].takenBy === currentUser.username) && !currentCastle.quests[key].completed) {
             //console.log('To do: ' + currentCastle.quests[key].title);
@@ -99,7 +102,8 @@ exports.account = function(req, res) {
         'currentTaskList': todoTaskList,
         'doneTaskList': doneTaskList,
         'onlyOneCompleted': onlyOneCompleted,
-        'user': currentUser
+        'user': currentUser,
+        'success': success
     });
 };
 
