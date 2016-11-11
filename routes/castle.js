@@ -84,7 +84,12 @@
  }
 
  exports.view = function(req, res) {
-     var name = req.query.name;
+     if(req.query.name != undefined) {
+         name = req.query.name;
+     } else {
+         name = req.app.locals.currentCastle.name;
+     }
+
      var index;
      for (s in data.castles) {
          if (name != null && data.castles[s].name == name) {
@@ -112,7 +117,7 @@
      console.log(req.app.locals.currentCastle);
 
      res.render('castle', {
-         'name': "John", //TODO use global
+         'name': req.app.locals.currentUser.name, //TODO use global
          'castleName': name,
          'monsterName': "Kraken",
          'castleHealth': castleHealth,

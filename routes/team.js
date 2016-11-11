@@ -2,7 +2,7 @@ var data = require("../data/castles.json");
 var dataUsers = require("../data/users.json");
 
 exports.view = function(req, res) {
-    var castle = data.castles[0]
+    var castle = req.app.locals.currentCastle;
     var users = castle.members;
 
 
