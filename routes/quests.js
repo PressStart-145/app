@@ -1,10 +1,12 @@
 var data = require("../data/castles.json");
 var dataUsers = require("../data/users.json");
-var quests = data.castles[0].quests;
-var monsterHealth = data.castles[0].game["monsterHealth"];
+var quests;
+var monsterHealth;
 
 exports.add = function(req, res) {
+    quests = req.app.locals.currentCastle.quests;
     var newQuest = {
+        "id": quests.length(),
         "title": req.body.title,
         "description": req.body.description,
         "level": req.body.level,
@@ -38,6 +40,8 @@ exports.add = function(req, res) {
 };
 
 exports.taskDone = function(req, res) {
+    quests = req.app.locals.currentCastle.quests;
+    monsterHealth = req.app.locals.currentCastle.game["monsterHealth"];
     quests.forEach(function(e) {
         if(e["title"] == req.query.task) {
             e["completed"] = true;
@@ -62,6 +66,7 @@ exports.taskDone = function(req, res) {
 }
 
 var spawnMonster = function() {
+    monsterHealth = req.app.locals.currentCastle.game["monsterHealth"];
     if(monsterHealth == 0) {
         monsterHealth = 100;
         console.log("A new monster has been spawned!!!");
@@ -71,7 +76,7 @@ var spawnMonster = function() {
 
 exports.account = function(req, res) {
     var currentUser = req.app.locals.currentUser;
-    var currentCastle = data.castles[0]; //TODO harcoded
+    var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
     var doneTaskList = [];
     var completedTask = 0;
@@ -101,21 +106,22 @@ exports.account = function(req, res) {
 
 
 exports.acceptTask = function(req, res) {
-    var acceptedTaskName = req.body.taskName;
+    var acceptedTaskIndex = req.body.taskNum;
     var accepteeUsername = req.app.locals.currentUser.username;
     var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
     var inProgressTaskList = [];
     var doneTaskList = [];
 
+    console.log(acceptedTaskIndex);
 
     for (var key in currentCastle.quests) {
-      if (currentCastle.quests[key].title === acceptedTaskName) {
+      if (key === acceptedTaskIndex) {
           currentCastle.quests[key].takenBy = accepteeUsername;
-          //TODO handle dup task titles
-          //TODO idea: use quests index number to handle assignment
       }
     }
+
+    console.log(currentCastle.quests);
 
     for (var key in currentCastle.quests) {
         if (currentCastle.quests[key].completed) {

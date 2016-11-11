@@ -37,9 +37,13 @@ $(".showDesc").click(function(e) {
 
 $(".todoTaskRow .btn").click(function(e) {
   e.preventDefault();
-  var txt = $(".showDesc")[0].children[0].children[0].textContent.trim();
-  console.log(txt);
+  console.log($(this).prev().children()[0].id);
+  //var txt = $(this).prev().children()[0].children()[0].textContent.trim();
+  //console.log(txt);
 
-  $.post( "/wizard/acceptTask", {'taskName': txt, 'username': "user"},function(data){});
+  var index = $(this).prev().children()[0].id.split("#")[1];
+  console.log(index);
+
+  $.post( "/wizard/acceptTask", {'taskNum': parseInt(index), 'username': "user"},function(data){});
   location.reload();
 });

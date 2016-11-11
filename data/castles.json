@@ -11,6 +11,7 @@
             ],
             "quests": [
                 {
+                    "id": 0,
                     "title": "Test task",
                     "description": "test description",
                     "level": "99",
@@ -19,6 +20,7 @@
                     "completed": false
                 },
                 {
+                    "id": 1,
                     "title": "Test task",
                     "description": "test description",
                     "level": "100",
@@ -27,6 +29,7 @@
                     "completed": false
                 },
                 {
+                    "id": 2,
                     "title": "Test task",
                     "description": "test description",
                     "level": "10",
@@ -35,6 +38,7 @@
                     "completed": false
                 },
                 {
+                    "id": 3,
                     "title": "Test task",
                     "description": "test description",
                     "level": "1",
@@ -43,6 +47,7 @@
                     "completed": false
                 },
                 {
+                    "id": 4,
                     "title": "Test task",
                     "description": "test description",
                     "level": "2",
@@ -51,6 +56,7 @@
                     "completed": false
                 },
                 {
+                    "id": 5,
                     "title": "Test task",
                     "description": "test description",
                     "level": "-100",
@@ -89,6 +95,7 @@
             ],
             "quests": [
                 {
+                    "id": 0,
                     "title": "task 1",
                     "description": "test description",
                     "level": "10",
@@ -97,6 +104,7 @@
                     "completed": false
                 },
                 {
+                    "id": 1,
                     "title": "task 10",
                     "description": "test description",
                     "level": "1",
@@ -105,6 +113,7 @@
                     "completed": false
                 },
                 {
+                    "id": 2,
                     "title": "Pass out flyers",
                     "description": "Flyers duh",
                     "level": "75",
@@ -112,6 +121,7 @@
                     "takenBy": "user",
                     "completed": false
                 },{
+                    "id": 3,
                     "title": "Ayy baguette",
                     "description": "Flyers duh",
                     "level": "35",
@@ -120,6 +130,7 @@
                     "completed": false
                 },
                 {
+                    "id": 4,
                     "title": "Do a thing",
                     "description": "do the thing",
                     "level": "2",
@@ -128,6 +139,7 @@
                     "completed": false
                 },
                 {
+                    "id": 5,
                     "title": "Get coffee",
                     "description": "Venti caramel frapuccino",
                     "level": "5",
@@ -136,6 +148,7 @@
                     "completed": false
                 },
                 {
+                    "id": 6,
                     "title": "Interview president Trump",
                     "description": "ayy we re screwed",
                     "level": "25",
@@ -162,6 +175,7 @@
             ],
             "quests": [
                 {
+                    "id": 0,
                     "title": "task 1",
                     "description": "test description",
                     "level": "10",
@@ -170,6 +184,7 @@
                     "completed": false
                 },
                 {
+                    "id": 1,
                     "title": "Put up posters",
                     "description": "do the thing",
                     "level": "1",
