@@ -17,6 +17,10 @@ html, body {
   color: black;
 }
 
+.currUserDiv {
+  color: red;
+}
+
 .userTaskRowDiv {
   display: none;
 }

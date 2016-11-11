@@ -32,7 +32,11 @@
 
 			<div id="userDiv" class="container-fluid">
 				{{#each users}}
+				{{#if currUser}}
+				<div class="row userRowDiv currUserDiv">
+				{{else}}
 				<div class="row userRowDiv">
+				{{/if}}
 					<div class="col-xs-2"><img src="/images/{{image}}" class="img-thumbnail"/></div>
 					<div class="col-xs-8">
 						<div class="row">
@@ -52,7 +56,11 @@
 			</div>
 			<div id="rankingDiv" class="container-fluid hidden">
 				{{#each rankings}}
+				{{#if currUser}}
+				<div class="row rankingRowDiv currUserDiv">
+				{{else}}
 				<div class="row rankingRowDiv">
+				{{/if}}
 					<div class="col-xs-2"><img src="/images/{{image}}" class="img-thumbnail"/></div>
 					<div class="col-xs-8">{{username}}</div>
 					<div class="col-xs-2" style="text-align: right;">{{numCompleted}}</div>

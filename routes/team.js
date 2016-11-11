@@ -4,6 +4,8 @@ var dataUsers = require("../data/users.json");
 exports.view = function(req, res) {
     var castle = req.app.locals.currentCastle;
     var users = castle.members;
+    var currentUser = req.app.locals.currentUser;
+
 
 
 
@@ -14,10 +16,17 @@ exports.view = function(req, res) {
         'username': '',
         'image': '',
         'numCompleted': '',
-        'taskList': []
+        'taskList': [],
+        'currUser': false
       };
       user.username = e.username;
-      //loop through user and find img
+
+      if(currentUser != null) {
+        if(currentUser.username === e.username) {
+          console.log("true");
+          user.currUser = true;
+        }
+      }
 
       dataUsers.users.forEach(function(u){
         if(u.username === e.username) {
