@@ -41,6 +41,7 @@ app.post('/account/reopenTask', quests.reopenTask);
 app.post('/wizard/acceptTask', quests.acceptTask);
 app.get('/login', users.login);
 app.post('/castle/add', castle.add);
+app.post('/castle/select', castle.select);
 app.get('/castle/select', castle.select);
 app.get('/castle', castle.view);
 app.get('/castle/join', castle.join);
