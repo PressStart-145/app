@@ -11,6 +11,8 @@ var toAdd = []; //TODO add self to toAdd list
 var isOriginal = true;
 var viewList = []; //Search results list
 
+var currUser = $("#mapMem ul").children()[0].innerText;
+
 var formResults = function() {
     formInfo = $("form").serializeArray();
     if (isOriginal) {
@@ -20,7 +22,9 @@ var formResults = function() {
     }
     for (s in memList) {
         if (memList[s].toUpperCase().includes(formInfo[1].value.toUpperCase())) {
-            viewList.push(memList[s]);
+            if(memList[s] !== currUser) {
+                viewList.push(memList[s]);
+            }
         }
     }
 
