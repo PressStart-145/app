@@ -100,9 +100,18 @@
          data.castles.push(newCastle);
      } else if (req.body.type === "member") {
          var name = req.body.name;
+         var memExists = false
          for (s in data.castles) {
              if (name != null && data.castles[s].name.replace(/\s/g, '') === name) {
-                 data.castles[s].members.push(newMem);
+                 for(mem in data.castles[s].members) {
+                     if(data.castles[s].members[mem].username === req.app.locals.currentUser.username) {
+                        memExists = true;
+                         break;
+                     }
+                 }
+                 if(!memExists) {
+                     data.castles[s].members.push(newMem);
+                 }
                  break;
              }
          }
