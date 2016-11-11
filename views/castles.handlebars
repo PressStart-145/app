@@ -40,7 +40,7 @@
 					{{#each castles}}
 						{{#if @first}}
 							<div class="item active">
-								<div class="castleSlide"><a href="../castle?name={{name}}" class="btn">Enter {{name}}</a></div>
+								<div class="castleSlide" id="firstCastle"><a href="../castle?name={{name}}" class="btn">Enter {{name}}</a></div>
 							</div>
 						{{else}}
 							<div class="item">
@@ -57,7 +57,7 @@
 							</div>
 						</div>
 					</div>
-					<a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+					<a class="left carousel-control" href="#carousel" role="button" data-slide="prev" style="display: none;">
 						<span class="arrow"><</span>
 						<span class="sr-only">Previous</span>
 					</a>
@@ -67,7 +67,7 @@
 					</a>
 				{{else}}
 					<div class="item active">
-						<div id="noCastle">
+						<div class="noCastle" id="noCastle">
 							<div class="row">
 								<a href="../castle/build" class="btn">Build</a>
 							</div><div class="row">
@@ -90,10 +90,33 @@
 		var hammer = new Hammer(myElem[0]);
 		hammer.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
 		hammer.on('swiperight', function(e) {
-			$(".left").click();
+			if($(".left").css('display') != 'none') {
+				$(".left").click();
+				$(".right").show();
+			}
 		});
 		hammer.on('swipeleft', function(e) {
-			$(".right").click();
+			if($(".right").css('display') != 'none') {
+				$(".right").click();
+				$(".left").show();
+			}
+		});
+
+		$(".left").click(function() {
+			console.log($(".active").prev());
+			if($(".active").prev().children()[0].id == "firstCastle") {
+				$(".left").hide();
+			} else {
+				$(".left").show();
+			}
+		});
+
+		$(".right").click(function() {
+			if($(".active").next().children()[0].id == "noCastle") {
+				$(".right").hide();
+			} else {
+				$(".right").show();
+			}
 		});
 	</script>
 </body>
