@@ -10,24 +10,50 @@
 	<link href="/css/bootstrap.min.css" rel="stylesheet">
 	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/account.css">
 </head>
 
 <body>
 	<div class="container">
-        <form method="post" action="/signup/add">
-            <input type="text" name="fullname" placeholder="Full Name" autofocus>
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-			<input type="text" name="email" placeholder="E-mail">
-			<input type="file" name="image" accept="image/*">
-			<input type="submit" value="Submit">
-            <a href="/" class="backBtn">Cancel</a>
-        </form>
-				{{#if err}}
-				<div>
-					{{errMsg}}
+		<div class="row">
+				<center>
+						<h2>Sign up</h2>
+					</center>
+		</div>
+		<form method="post" action="/signup/add">
+				<div class="row">
+						<div class="col-xs-12">
+								<input type="text" name="fullname" placeholder="Full Name" autofocus>
+						</div>
 				</div>
-				{{/if}}
+				<div class="row">
+						<div class="col-xs-12">
+								<input type="text" name="username" placeholder="Username">
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+								<input type="password" name="password" placeholder="Password">
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+								<input type="text" name="email" placeholder="E-mail">
+						</div>
+				</div>
+				<div class="row">
+						<div class="col-xs-12">
+								<input type="file" name="image" accept="image/*">
+						</div>
+				</div>
+				<div class="row">
+						<center>
+								<a href="/" class="btn backBtn"><input type="button" value="  Back "></a>
+								<a href="" class="btn"><input type="submit" value="Submit"></a>
+						</center>
+
+				</div>
+			</form>
 
 	</div>
 
