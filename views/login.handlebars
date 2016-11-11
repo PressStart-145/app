@@ -37,8 +37,9 @@
 					<a href="/signup" class="btn" id="makeAccount">Don't have an account?</a>
 				</div>
 				{{#if err}}
-				<div>
-					{{errMsg}}
+				<div class="alert alert-danger">
+	  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+	  			{{errMsg}}
 				</div>
 				{{/if}}
 			</div>
