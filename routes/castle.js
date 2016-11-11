@@ -103,6 +103,9 @@
          name = req.app.locals.currentCastle.name;
          currCastle = req.app.locals.currentCastle;
          req.app.locals.currentCastle.game.castleHealth -= 3;
+         if(req.app.locals.currentCastle.game.castleHealth < 0) {
+             req.app.locals.currentCastle.game.castleHealth = 0;
+         }
      }
 
 
