@@ -67,6 +67,7 @@
              }
          };
          newCastle.name = req.body.value.name;
+         newCastle.admin = req.app.locals.currentUser;
          newCastle.members = req.body.value.members;
          //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
          data.castles.push(newCastle);
@@ -117,7 +118,7 @@
      console.log(req.app.locals.currentCastle);
 
      res.render('castle', {
-         'name': req.app.locals.currentUser.name, 
+         'name': req.app.locals.currentUser.name,
          'castleName': name,
          'monsterName': "Kraken",
          'castleHealth': castleHealth,
