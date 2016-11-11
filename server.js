@@ -17,6 +17,15 @@ var quests = require('./routes/quests');
 
 var port = process.env.PORT || PORT;
 
+
+app.locals.currentUser = {
+    "name": "Test User",
+    "username": "123",
+    "password": "123",
+    "email": "123@mail.com",
+    "imageURL": ""
+};
+
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');

@@ -13,6 +13,10 @@
                     "numCompleted": 10
                 },
                 {
+                    "username": "123",
+                    "numCompleted": 1
+                },
+                {
                     "username": "user2",
                     "numCompleted": 0
                 }
@@ -24,6 +28,14 @@
                     "level": "10",
                     "deadline": "11/10/2016",
                     "takenBy": "",
+                    "completed": false
+                },
+                {
+                    "title": "task 10",
+                    "description": "test description",
+                    "level": "1",
+                    "deadline": "11/10/2016",
+                    "takenBy": "123",
                     "completed": false
                 },
                 {

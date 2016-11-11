@@ -94,7 +94,7 @@
          }
      }
      if (data.castles[index] == undefined || index == null) {
-         console.log("Failed to find castle.");
+         console.log("Failed to find castle ");
          return;
      }
      //currCastle = req.app.locals.currentCastle;
