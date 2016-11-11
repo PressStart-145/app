@@ -14,6 +14,9 @@ exports.add = function(req, res) {
     };
     data.castles[0].quests.push(newQuest);
 
+    console.log(req.app.locals.currentUser);
+    console.log(req.app.locals.currentCastle);
+
     var currentCastle = data.castles[0]; //TODO harcoded
     var todoTaskList = [];
     var inProgressTaskList = [];
@@ -45,6 +48,10 @@ exports.taskDone = function(req, res) {
                 monsterHealth = 0;
                 //TODO add a victory sound and notify
                 //members that the monster died
+                //Only spawn monster if numQuests>0
+                //Else, enter peaceful mode
+                //peaceful mode= no monsters and can heal
+                //TODO after monster death, allow grace period for healing
                 spawnMonster();
             }
             if(monsterHealth > 100) {
@@ -109,6 +116,8 @@ exports.acceptTask = function(req, res) {
     for (var key in data.castles[0].quests) {
       if (data.castles[0].quests[key].title === acceptedTaskName) {
           data.castles[0].quests[key].takenBy = accepteeUsername;
+          //TODO handle dup task titles
+          //TODO idea: use quests index number to handle assignment
       }
     }
 

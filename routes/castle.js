@@ -44,7 +44,6 @@
      } else {
          req.app.locals.currentUser = currentUser;
 
-         console.log(req.app.locals.currentUser);
          //TODO prep data to have only the castle where req.body.username is
          res.render('castles', data);
      }
@@ -87,7 +86,6 @@
  exports.view = function(req, res) {
      var name = req.query.name;
      var index;
-     req.app.locals.currentCastle = req.query.name;
      for (s in data.castles) {
          if (name != null && data.castles[s].name == name) {
              index = s;
@@ -102,6 +100,7 @@
      quests = currCastle.quests;
      monsterHealth = currCastle.game["monsterHealth"];
      castleHealth = currCastle.game["castleHealth"];
+     req.app.locals.currentCastle = currCastle;
      /*var nameToShow = req.params.userName;
     var castleName = req.params.castleName;
     res.render('castle', {
@@ -109,6 +108,8 @@
   	     'castleName': castleName
      });*/
 
+     console.log(req.app.locals.currentUser);
+     console.log(req.app.locals.currentCastle);
 
      res.render('castle', {
          'name': "John", //TODO use global
