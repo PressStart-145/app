@@ -35,7 +35,7 @@ var alertName = function() {
 
 var formInfo;
 var memList;
-var toAdd = []; //TODO add self to toAdd list
+var toAdd = [];
 var isOriginal = true;
 var viewList = []; //Search results list
 

@@ -1,5 +1,5 @@
 /* Build Castle JS */
-$("#nameCastle").click(function(e) {
+/*$("#nameCastle").click(function(e) {
     e.preventDefault();
     $("#nameForm").hide();
     $("#addMembers").show();
@@ -7,7 +7,7 @@ $("#nameCastle").click(function(e) {
 
 var formInfo;
 var memList;
-var toAdd = []; //TODO add self to toAdd list
+var toAdd = [];
 var isOriginal = true;
 var viewList = []; //Search results list
 
@@ -83,6 +83,7 @@ $("#doneMem").click(function(e) {
     };
     $.post("/castle/add", newCastle);
 });
+*/
 
 /* Join Castle JS */
 $("#resultsList a").click(function(e) {

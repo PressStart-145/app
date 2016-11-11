@@ -14,10 +14,10 @@ exports.add = function(req, res) {
         "takenBy": "",
         "completed": false
     };
-    data.castles[0].quests.push(newQuest);
+    req.app.locals.currentCastle.quests.push(newQuest);
 
 
-    var currentCastle = data.castles[0]; //TODO harcoded
+    var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
     var inProgressTaskList = [];
     var doneTaskList = [];

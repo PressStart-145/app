@@ -50,7 +50,6 @@
      } else {
          req.app.locals.currentUser = currentUser;
 
-         //TODO prep data to have only the castle where req.body.username is
          var userCastles = {
              "castles": []
          };
@@ -97,7 +96,6 @@
                  "numCompleted": 0
              });
          }
-         //newCastle.admin = req.app.locals.userName; //TODO implement userName variable
          data.castles.push(newCastle);
      } else if (req.body.type === "member") {
          var name = req.body.name;
@@ -172,7 +170,6 @@
  };
 
  exports.join = function(req, res) {
-     //TODO load from userCastles
      var userCastles = {
          "castles": []
      };
