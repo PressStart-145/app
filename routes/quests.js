@@ -41,10 +41,26 @@ exports.taskDone = function(req, res) {
         if(e["title"] == req.query.task) {
             e["completed"] = true;
             monsterHealth = monsterHealth - e["level"];
+            if(monsterHealth <= 0) {
+                monsterHealth = 0;
+                //TODO add a victory sound and notify
+                //members that the monster died
+                spawnMonster();
+            }
+            if(monsterHealth > 100) {
+                monsterHealth = 100;
+            }
             console.log(quests);
             console.log(monsterHealth);
         }
     });
+}
+
+var spawnMonster = function() {
+    if(monsterHealth == 0) {
+        monsterHealth = 100;
+        console.log("A new monster has been spawned!!!");
+    }
 }
 
 
