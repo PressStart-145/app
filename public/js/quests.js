@@ -14,14 +14,14 @@ $("#questList .doneTaskRow .btn").click(function(e) {
     e.preventDefault();
     //$(".confirm").show();
     //console.log($(this).parent());
-    var txt = $(this).parent()[0].children[0].textContent.trim();
+    var index = $(this).parent()[0].id.split("#")[1];
     //console.log(txt);
 
-    $("#taskTitle").text(txt); //txt.trim());
+    //$("#taskTitle").text(txt); //txt.trim());
 
 
     //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
-    $.post( "/account/reopenTask", {'taskName': txt},function(data){
+    $.post( "/account/reopenTask", {'taskNum': parseInt(index)},function(data){
       location.reload();
       /*
       $(document).ready(function(){
