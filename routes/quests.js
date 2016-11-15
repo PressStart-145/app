@@ -3,6 +3,8 @@ var dataUsers = require("../data/users.json");
 var quests;
 var monsterHealth;
 
+var models = require('../models');
+
 exports.add = function(req, res) {
     quests = req.app.locals.currentCastle.quests;
     var newQuest = {
@@ -73,8 +75,46 @@ var spawnMonster = function(req) {
     }
 }
 
+//TODO ONLY FOR DEBUGING, CAN BE REMOVED
+printCastles = function() {
+    console.log("Printing linked castles");
+    models.Castle.find()
+        .populate('game admin members')
+        .exec(function(err, castles) {
+            if(castles == null) {
+              console.log("No castles");
+            } else {
+              castles.forEach(function(castle){
+                console.log("------------------------------------");
+                if(castle.admin == null) {
+                  console.log(castle.name + " has no admin");
+                } else {
+                  console.log(castle.name + "'s admin is " + castle.admin.username);
+                }
+                if(castle.members == null) {
+                  console.log(castle.name + " has no memebers");
+                } else {
+                  console.log(castle.name + "'s members are:");
+                  castle.members.forEach(function(m){
+                    console.log(m.username);
+                  });
+                }
+                if(castle.game == null) {
+                  console.log(castle.name + " has no game lol");
+                } else {
+                  console.log(castle.name + "'s hp " + castle.game.castleHealth);
+                  console.log(castle.name + "'s monster's hp " + castle.game.monsterHealth );
+                }
+              });
+              console.log("------------------------------------");
+            }
+        });
+}
 
 exports.account = function(req, res) {
+
+    printCastles();
+
     var currentUser = req.app.locals.currentUser;
     var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
