@@ -17,23 +17,37 @@ var mongoldb_uri = 'mongodb://heroku_1vr3s51g:9s5cs0ivlt4ineh760d7ndfa4u@ds15509
 //Press-start URI
 //var mongoldb_uri = 'mongodb://heroku_gc5bsfx7:75str8ep8qk1q7e55eiof8pmln@ds155097.mlab.com:55097/heroku_gc5bsfx7';
 var database_uri = mongoldb_uri || local_database_uri;
+mongoose.Promise = global.Promise;
 mongoose.connect(database_uri);
 
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-    var kittySchema = mongoose.Schema({
-        name: String
-    });
-    var Kitten = mongoose.model('Kitty', kittySchema);
-    var silence = new Kitten({name: "silence"});
+/*
+  DB SETUP COMMAND
+  node initUserDB.js; node initQuestDB.js; node initCastleDB.js; node linkQuestDB.js; node linkCastleDB.js
+*/
 
-    silence.save(function(err, cat){
-        if (err) console.log(err);
-        console.log("saving");
-        console.log(cat);
-    });
-});
+// DB TESTING
+// var db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', function() {
+//     var kittySchema = mongoose.Schema({
+//         name: String
+//     });
+//     var Kitten = mongoose.model('Kitty', kittySchema);
+//     var silence = new Kitten({name: "silence"});
+//
+//     silence.save(function(err, cat){
+//         if (err) console.log(err);
+//         console.log("saving");
+//         console.log(cat);
+//         Kitten
+//           .find()
+//           .remove()
+//           .exec(function() {
+//             console.log("Kitty table dropped");
+//             mongoose.connection.close();
+//         });
+//     });
+// });
 
 var app = express();
 var castle = require('./routes/castle');
