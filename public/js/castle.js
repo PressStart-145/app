@@ -111,7 +111,9 @@ var dmgMonster = function() {
         var str = $("#monsterHP").text().match(/:.*?\//g)[0];
         var monsterHealth = str.substring(2, str.length - 1);
         var fraction = monsterHealth / 100;
+        console.log(monsterHealth);
         var width = fraction * 50;
+        console.log(width);
         $("#monsterHealth").css('width', width + "%");
     }
 };

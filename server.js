@@ -12,10 +12,8 @@ var handlebars = require('express3-handlebars');
 /* Database Code */
 var mongoose = require('mongoose');
 var local_database_uri  = 'mongodb://localhost/';
-//Before-grading URI
+//Database URI for both apps
 var mongoldb_uri = 'mongodb://heroku_1vr3s51g:9s5cs0ivlt4ineh760d7ndfa4u@ds155097.mlab.com:55097/heroku_1vr3s51g';
-//Press-start URI
-//var mongoldb_uri = 'mongodb://heroku_gc5bsfx7:75str8ep8qk1q7e55eiof8pmln@ds155097.mlab.com:55097/heroku_gc5bsfx7';
 var database_uri = mongoldb_uri || local_database_uri;
 mongoose.Promise = global.Promise;
 mongoose.connect(database_uri);
@@ -100,8 +98,6 @@ app.post('/wizard/add', quests.add);
 app.get('/wizard', quests.view);
 app.get('/complete', quests.taskDone);
 app.get('/signup', users.signup);
-// Example route
-// app.get('/users', user.list);
 
 http.createServer(app).listen(port);
 console.log("Listening on port " + port);
