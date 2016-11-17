@@ -10,7 +10,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "3.x",
-    "express3-handlebars": "*"
+    "express3-handlebars": "*",
+    "mongoose": "^4.6.8"
   },
   "repository": {
     "type": "git",
