@@ -22,7 +22,7 @@ exports.select = function(req, res) {
   console.log(req.body);
   if (req.body.username != null && req.body.password != null) {
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    checkCredentialsDB(req.body.username, req.body.password);
+    //checkCredentialsDB(req.body.username, req.body.password);
     users.users.forEach(function(userJson) {
       if (userJson.username === req.body.username) {
         usernameInexistant = false;
@@ -65,7 +65,7 @@ exports.select = function(req, res) {
     }
   }
   //TODO DB CALL TO COMMENT OUT FOR PROD
-  rUserCastles(currentUser, userCastles);
+  //rUserCastles(currentUser, userCastles);
   res.render('castles', userCastles);
 }
 
@@ -104,7 +104,7 @@ exports.add = function(req, res) {
       });
     }
     data.castles.push(newCastle);
-    addCastleToDB(newCastle); //TODO DB CALL TO COMMENT OUT FOR PROD
+    //addCastleToDB(newCastle); //TODO DB CALL TO COMMENT OUT FOR PROD
   } else if (req.body.type === "member") {
     var name = req.body.name;
     var memExists = false
