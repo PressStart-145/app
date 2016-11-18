@@ -12,6 +12,15 @@
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
 	<link rel="stylesheet" type="text/css" href="/css/wizard.css">
 	<script src="/js/analytics.js"></script>
+
+	<style>
+		.inProgressTaskList {
+			color: var(--pink);
+		}
+		.doneList {
+			color: var(--pink);
+		}
+	</style>
 </head>
 
 <body>
@@ -55,7 +64,7 @@
 										<div class="col-xs-4 btn">Complete</div>
 									</div>
 								{{/each}}
-								<div class="row" style="margin-bottom: 0px !important;">
+								<div id="compCount" class="row" style="margin-bottom: 0px !important;">
 									{{#if onlyOneCompleted}}
 										Completed {{numCompleted}} Quest
 									{{else}}

@@ -37,10 +37,17 @@ $("#personalList .currentTaskRow .btn").click(function(e) {
     var title = $(this).parent().children().eq(0).text();
     var level = $(this).parent().children().eq(1).text();
 
-    var html = "<div class=\"row doneTaskRow hidden\">";
+    var html = "<div class=\"row doneTaskRow\">";
     var html = html + "<div class=\"col-xs-7\">" + title + "</div>";
     var html = html + "<div class=\"col-xs-5\">" + level + "</div></div>";
     $("#personalList .doneList").append(html);
+    var count = parseInt($("#compCount").text().split(" ")[1]);
+    count++;
+    if(count == 1) {
+        $("#compCount").text( "Completed " + count + " Quest");
+    } else {
+        $("#compCount").text( "Completed " + count + " Quests");
+    }
 
     //$("#taskTitle").text(txt); //txt.trim());
     //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
