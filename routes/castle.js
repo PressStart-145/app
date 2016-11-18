@@ -104,8 +104,9 @@ exports.add = function(req, res) {
       });
     }
     data.castles.push(newCastle);
-    //addCastleToDB(newCastle); //TODO DB CALL TO COMMENT OUT FOR PROD
+    addCastleToDB(newCastle); //TODO DB CALL TO COMMENT OUT FOR PROD
   } else if (req.body.type === "member") {
+    addMemberToCastle(req.app.locals.currentUser.username, req.body.name);
     var name = req.body.name;
     var memExists = false
     for (s in data.castles) {
@@ -237,8 +238,10 @@ checkCredentialsDB = function(username, password) {
       });
 }
 
+//check first if there are no castle with this name?
 addCastleToDB = function(castleJSON) {
   var userID;
+  var gameID;
   var memberIDs = [];
   var memberUsernames = [];
 
@@ -246,14 +249,28 @@ addCastleToDB = function(castleJSON) {
     memberUsernames.push(u.username);
   });
 
-  var game = new models.Game({
-    "castleHealth": castleJSON.game.castleHealth,
-    "monsterHealth": castleJSON.game.monsterHealth
-  });
-  game.save(function(err, game) {
-    if (err) console.log(err);
-    rUserId();
-  });
+  models.Castle
+    .find({name: castleJSON.name})
+    .exec(function(err, castles){
+      if(err) console.log(err);
+      if(castles.length != 0) {
+        console.log("castle " + castleJSON.name + " already exist");
+      } else {
+        cGame();
+      }
+    });
+
+  cGame = function() {
+    var game = new models.Game({
+      "castleHealth": castleJSON.game.castleHealth,
+      "monsterHealth": castleJSON.game.monsterHealth
+    });
+    game.save(function(err, game) {
+      if (err) console.log(err);
+      gameID = game._id;
+      rUserId();
+    });
+  }
 
   rUserId = function() {
     models.User
@@ -283,7 +300,7 @@ addCastleToDB = function(castleJSON) {
       "name": castleJSON.name,
       "admin": userID,
       "members": memberIDs,
-      "game": game._id
+      "game": gameID
     });
 
     castle.save(function(err, castle) {
@@ -300,10 +317,10 @@ rUserCastles = function(currentUser, userCastles) {
     .find()
     .populate('members')
     .exec(function(err, castles) {
-      if(err) console.log(err);
-      castles.forEach(function(c){
-        c.members.forEach(function(m){
-          if(m.username === currentUser.username) {
+      if (err) console.log(err);
+      castles.forEach(function(c) {
+        c.members.forEach(function(m) {
+          if (m.username === currentUser.username) {
             result.push(c._id)
           }
         });
@@ -311,19 +328,75 @@ rUserCastles = function(currentUser, userCastles) {
       printUserCastles();
     });
 
-    printUserCastles = function() {
-      models.Castle
-          .find({
-              _id: {
-                $in: result
-              }
-            })
-          .exec(function(err, castles){
-            if(err) console.log(err);
-            console.log("user " + currentUser.username + " is in those castles: ");
-            castles.forEach(function(c){
-              console.log(c.name);
-            });
-          });
-    }
+  printUserCastles = function() {
+    models.Castle
+      .find({
+        _id: {
+          $in: result
+        }
+      })
+      .exec(function(err, castles) {
+        if (err) console.log(err);
+        console.log("user " + currentUser.username + " is in those castles: ");
+        castles.forEach(function(c) {
+          console.log(c.name);
+        });
+      });
+  }
+}
+
+addMemberToCastle = function(username, castleName) {
+  var userID;
+  models.User
+    .find({
+      username: username
+    })
+    .exec(function(err, users) {
+      if (users.length != 1) {
+        console.log("0 or more than 1 user with this username " + username);
+        console.log(users.count);
+        console.log(users);
+      } else {
+        userID = users[0]._id;
+        checkIfUserInCastle();
+      }
+    });
+
+  checkIfUserInCastle = function() {
+    var inCastle = false;
+    models.Castle
+      .findOne({
+        name: castleName
+      })
+      .populate("members")
+      .exec(function(err, castle) {
+        if (err) console.log(err);
+        castle.members.forEach(function(m) {
+          if (m.username === username) {
+            inCastle = true;
+          }
+        });
+        if (inCastle) {
+          console.log("user " + username + " already in castle " + castleName);
+        } else {
+          addToCastle();
+        }
+      });
+  }
+
+  addToCastle = function() {
+    models.Castle
+      .update({
+          name: castleName
+        }, {
+          $push: {
+            members: userID
+          }
+        },
+        function(err, raw) {
+          if (err) console.log(err);
+          console.log("member " + username + " added to castle " + castleName);
+        }
+      );
+  }
 }
