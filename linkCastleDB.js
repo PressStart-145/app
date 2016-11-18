@@ -12,13 +12,28 @@ var mongoose = require('mongoose');
 var models = require('./models');
 var userIDs = [];
 var gameIDs = [];
+var questuserIDs = [];
 var castleLength = 0;
 
-getRandomUserIds = function() {
+getRandomUserIDs = function() {
     var memberCount = Math.random() * userIDs.length + 1;
     var shuffled = userIDs.sort(function(){return .5 - Math.random()});
     var selected =shuffled.slice(0,memberCount);
     return selected;
+}
+
+getQuestIDs = function(memberArr) {
+  var questIDs = [];
+
+  memberArr.forEach(function(m){
+    questuserIDs.forEach(function(q){
+      if (m.toString() == q.userID.toString()) {
+        questIDs.push(q.questID);
+      }
+    });
+  });
+
+  return questIDs;
 }
 
 //Before-grading URI
@@ -47,9 +62,24 @@ db.once('open', function() {
               games.forEach(function(g) {
                   gameIDs.push(g._id);
               });
+              getQuestuserIDs();
+          });
+    }
+
+    //get task/user IDs
+    getQuestuserIDs = function() {
+      models.Quest
+          .find({}, function(err, quests) {
+              quests.forEach(function(q) {
+                  questuserIDs.push({
+                    "questID": q._id,
+                    "userID": q.takenBy
+                  });
+              });
               updateQuests();
           });
     }
+
     //update quests to have user id linked to it
     updateQuests = function() {
         models.Castle
@@ -59,14 +89,16 @@ db.once('open', function() {
                 var i = 0;
                 castles.forEach(function(c) {
                     //get random users
-                    var memberArr = getRandomUserIds();
+                    var memberArr = getRandomUserIDs();
+                    var questArr = getQuestIDs(memberArr);
                     models.Castle.update({
                         _id: c._id
                     }, {
                         $set: {
                             game: gameIDs[i],
                             admin: memberArr[0],
-                            members: memberArr
+                            members: memberArr,
+                            quests: questArr
                         }
                     }, function(err, raw) {
                         if (err) console.log(err);
@@ -89,7 +121,15 @@ db.once('open', function() {
     printCastles = function() {
         console.log("Printing linked castles");
         models.Castle.find()
-            .populate('game admin members')
+            // .populate('game admin members quests',
+            //           populate('takenBy'))
+            .populate({
+              path: 'game admin members quests',
+              populate: {
+                path: 'takenBy',
+                model: 'User'
+              }
+            })
             .exec(function(err, castles) {
                 if(castles == null) {
                   console.log("No castles");
@@ -107,6 +147,14 @@ db.once('open', function() {
                       console.log(castle.name + "'s members are:");
                       castle.members.forEach(function(m){
                         console.log(m.username);
+                      });
+                    }
+                    if(castle.quests == null) {
+                      console.log(castle.name + " has no quests");
+                    } else {
+                      console.log(castle.name + "'s quests are:");
+                      castle.quests.forEach(function(q){
+                        console.log(q.title + " taken by: " + q.takenBy.username);
                       });
                     }
                     if(castle.game == null) {

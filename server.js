@@ -19,7 +19,13 @@ mongoose.Promise = global.Promise;
 mongoose.connect(database_uri);
 
 /*
-  DB SETUP COMMAND
+  d8888b. d8888b.      .d8888. d88888b d888888b db    db d8888b.
+  88  `8D 88  `8D      88'  YP 88'     `~~88~~' 88    88 88  `8D
+  88   88 88oooY'      `8bo.   88ooooo    88    88    88 88oodD'
+  88   88 88~~~b.        `Y8b. 88~~~~~    88    88    88 88~~~
+  88  .8D 88   8D      db   8D 88.        88    88b  d88 88
+  Y8888D' Y8888P'      `8888Y' Y88888P    YP    ~Y8888P' 88
+   
   node initUserDB.js; node initQuestDB.js; node initCastleDB.js; node linkQuestDB.js; node linkCastleDB.js
 */
 
