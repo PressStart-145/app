@@ -62,6 +62,8 @@ body {
 .taskList {
     width: 90%;
     margin-left: 5% !important;
+    max-height: 33em;
+    overflow: auto;
 }
 
 .extra {

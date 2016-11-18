@@ -96,6 +96,7 @@ app.get('/castle/team', team.view);
 app.get('/account', quests.account)
 app.post('/wizard/add', quests.add);
 app.get('/wizard', quests.view);
+app.get('/wizard2', quests.view2);
 app.get('/complete', quests.taskDone);
 app.get('/signup', users.signup);
 

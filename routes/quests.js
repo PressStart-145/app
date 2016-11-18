@@ -209,6 +209,57 @@ exports.view = function(req, res) {
     });
 };
 
+exports.view2 = function(req, res) {
+    var currentUser = req.app.locals.currentUser;
+    var currentCastle = req.app.locals.currentCastle;
+    var todoTaskList = [];
+    var inProgressTaskList = [];
+    var doneTaskList = [];
+
+    /* Team Quests */
+    for (var key in currentCastle.quests) {
+        if (currentCastle.quests[key].completed) {
+            doneTaskList.push(currentCastle.quests[key]);
+        } else if (currentCastle.quests[key].takenBy === "") {
+            todoTaskList.push(currentCastle.quests[key]);
+        } else {
+            inProgressTaskList.push(currentCastle.quests[key]);
+        }
+    }
+
+    /* Personal Quests */
+    var completedTask = 0;
+    var userToDoTaskList = [];
+    var userCompleteTaskList = [];
+
+    var success = req.app.locals.success;
+    req.app.locals.success = null;
+
+    for (var key in currentCastle.quests) {
+        if ((currentCastle.quests[key].takenBy === currentUser.username) && !currentCastle.quests[key].completed) {
+            //console.log('To do: ' + currentCastle.quests[key].title);
+            userToDoTaskList.push(currentCastle.quests[key])
+        }
+        if ((currentCastle.quests[key].takenBy === currentUser.username) && currentCastle.quests[key].completed) {
+            //console.log('Done: ' + currentCastle.quests[key].title);
+            userCompleteTaskList.push(currentCastle.quests[key])
+        }
+    }
+
+    completedTask = doneTaskList.length;
+    var onlyOneCompleted = (completedTask == 1);
+
+    res.render('wizard2', {
+      'doneTaskList': doneTaskList,
+      'currentTaskList': userToDoTaskList,
+      'userCompleteTaskList': userCompleteTaskList,
+      'todoTaskList': todoTaskList,
+      'inProgressTaskList': inProgressTaskList,
+      'numCompleted': completedTask,
+      'onlyOneCompleted': onlyOneCompleted
+    });
+};
+
 exports.completeTask = function(req, res) {
   var completedTaskIndex = req.body.taskNum;
   var currentUser = req.app.locals.currentUser;
