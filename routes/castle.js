@@ -1,199 +1,329 @@
- var data = require("../data/castles.json");
- var users = require("../data/users.json");
+var data = require("../data/castles.json");
+var users = require("../data/users.json");
+var models = require('../models');
 
- var currCastle;
- var quests;
- var monsterHealth;
- var castleHealth;
+var currCastle;
+var quests;
+var monsterHealth;
+var castleHealth;
 
- var newMem = {
-     "username": "snot",
-     "numCompleted": 0
- }
+var newMem = {
+  "username": "snot",
+  "numCompleted": 0
+}
 
- exports.select = function(req, res) {
-     var usernameInexistant = true;
-     var wrongPassword = true;
-     var err = false;
-     var errMsg = "";
-     var currentUser;
+exports.select = function(req, res) {
+  var usernameInexistant = true;
+  var wrongPassword = true;
+  var err = false;
+  var errMsg = "";
+  var currentUser;
 
-     console.log(req.body);
-     if (req.body.username != null && req.body.username != null) {
-         users.users.forEach(function(userJson) {
-             if (userJson.username === req.body.username) {
-                 usernameInexistant = false;
-                 if (userJson.password === req.body.password) {
-                     wrongPassword = false;
-                     currentUser = userJson;
-                 }
-             }
-         });
+  console.log(req.body);
+  if (req.body.username != null && req.body.password != null) {
+    //TODO DB CALL TO COMMENT OUT FOR PROD
+    checkCredentialsDB(req.body.username, req.body.password);
+    users.users.forEach(function(userJson) {
+      if (userJson.username === req.body.username) {
+        usernameInexistant = false;
+        if (userJson.password === req.body.password) {
+          wrongPassword = false;
+          currentUser = userJson;
+        }
+      }
+    });
 
-         if (usernameInexistant) {
-             err = true;
-             errMsg = "Username " + req.body.username + " does not exist";
-         } else if (wrongPassword) {
-             err = true;
-             errMsg = "Wrong password";
-         }
-     } else {
-       usernameInexistant = false;
-       wrongPassword = false;
-       currentUser = req.app.locals.currentUser;
-     }
+    if (usernameInexistant) {
+      err = true;
+      errMsg = "Username " + req.body.username + " does not exist";
+    } else if (wrongPassword) {
+      err = true;
+      errMsg = "Wrong password";
+    }
+  } else {
+    usernameInexistant = false;
+    wrongPassword = false;
+    currentUser = req.app.locals.currentUser;
+  }
 
-     if (err) {
-         req.app.locals.err = true;
-         req.app.locals.errMsg = errMsg;
-         res.redirect('login');
-     } else {
-         req.app.locals.currentUser = currentUser;
+  if (err) {
+    req.app.locals.err = true;
+    req.app.locals.errMsg = errMsg;
+    res.redirect('login');
+  } else {
+    req.app.locals.currentUser = currentUser;
 
-         var userCastles = {
-             "castles": []
-         };
-         for (key in data.castles) {
-             for (mem in data.castles[key].members) {
-                 if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-                     userCastles.castles.push(data.castles[key]);
-                 }
-             }
-         }
-     }
-     res.render('castles', userCastles);
- }
-
- exports.add = function(req, res) {
-     newMem = {
-         "username": req.app.locals.currentUser.username,
-         "numCompleted": 0
-     };
-
-     console.log(req.body.type);
-     console.log("before");
-     console.log(data.castles);
-     if (req.body.type === "castle") {
-         var newCastle = {
-             "name": "",
-             "admin": "",
-             "members": [],
-             "quests": [],
-             "numCompleted": 0,
-             "game": {
-                 "castleHealth": 100,
-                 "monsterHealth": 100,
-                 "items": []
-             }
-         };
-         newCastle.name = req.body.value.name;
-         newCastle.admin = req.app.locals.currentUser.username;
-         //newCastle.members = req.body.value.members;
-         newCastle.members.push(newMem);
-         for (key in req.body.value.members) {
-             newCastle.members.push({
-                 "username": req.body.value.members[key],
-                 "numCompleted": 0
-             });
-         }
-         data.castles.push(newCastle);
-     } else if (req.body.type === "member") {
-         var name = req.body.name;
-         var memExists = false
-         for (s in data.castles) {
-             if (name != null && data.castles[s].name.replace(/\s/g, '') === name) {
-                 for(mem in data.castles[s].members) {
-                     if(data.castles[s].members[mem].username === req.app.locals.currentUser.username) {
-                        memExists = true;
-                         break;
-                     }
-                 }
-                 if(!memExists) {
-                     data.castles[s].members.push(newMem);
-                 }
-                 break;
-             }
-         }
-         res.render('castles', data);
-     }
-     console.log("after");
-     console.log(data.castles);
- }
-
- exports.view = function(req, res) {
-     if (req.query.name != undefined) {
-         name = req.query.name;
-         var index;
-         for (s in data.castles) {
-             if (name != null && data.castles[s].name == name) {
-                 index = s;
-             }
-         }
-         if (data.castles[index] == undefined || index == null) {
-             console.log("Failed to find castle ");
-             return;
-         }
-         currCastle = data.castles[index];
-         req.app.locals.currentCastle = currCastle;
-     } else {
-         name = req.app.locals.currentCastle.name;
-         currCastle = req.app.locals.currentCastle;
-         req.app.locals.currentCastle.game.castleHealth -= 3;
-         if (req.app.locals.currentCastle.game.castleHealth < 0) {
-             req.app.locals.currentCastle.game.castleHealth = 0;
-             console.log("Your castle is falling!!!");
-         }
-     }
+    var userCastles = {
+      "castles": []
+    };
+    for (key in data.castles) {
+      for (mem in data.castles[key].members) {
+        if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+          userCastles.castles.push(data.castles[key]);
+        }
+      }
+    }
+  }
+  //TODO DB CALL TO COMMENT OUT FOR PROD
+  rUserCastles(currentUser, userCastles);
+  res.render('castles', userCastles);
+}
 
 
-     quests = currCastle.quests;
-     monsterHealth = currCastle.game["monsterHealth"];
-     castleHealth = currCastle.game["castleHealth"];
 
-     /*var nameToShow = req.params.userName;
-    var castleName = req.params.castleName;
-    res.render('castle', {
-        'name': nameToShow,
-  	     'castleName': castleName
-     });*/
+exports.add = function(req, res) {
+  newMem = {
+    "username": req.app.locals.currentUser.username,
+    "numCompleted": 0
+  };
 
-     console.log(req.app.locals.currentUser);
-     console.log(req.app.locals.currentCastle);
+  console.log(req.body.type);
+  console.log("before");
+  console.log(data.castles);
+  if (req.body.type === "castle") {
+    var newCastle = {
+      "name": "",
+      "admin": "",
+      "members": [],
+      "quests": [],
+      "numCompleted": 0,
+      "game": {
+        "castleHealth": 100,
+        "monsterHealth": 100,
+        "items": []
+      }
+    };
+    newCastle.name = req.body.value.name;
+    newCastle.admin = req.app.locals.currentUser.username;
+    //newCastle.members = req.body.value.members;
+    newCastle.members.push(newMem);
+    for (key in req.body.value.members) {
+      newCastle.members.push({
+        "username": req.body.value.members[key],
+        "numCompleted": 0
+      });
+    }
+    data.castles.push(newCastle);
+    addCastleToDB(newCastle); //TODO DB CALL TO COMMENT OUT FOR PROD
+  } else if (req.body.type === "member") {
+    var name = req.body.name;
+    var memExists = false
+    for (s in data.castles) {
+      if (name != null && data.castles[s].name.replace(/\s/g, '') === name) {
+        for (mem in data.castles[s].members) {
+          if (data.castles[s].members[mem].username === req.app.locals.currentUser.username) {
+            memExists = true;
+            break;
+          }
+        }
+        if (!memExists) {
+          data.castles[s].members.push(newMem);
+        }
+        break;
+      }
+    }
+    res.render('castles', data);
+  }
+  console.log("after");
+  console.log(data.castles);
+}
 
-     res.render('castle', {
-         'name': req.app.locals.currentUser.name,
-         'castleName': name,
-         'monsterName': "Kraken",
-         'castleHealth': castleHealth,
-         'monsterHealth': monsterHealth
-     });
- };
+exports.view = function(req, res) {
+  if (req.query.name != undefined) {
+    name = req.query.name;
+    var index;
+    for (s in data.castles) {
+      if (name != null && data.castles[s].name == name) {
+        index = s;
+      }
+    }
+    if (data.castles[index] == undefined || index == null) {
+      console.log("Failed to find castle ");
+      return;
+    }
+    currCastle = data.castles[index];
+    req.app.locals.currentCastle = currCastle;
+  } else {
+    name = req.app.locals.currentCastle.name;
+    currCastle = req.app.locals.currentCastle;
+    req.app.locals.currentCastle.game.castleHealth -= 3;
+    if (req.app.locals.currentCastle.game.castleHealth < 0) {
+      req.app.locals.currentCastle.game.castleHealth = 0;
+      console.log("Your castle is falling!!!");
+    }
+  }
 
- exports.join = function(req, res) {
-     var userCastles = {
-         "castles": []
-     };
-     var canJoin = true;
-     for (key in data.castles) {
-         canJoin = true;
-         for (mem in data.castles[key].members) {
-             if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-                 canJoin = false;
-             }
-         }
-         if(canJoin) {
-             userCastles.castles.push(data.castles[key]);
-         }
-     }
-     console.log(userCastles);
-     res.render('joinCastle', userCastles);
- };
 
- exports.build = function(req, res) {
-     var userData = {
-         "users": users.users,
-         "castles": data.castles,
-         "currUser": req.app.locals.currentUser.username
-     };
-     res.render('buildCastle', userData);
- };
+  quests = currCastle.quests;
+  monsterHealth = currCastle.game["monsterHealth"];
+  castleHealth = currCastle.game["castleHealth"];
+
+  /*var nameToShow = req.params.userName;
+var castleName = req.params.castleName;
+res.render('castle', {
+    'name': nameToShow,
+     'castleName': castleName
+ });*/
+
+  console.log(req.app.locals.currentUser);
+  console.log(req.app.locals.currentCastle);
+
+  res.render('castle', {
+    'name': req.app.locals.currentUser.name,
+    'castleName': name,
+    'monsterName': "Kraken",
+    'castleHealth': castleHealth,
+    'monsterHealth': monsterHealth
+  });
+};
+
+exports.join = function(req, res) {
+  var userCastles = {
+    "castles": []
+  };
+  var canJoin = true;
+  for (key in data.castles) {
+    canJoin = true;
+    for (mem in data.castles[key].members) {
+      if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+        canJoin = false;
+      }
+    }
+    if (canJoin) {
+      userCastles.castles.push(data.castles[key]);
+    }
+  }
+  console.log(userCastles);
+  res.render('joinCastle', userCastles);
+};
+
+exports.build = function(req, res) {
+  var userData = {
+    "users": users.users,
+    "castles": data.castles,
+    "currUser": req.app.locals.currentUser.username
+  };
+  res.render('buildCastle', userData);
+};
+
+
+/*
+d8888b. d8888b.      d88888b db    db d8b   db  .o88b.
+88  `8D 88  `8D      88'     88    88 888o  88 d8P  Y8
+88   88 88oooY'      88ooo   88    88 88V8o 88 8P
+88   88 88~~~b.      88~~~   88    88 88 V8o88 8b
+88  .8D 88   8D      88      88b  d88 88  V888 Y8b  d8
+Y8888D' Y8888P'      YP      ~Y8888P' VP   V8P  `Y88P'
+*/
+
+checkCredentialsDB = function(username, password) {
+  models.User
+    .find({
+        username: username
+      },
+      function(err, users) {
+        if (err) console.log(err);
+        if (users.length == 0) {
+          console.log("no user " + username);
+        } else if (users.length > 1) {
+          console.log("too many users with username " + username);
+        } else {
+          if (users[0].password !== password) {
+            console.log("wrong password for user " + username);
+          } else {
+            console.log("matching username/password");
+          }
+        }
+      });
+}
+
+addCastleToDB = function(castleJSON) {
+  var userID;
+  var memberIDs = [];
+  var memberUsernames = [];
+
+  castleJSON.members.forEach(function(u) {
+    memberUsernames.push(u.username);
+  });
+
+  var game = new models.Game({
+    "castleHealth": castleJSON.game.castleHealth,
+    "monsterHealth": castleJSON.game.monsterHealth
+  });
+  game.save(function(err, game) {
+    if (err) console.log(err);
+    rUserId();
+  });
+
+  rUserId = function() {
+    models.User
+      .find({
+          username: {
+            $in: memberUsernames
+          }
+        },
+        function(err, users) {
+          if (err) console.log(err);
+          if (users == null) {
+            console.log("no user with names: " + memberUsernames);
+          } else {
+            users.forEach(function(u) {
+              if (u.username === castleJSON.admin) {
+                userID = u._id;
+              }
+              memberIDs.push(u._id);
+            });
+          }
+          cCastle();
+        });
+  }
+
+  cCastle = function() {
+    var castle = new models.Castle({
+      "name": castleJSON.name,
+      "admin": userID,
+      "members": memberIDs,
+      "game": game._id
+    });
+
+    castle.save(function(err, castle) {
+      if (err) console.log(err);
+      console.log("castle " + castle.name + " saved on MongoDB");
+    });
+  }
+}
+
+rUserCastles = function(currentUser, userCastles) {
+  var result = [];
+  console.log("in rUserCastles");
+  models.Castle
+    .find()
+    .populate('members')
+    .exec(function(err, castles) {
+      if(err) console.log(err);
+      castles.forEach(function(c){
+        c.members.forEach(function(m){
+          if(m.username === currentUser.username) {
+            result.push(c._id)
+          }
+        });
+      });
+      printUserCastles();
+    });
+
+    printUserCastles = function() {
+      models.Castle
+          .find({
+              _id: {
+                $in: result
+              }
+            })
+          .exec(function(err, castles){
+            if(err) console.log(err);
+            console.log("user " + currentUser.username + " is in those castles: ");
+            castles.forEach(function(c){
+              console.log(c.name);
+            });
+          });
+    }
+}
