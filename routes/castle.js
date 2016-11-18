@@ -104,9 +104,11 @@ exports.add = function(req, res) {
       });
     }
     data.castles.push(newCastle);
-    addCastleToDB(newCastle); //TODO DB CALL TO COMMENT OUT FOR PROD
+    //TODO DB CALL TO COMMENT OUT FOR PROD
+    //addCastleToDB(newCastle);
   } else if (req.body.type === "member") {
-    addMemberToCastle(req.app.locals.currentUser.username, req.body.name);
+    //TODO DB CALL TO COMMENT OUT FOR PROD
+    //addMemberToCastle(req.app.locals.currentUser.username, req.body.name);
     var name = req.body.name;
     var memExists = false
     for (s in data.castles) {
@@ -131,6 +133,8 @@ exports.add = function(req, res) {
 
 exports.view = function(req, res) {
   if (req.query.name != undefined) {
+    //TODO DB CALL TO COMMENT OUT FOR PROD
+    //findCastle(req.query.name);
     name = req.query.name;
     var index;
     for (s in data.castles) {
@@ -399,4 +403,17 @@ addMemberToCastle = function(username, castleName) {
         }
       );
   }
+}
+
+findCastle = function(castleName) {
+  models.Castle
+    .findOne({name: castleName})
+    .exec(function(err, castle){
+      if(err) console.log(err);
+      if (!castle) {
+        console.log("castle " + castleName + " does not exist");
+      } else {
+        console.log("castle " + castle.name + " has id " + castle._id);
+      }
+    });
 }
