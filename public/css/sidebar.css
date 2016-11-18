@@ -4,10 +4,15 @@ html, body {
   overflow: hidden;
 }
 
+.sidebarToggleButton {
+    text-align: center;
+}
+
 .sidebarButton img {
   width: 30%;
   height: auto;
-  margin-left: 35%;
+  margin: auto;
+  display: inline-block;
 }
 
 #mainDivSidebarButtonImg {
@@ -61,4 +66,8 @@ html, body {
 }
 #sidebarDiv.toggled {
   left: 100%;
+}
+
+#myAccountDiv {
+    margin: 0 !important;
 }
