@@ -170,11 +170,7 @@
 		$("#personalQuestsBtn").click(function(e) {
 			ga('send', 'event', 'Tab', 'click', 'TabNav');
 		});
-		ga('set', 'appName', 'CREWsades');
-		ga('send', 'screenview', {
-			'appName': 'CREWsades',
-			'screenName': 'Create a new Quest'
-		});
+		ga('send', 'pageview', location.pathname);
 	</script>
 </body>
 </html>
