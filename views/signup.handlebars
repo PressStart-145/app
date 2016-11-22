@@ -30,7 +30,7 @@
 						<h2>Sign up</h2>
 					</center>
 		</div>
-		<form method="post" action="/signup/add">
+		<form method="post" action="/signup/add" onsubmit="return validateForm()">
 				<div class="row">
 						<div class="col-xs-12">
 								<input type="text" name="fullname" placeholder="Full Name" autofocus>
@@ -38,12 +38,15 @@
 				</div>
 				<div class="row">
 						<div class="col-xs-12">
-								<input type="text" name="username" placeholder="Username">
+								<input type="text" name="username" placeholder="Username" required>
+								{{#if err}}
+									<div>Error: {{errMsg}}</div>
+								{{/if}}
 						</div>
 				</div>
 				<div class="row">
 						<div class="col-xs-12">
-								<input type="password" name="password" placeholder="Password">
+								<input type="password" name="password" placeholder="Password" required>
 						</div>
 				</div>
 				<div class="row">
