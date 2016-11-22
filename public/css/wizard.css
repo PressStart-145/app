@@ -30,10 +30,6 @@ body {
   color: white;
 }
 
-.btn.selected {
-  color: black;
-}
-
 .row {
     margin-bottom: 10px !important;
 }
@@ -68,6 +64,32 @@ body {
 .extra {
     text-align: center;
     margin-top: -10px !important;
+    border-bottom: 2px solid var(--pink);
+}
+
+.extra div {
+    padding: 0;
+}
+
+.extra div:first-child {
+    padding-right: 3px;
+}
+
+.extra div:last-child {
+    padding-left: 3px;
+}
+
+.extra div .btn {
+    width: 100%;
+    color: black;
+    background-color: rgba(244,141,153,0.3);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.extra div .btn.selected {
+    color: white;
+    background-color: var(--pink);
 }
 
 #levelField {

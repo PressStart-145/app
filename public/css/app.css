@@ -3,7 +3,8 @@
 :root {
   --blue: #3f4677;
   --purple: #a467a3;
-  --pink: #f48d99;
+  --pink: rgb(244,141,153);
+  --oppink: rgba(244,141,153,0.5);
   --green: #69b594;
   --yellow: #f2dc93;
 }
