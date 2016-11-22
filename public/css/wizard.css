@@ -62,12 +62,12 @@ body {
 .taskList {
     width: 90%;
     margin-left: 5% !important;
-    max-height: 33em;
-    overflow: auto;
+    overflow-y:scroll;
 }
 
 .extra {
     text-align: center;
+    margin-top: -10px !important;
 }
 
 #levelField {

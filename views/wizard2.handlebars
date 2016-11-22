@@ -43,7 +43,7 @@
 			</div>
 			<div class="container-fluid">
 				<!-- <button class="backBtn">Back</button> -->
-				<div class="container-fluid">
+				<div class="container-fluid" id="wizardHeader">
 					<div class="row">
 						<div class="col-xs-4">
 							<img src="/images/characters/wizardTransparent.png" height="100px">
@@ -55,8 +55,6 @@
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="container-fluid">
 					<div class="row extra">
 						<div class="col-xs-6">
 							<h6 id="openQuestsBtn" class="btn selected">Team Quests</h6>
@@ -65,6 +63,8 @@
 							<h6 id="personalQuestsBtn" class="btn">Personal Quests</h6>
 						</div>
 					</div>
+				</div>
+				<div class="container-fluid">
 					<div class="row taskList">
 						<div id="personalList" class="hidden">
 								{{#each currentTaskList}}

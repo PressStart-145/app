@@ -1,3 +1,9 @@
+window.onload = function() {
+    var h = window.innerHeight - 50;
+    console.log(h - $("#wizardHeader").height());
+    $(".taskList").css('max-height', h - $("#wizardHeader").height());
+}
+
 var afterPost = false;
 
 $("#openQuestsBtn").click(function(e) {
