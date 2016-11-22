@@ -13,6 +13,10 @@ $("#nameCastle").click(function(e) {
     }
 
     var name = $("form").serializeArray()[0].value;
+    if("".localeCompare(name.toUpperCase().replace(/\s/g,'').trim()) == 0) {
+        alertName();
+        return;
+    }
 
     for(s in castleList) {
         if(castleList[s].toUpperCase().localeCompare(name.toUpperCase()) == 0) {
