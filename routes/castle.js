@@ -23,6 +23,7 @@ exports.select = function(req, res) {
   if (req.body.username != null && req.body.password != null) {
     //TODO DB CALL TO COMMENT OUT FOR PROD
     //checkCredentialsDB(req.body.username, req.body.password);
+    //TODO should return user info to put into req.app.locals.currentUser
     users.users.forEach(function(userJson) {
       if (userJson.username === req.body.username) {
         usernameInexistant = false;
@@ -41,6 +42,8 @@ exports.select = function(req, res) {
       errMsg = "Wrong password";
     }
   } else {
+    // else if we re not checking for credential
+    // (ie select not called from login page)
     usernameInexistant = false;
     wrongPassword = false;
     currentUser = req.app.locals.currentUser;
@@ -53,6 +56,8 @@ exports.select = function(req, res) {
   } else {
     req.app.locals.currentUser = currentUser;
 
+    //TODO DB CALL TO COMMENT OUT FOR PROD
+    //rUserCastles(currentUser, userCastles);
     var userCastles = {
       "castles": []
     };
@@ -64,8 +69,6 @@ exports.select = function(req, res) {
       }
     }
   }
-  //TODO DB CALL TO COMMENT OUT FOR PROD
-  //rUserCastles(currentUser, userCastles);
   res.render('castles', userCastles);
 }
 
@@ -149,6 +152,8 @@ exports.view = function(req, res) {
     currCastle = data.castles[index];
     req.app.locals.currentCastle = currCastle;
   } else {
+    //TODO DB CALL TO COMMENT OUT FOR PROD
+    findCastleAndRemoveHealth("Disney" /*req.app.locals.currentCastle.name*/, 40);
     name = req.app.locals.currentCastle.name;
     currCastle = req.app.locals.currentCastle;
     canDamage = false;
@@ -179,8 +184,8 @@ res.render('castle', {
      'castleName': castleName
  });*/
 
-  console.log(req.app.locals.currentUser);
-  console.log(req.app.locals.currentCastle);
+  //console.log(req.app.locals.currentUser);
+  //console.log(req.app.locals.currentCastle);
 
   res.render('castle', {
     'name': req.app.locals.currentUser.name,
@@ -423,6 +428,33 @@ findCastle = function(castleName) {
         console.log("castle " + castleName + " does not exist");
       } else {
         console.log("castle " + castle.name + " has id " + castle._id);
+      }
+    });
+}
+
+
+//TODO now working
+findCastleAndRemoveHealth = function(castleName, healthAmount) {
+  console.log("in findCastleAndRemoveHealth");
+  models.Castle
+    .findOne({name: castleName})
+    .populate("game")
+    .exec(function(err, castle) {
+      if(err) console.log(err);
+      if (!castle) {
+        console.log("castle " + castleName + " does not exist");
+      } else {
+        console.log("castle " + castle.name + " has id " + castle._id);
+        console.log("Castle Health: " + castle.game.castleHealth);
+        if(castle.game.castleHealth >= healthAmount) {
+          castle.game.castleHealth = castle.game.castleHealth - healthAmount;
+        } else {
+          castle.game.castleHealth = 0;
+        }
+        castle.save(function(err, c){
+          if(err) console.log(err);
+          console.log("Castle Health: " + c.game.castleHealth);
+        })
       }
     });
 }
