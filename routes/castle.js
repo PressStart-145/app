@@ -151,7 +151,16 @@ exports.view = function(req, res) {
   } else {
     name = req.app.locals.currentCastle.name;
     currCastle = req.app.locals.currentCastle;
-    req.app.locals.currentCastle.game.castleHealth -= 3;
+    canDamage = false;
+    for (q in currCastle.quests) {
+        if (q.completed == false) {
+            canDamage = true;
+            break;
+        }
+    }
+    if (canDamage) {
+        req.app.locals.currentCastle.game.castleHealth -= 3;
+    }
     if (req.app.locals.currentCastle.game.castleHealth < 0) {
       req.app.locals.currentCastle.game.castleHealth = 0;
       console.log("Your castle is falling!!!");
