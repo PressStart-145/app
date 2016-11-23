@@ -63,7 +63,7 @@ exports.select = function(req, res) {
     // }
 
     console.log("select");
-    makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
+    makeCastleJson(req, res, 'castles', 0, null); //0 select:userCastles
   }
 
   // if (err) {
@@ -160,63 +160,63 @@ exports.add = function(req, res) {
 exports.view = function(req, res) {
   if (req.query.name != undefined) {
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    //findCastle(req.query.name);
-    name = req.query.name;
-    var index;
-    for (s in data.castles) {
-      if (name != null && data.castles[s].name == name) {
-        index = s;
-      }
-    }
-    if (data.castles[index] == undefined || index == null) {
-      console.log("Failed to find castle ");
-      return;
-    }
-    currCastle = data.castles[index];
-    req.app.locals.currentCastle = currCastle;
+    findCastle(req, res, req.query.name);
+    // name = req.query.name;
+    // var index;
+    // for (s in data.castles) {
+    //   if (name != null && data.castles[s].name == name) {
+    //     index = s;
+    //   }
+    // }
+    // if (data.castles[index] == undefined || index == null) {
+    //   console.log("Failed to find castle ");
+    //   return;
+    // }
+    // currCastle = data.castles[index];
+    // req.app.locals.currentCastle = currCastle;
   } else {
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    //findCastleAndRemoveHealth("Disney" /*req.app.locals.currentCastle.name*/, 40);
-    name = req.app.locals.currentCastle.name;
-    currCastle = req.app.locals.currentCastle;
-    canDamage = false;
-    for (q in currCastle.quests) {
-        if (q.completed == false) {
-            canDamage = true;
-            break;
-        }
-    }
-    if (canDamage) {
-        req.app.locals.currentCastle.game.castleHealth -= 3;
-    }
-    if (req.app.locals.currentCastle.game.castleHealth < 0) {
-      req.app.locals.currentCastle.game.castleHealth = 0;
-      console.log("Your castle is falling!!!");
-    }
+    findCastleAndRemoveHealth(req, res, req.app.locals.currentCastle.name, 3);
+    // name = req.app.locals.currentCastle.name;
+    // currCastle = req.app.locals.currentCastle;
+    // canDamage = false;
+    // for (q in currCastle.quests) {
+    //     if (q.completed == false) {
+    //         canDamage = true;
+    //         break;
+    //     }
+    // }
+    // if (canDamage) {
+    //     req.app.locals.currentCastle.game.castleHealth -= 3;
+    // }
+    // if (req.app.locals.currentCastle.game.castleHealth < 0) {
+    //   req.app.locals.currentCastle.game.castleHealth = 0;
+    //   console.log("Your castle is falling!!!");
+    // }
   }
 
 
-  quests = currCastle.quests;
-  monsterHealth = currCastle.game["monsterHealth"];
-  castleHealth = currCastle.game["castleHealth"];
-
-  /*var nameToShow = req.params.userName;
-var castleName = req.params.castleName;
-res.render('castle', {
-    'name': nameToShow,
-     'castleName': castleName
- });*/
-
-  //console.log(req.app.locals.currentUser);
-  //console.log(req.app.locals.currentCastle);
-
-  res.render('castle', {
-    'name': req.app.locals.currentUser.name,
-    'castleName': name,
-    'monsterName': "Kraken",
-    'castleHealth': castleHealth,
-    'monsterHealth': monsterHealth
-  });
+//   quests = currCastle.quests;
+//   monsterHealth = currCastle.game["monsterHealth"];
+//   castleHealth = currCastle.game["castleHealth"];
+//
+//   /*var nameToShow = req.params.userName;
+// var castleName = req.params.castleName;
+// res.render('castle', {
+//     'name': nameToShow,
+//      'castleName': castleName
+//  });*/
+//
+//   //console.log(req.app.locals.currentUser);
+//   //console.log(req.app.locals.currentCastle);
+//
+//   res.render('castle', {
+//     'name': req.app.locals.currentUser.name,
+//     'castleName': name,
+//     'monsterName': "Kraken",
+//     'castleHealth': castleHealth,
+//     'monsterHealth': monsterHealth
+//   });
 };
 
 exports.join = function(req, res) {
@@ -301,7 +301,7 @@ checkCredentialsDB = function(req, res, username, password) {
               "imageURL": users[0].imageURL,
           };
           console.log("checkCredentialsDB");
-          makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
+          makeCastleJson(req, res, 'castles', 0, null); //0 select:userCastles
         }
       });
 }
@@ -375,7 +375,7 @@ addCastleToDB = function(req, res, castleJSON) {
       if (err) console.log(err);
       console.log("castle " + castle.name + " saved on MongoDB");
       console.log("addCastleToDB");
-      makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
+      makeCastleJson(req, res, 'castles', 0, null);
     });
   }
 }
@@ -466,13 +466,13 @@ addMemberToCastle = function(req, res, username, castleName) {
           if (err) console.log(err);
           console.log("member " + username + " added to castle " + castleName);
           console.log("addMemberToCastle");
-          makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
+          makeCastleJson(req, res, 'castles', 0, null); //0 select:userCastles
         }
       );
   }
 }
 
-findCastle = function(castleName) {
+findCastle = function(req, res, castleName) {
   models.Castle
     .findOne({name: castleName})
     .exec(function(err, castle){
@@ -481,11 +481,12 @@ findCastle = function(castleName) {
         console.log("castle " + castleName + " does not exist");
       } else {
         console.log("castle " + castle.name + " has id " + castle._id);
+        makeCastleJson(req, res, 'castle', 1, castleName);
       }
     });
 }
 
-findCastleAndRemoveHealth = function(castleName, healthAmount) {
+findCastleAndRemoveHealth = function(req, res, castleName, healthAmount) {
   models.Castle
     .findOne({name: castleName})
     .populate("game quests")
@@ -511,11 +512,12 @@ findCastleAndRemoveHealth = function(castleName, healthAmount) {
             castle.game.castleHealth = 0;
             console.log("Your castle is falling");
           }
-          castle.game.save(function(err, g){
-            if(err) console.log(err);
-            console.log("Castle new health: " + g.castleHealth);
-          });
         }
+        castle.game.save(function(err, g){
+          if(err) console.log(err);
+          console.log("Castle new health: " + g.castleHealth);
+          makeCastleJson(req, res, 'castle', 1, castleName);
+        });
       }
     });
 }
@@ -549,7 +551,7 @@ findJoinableCastles = function(username) {
 }
 
 
-makeCastleJson = function(req, res, page, num) {
+makeCastleJson = function(req, res, page, num, arg) {
   console.log("in makeCastleJson");
   var result = {'castles': []};
   models.Castle
@@ -628,21 +630,35 @@ makeCastleJson = function(req, res, page, num) {
       //0 select:userCastles
       switch(num){
         case 0:
-        var dbUserCastles = {
-          "castles": []
-        };
-        result.castles.forEach(function(c){
-          //console.log(c.name);
-          //console.log(c.members);
-          c.members.forEach(function(m){
-            if(m.username === req.app.locals.currentUser.username) {
-              console.log("pushing " + c.name);
-              dbUserCastles.castles.push(c);
+          var dbUserCastles = {
+            "castles": []
+          };
+          result.castles.forEach(function(c){
+            //console.log(c.name);
+            //console.log(c.members);
+            c.members.forEach(function(m){
+              if(m.username === req.app.locals.currentUser.username) {
+                console.log("pushing " + c.name);
+                dbUserCastles.castles.push(c);
+              }
+            });
+          });
+          dataToSend = dbUserCastles;
+          break;
+        case 1:
+          result.castles.forEach(function(c){
+            if(c.name === arg) {
+              req.app.locals.currentCastle = c;
+              dataToSend = {
+                'name': req.app.locals.currentUser.name,
+                'castleName': c.name,
+                'monsterName': "Kraken",
+                'castleHealth': c.game.castleHealth,
+                'monsterHealth': c.game.monsterHealth
+              };
             }
           });
-        });
-        dataToSend = dbUserCastles;
-        break;
+          break;
         default:
 
       };
