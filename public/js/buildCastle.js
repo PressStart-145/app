@@ -1,6 +1,9 @@
 /* Build Castle JS */
 var castleList = [];
 var originalCastle = true;
+var inputType;
+
+var castleName = "";
 
 $("#nameCastle").click(function(e) {
     e.preventDefault();
@@ -12,7 +15,7 @@ $("#nameCastle").click(function(e) {
         originalCastle = false;
     }
 
-    var name = $("form").serializeArray()[0].value;
+    var name = $("input#name")[0].value;
     if("".localeCompare(name.toUpperCase().replace(/\s/g,'').trim()) == 0) {
         alertName();
         return;
@@ -30,6 +33,16 @@ $("#nameCastle").click(function(e) {
 
     $("#nameForm").hide();
     $("#addMembers").show();
+    castleName = name
+    inputType = $("<input>")
+               .attr("type", "hidden")
+               .attr("name", "name").val(name);
+    inputType.appendTo("#sendBuild");
+    inputType = $("<input>")
+               .attr("id", "hasData")
+               .attr("type", "hidden")
+               .attr("name", "members").val([]);
+     inputType.appendTo("#sendBuild");
 });
 
 var alertName = function() {
@@ -46,7 +59,7 @@ var viewList = []; //Search results list
 var currUser;
 
 var formResults = function() {
-    formInfo = $("form").serializeArray();
+    searchPhrase = $("input#searchPhrase")[0].value;
     if (isOriginal) {
         memList = $("#mapMem").html().replace(/\s/g, '');
         memList = memList.substring(8, memList.length - 10).split("</li><li>");
@@ -55,7 +68,7 @@ var formResults = function() {
     }
     viewList = [];
     for (s in memList) {
-        if (memList[s].toUpperCase().includes(formInfo[1].value.toUpperCase())) {
+        if (memList[s].toUpperCase().includes(searchPhrase.toUpperCase())) {
             if(memList[s] !== currUser) {
                 viewList.push(memList[s]);
             }
@@ -92,6 +105,16 @@ $("#mapMem").on('click', 'li', function() {
     }
     $(this).toggleClass("taken");
     updateSelected();
+    console.log($("#sendBuild").html());
+    if ($("#sendBuild input").last().attr("name") == "members"){
+        $("#sendBuild input").last().remove();
+    }
+    inputType = $("<input>")
+               .attr("id", "hasData")
+               .attr("type", "hidden")
+               .attr("name", "members").val(toAdd);
+     inputType.appendTo("#sendBuild");
+     console.log($("#sendBuild").html());
 });
 
 $("#selectedMem").on('click', 'div', function() {
@@ -112,9 +135,18 @@ var updateSelected = function() {
     }
 }
 
-$("#doneMem").click(function(e) {
+window.onload = function() {
+    inputType = $("<input>")
+               .attr("type", "hidden")
+               .attr("name", "type").val("castle");
+    inputType.appendTo("#sendBuild");
+}
+
+
+//$("#doneMem").click(function(e) {
     //e.preventDefault();
     //Create a castle JSON object with the name and members provided
+    /*
     formInfo = $("form").serializeArray();
     var data = {
         "type": "castle",
@@ -122,11 +154,11 @@ $("#doneMem").click(function(e) {
             "name": formInfo[0].value.trim(),
             "members": toAdd
         }
-    };
+    };*/
     /*
     var newCastle = {
         "name": formInfo[0].value,
         "members": toAdd
     };*/
-    $.post("/castle/add", data);
-});
+    //$.post("/castle/add", data);
+//});

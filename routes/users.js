@@ -26,12 +26,15 @@ exports.update = function(req, res) {
 }
 
 exports.signup = function(req, res) {
-
   res.render('signup');
 }
 
 exports.add = function(req, res){
     var usernameTaken = false;
+    var invalidUsername = false;
+    if(!(new RegExp(/^[a-zA-Z0-9_]+$/).test(req.body.username))) {
+        invalidUsername = true;
+    }
     data.users.forEach(function(userJson){
       if(userJson.username === req.body.username) {
         usernameTaken = true;
@@ -43,7 +46,13 @@ exports.add = function(req, res){
         'err': true,
         'errMsg': errMsg
       });
-    } else {
+  } else if(invalidUsername) {
+      var errMsg = "Username " + req.body.username + " is invalid. Only letters, numbers, and underscores allowed.";
+      res.render('signup', {
+        'err': true,
+        'errMsg': errMsg
+      });
+  } else {
       var newUser = {
           "name": req.body.fullname,
           "username": req.body.username,

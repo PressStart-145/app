@@ -39,6 +39,8 @@ exports.add = function(req, res) {
     "numCompleted": 0
   };
 
+  console.log(req.body);
+
   if (req.body.type === "castle") {
     var newCastle = {
       "name": "",
@@ -52,12 +54,17 @@ exports.add = function(req, res) {
         "items": []
       }
     };
-    newCastle.name = req.body.value.name;
+    newCastle.name = req.body.name;
     newCastle.admin = req.app.locals.currentUser.username;
     newCastle.members.push(newMem);
-    for (key in req.body.value.members) {
+    var postMembers = req.body.members.split(",");
+    console.log(req.body.members.split(","));
+    for (key in req.body.members.split(",")) {
+        console.log(req.body.members.split(",")[key]);
+    }
+    for (key in postMembers) {
       newCastle.members.push({
-        "username": req.body.value.members[key],
+        "username": postMembers[key],
         "numCompleted": 0
       });
     }

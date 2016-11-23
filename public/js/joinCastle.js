@@ -28,7 +28,6 @@ $("#resultsList").on('click', 'li', function() {
               .attr("type", "hidden")
               .attr("name", "name").val(selectedCastle);
     input.appendTo("#sendJoin");
-    console.log("gdgf");
 });
 
 /*
