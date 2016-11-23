@@ -220,36 +220,37 @@ exports.view = function(req, res) {
 };
 
 exports.join = function(req, res) {
-  var userCastles = {
-    "castles": []
-  };
-  var canJoin = true;
-  for (key in data.castles) {
-    canJoin = true;
-    for (mem in data.castles[key].members) {
-      if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-        canJoin = false;
-      }
-    }
-    if (canJoin) {
-      userCastles.castles.push(data.castles[key]);
-    }
-  }
-  console.log(userCastles);
+  // var userCastles = {
+  //   "castles": []
+  // };
+  // var canJoin = true;
+  // for (key in data.castles) {
+  //   canJoin = true;
+  //   for (mem in data.castles[key].members) {
+  //     if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+  //       canJoin = false;
+  //     }
+  //   }
+  //   if (canJoin) {
+  //     userCastles.castles.push(data.castles[key]);
+  //   }
+  // }
+  // console.log(userCastles);
 
   //TODO DB CALL TO COMMENT OUT FOR PROD
-   var dbUserCastles = findJoinableCastles(req.app.locals.currentUser.username);
+  findJoinableCastles(req, res, req.app.locals.currentUser.username);
 
-  res.render('joinCastle', userCastles);
+  //res.render('joinCastle', userCastles);
 };
 
 exports.build = function(req, res) {
-  var userData = {
-    "users": users.users,
-    "castles": data.castles,
-    "currUser": req.app.locals.currentUser.username
-  };
-  res.render('buildCastle', userData);
+  // var userData = {
+  //   "users": users.users,
+  //   "castles": data.castles,
+  //   "currUser": req.app.locals.currentUser.username
+  // };
+  // res.render('buildCastle', userData);
+  makeCastleJson(req, res, 'castles', 3, null);
 };
 
 
@@ -323,6 +324,7 @@ addCastleToDB = function(req, res, castleJSON) {
       if(err) console.log(err);
       if(castles.length != 0) {
         console.log("castle " + castleJSON.name + " already exist");
+        makeCastleJson(req, res, 'castles', 0, null);
       } else {
         cGame();
       }
@@ -523,7 +525,7 @@ findCastleAndRemoveHealth = function(req, res, castleName, healthAmount) {
 }
 
 
-findJoinableCastles = function(username) {
+findJoinableCastles = function(req, res, username) {
   console.log(username);
   var result = {
     "castles": []
@@ -546,7 +548,8 @@ findJoinableCastles = function(username) {
           result.castles.push({'name': c.name});
         }
       });
-      return result;
+      makeCastleJson(req, res, 'joinCastle', 2, result);
+      //res.render('joinCastle', userCastles);
     });
 }
 
@@ -628,14 +631,17 @@ makeCastleJson = function(req, res, page, num, arg) {
       var dataToSend;
 
       //0 select:userCastles
+      //1 view:currentCastle
+      //2 join:joinableCastles
+      //0 build:castles. users, currentUser
       switch(num){
         case 0:
           var dbUserCastles = {
             "castles": []
           };
           result.castles.forEach(function(c){
-            //console.log(c.name);
-            //console.log(c.members);
+            console.log(c.name);
+            console.log(c.members);
             c.members.forEach(function(m){
               if(m.username === req.app.locals.currentUser.username) {
                 console.log("pushing " + c.name);
@@ -658,6 +664,32 @@ makeCastleJson = function(req, res, page, num, arg) {
               };
             }
           });
+          break;
+        case 2:
+          dataToSend = arg;
+          break;
+        case 3:
+          var userData = {
+            "users": [],
+            "castles": result.castles,
+            "currUser": req.app.locals.currentUser.username
+          };
+
+          result.castles.forEach(function(c){
+            c.members.forEach(function(m){
+              var inIt = false;
+              userData.users.forEach(function(u){
+                if(m.username === u.username) {
+                  inIt = true;
+                }
+              });
+              if(!inIt){
+                userData.users.push({"username": m.username});
+              }
+            });
+          });
+          dataToSend = userData;
+
           break;
         default:
 
