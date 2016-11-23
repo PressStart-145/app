@@ -19,7 +19,7 @@ exports.select = function(req, res) {
   var errMsg = "";
   var currentUser;
 
-  console.log(req.body);
+  // console.log(req.body);
   if (req.body.username != null && req.body.password != null) {
     //TODO DB CALL TO COMMENT OUT FOR PROD
     checkCredentialsDB(req, res, req.body.username, req.body.password);
@@ -46,7 +46,7 @@ exports.select = function(req, res) {
     usernameInexistant = false;
     wrongPassword = false;
     currentUser = req.app.locals.currentUser;
-    // 
+    //
     // req.app.locals.currentUser = currentUser;
     //
     // //TODO DB CALL TO COMMENT OUT FOR PROD
@@ -62,6 +62,7 @@ exports.select = function(req, res) {
     //   }
     // }
 
+    console.log("select");
     makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
   }
 
@@ -97,10 +98,10 @@ exports.add = function(req, res) {
     "username": req.app.locals.currentUser.username,
     "numCompleted": 0
   };
-
-  console.log(req.body.type);
-  console.log("before");
-  console.log(data.castles);
+  //
+  // console.log(req.body.type);
+  // console.log("before");
+  // console.log(data.castles);
   if (req.body.type === "castle") {
     var newCastle = {
       "name": "",
@@ -124,32 +125,36 @@ exports.add = function(req, res) {
         "numCompleted": 0
       });
     }
-    data.castles.push(newCastle);
+    // data.castles.push(newCastle);
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    //addCastleToDB(newCastle);
+    console.log("before db call");
+    addCastleToDB(req, res, newCastle);
+    console.log("after db call");
   } else if (req.body.type === "member") {
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    //addMemberToCastle(req.app.locals.currentUser.username, req.body.name);
-    var name = req.body.name;
-    var memExists = false
-    for (s in data.castles) {
-      if (name != null && data.castles[s].name.replace(/\s/g, '') === name) {
-        for (mem in data.castles[s].members) {
-          if (data.castles[s].members[mem].username === req.app.locals.currentUser.username) {
-            memExists = true;
-            break;
-          }
-        }
-        if (!memExists) {
-          data.castles[s].members.push(newMem);
-        }
-        break;
-      }
-    }
-    res.render('castles', data);
+    console.log("before db call");
+    addMemberToCastle(req, res, req.app.locals.currentUser.username, req.body.name);
+    console.log("after db call");
+    // var name = req.body.name;
+    // var memExists = false
+    // for (s in data.castles) {
+    //   if (name != null && data.castles[s].name.replace(/\s/g, '') === name) {
+    //     for (mem in data.castles[s].members) {
+    //       if (data.castles[s].members[mem].username === req.app.locals.currentUser.username) {
+    //         memExists = true;
+    //         break;
+    //       }
+    //     }
+    //     if (!memExists) {
+    //       data.castles[s].members.push(newMem);
+    //     }
+    //     break;
+    //   }
+    // }
+    //res.render('castles', data);
   }
-  console.log("after");
-  console.log(data.castles);
+  // console.log("after");
+  // console.log(data.castles);
 }
 
 exports.view = function(req, res) {
@@ -295,14 +300,14 @@ checkCredentialsDB = function(req, res, username, password) {
               "email": users[0].email,
               "imageURL": users[0].imageURL,
           };
-
+          console.log("checkCredentialsDB");
           makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
         }
       });
 }
 
 //check first if there are no castle with this name?
-addCastleToDB = function(castleJSON) {
+addCastleToDB = function(req, res, castleJSON) {
   var userID;
   var gameID;
   var memberIDs = [];
@@ -369,6 +374,8 @@ addCastleToDB = function(castleJSON) {
     castle.save(function(err, castle) {
       if (err) console.log(err);
       console.log("castle " + castle.name + " saved on MongoDB");
+      console.log("addCastleToDB");
+      makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
     });
   }
 }
@@ -407,7 +414,7 @@ rUserCastles = function(currentUser, userCastles) {
   }
 }
 
-addMemberToCastle = function(username, castleName) {
+addMemberToCastle = function(req, res, username, castleName) {
   var userID;
   models.User
     .find({
@@ -458,6 +465,8 @@ addMemberToCastle = function(username, castleName) {
         function(err, raw) {
           if (err) console.log(err);
           console.log("member " + username + " added to castle " + castleName);
+          console.log("addMemberToCastle");
+          makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
         }
       );
   }
@@ -612,19 +621,22 @@ makeCastleJson = function(req, res, page, num) {
 
       //console.log(result);
       dbCastleJson = result;
-      console.log(dbCastleJson);
 
 
       var dataToSend;
 
+      //0 select:userCastles
       switch(num){
         case 0:
         var dbUserCastles = {
           "castles": []
         };
         result.castles.forEach(function(c){
+          //console.log(c.name);
+          //console.log(c.members);
           c.members.forEach(function(m){
-            if(m.username === "123") {
+            if(m.username === req.app.locals.currentUser.username) {
+              console.log("pushing " + c.name);
               dbUserCastles.castles.push(c);
             }
           });
@@ -635,6 +647,7 @@ makeCastleJson = function(req, res, page, num) {
 
       };
 
+      //console.log(dataToSend);
       res.render(page, dataToSend);
       //return result;
     });

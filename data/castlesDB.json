@@ -7,6 +7,13 @@
     }
   },
   {
+    "name": "Test Castle",
+    "game": {
+      "castleHealth": 96,
+      "monsterHealth": 57
+    }
+  },
+  {
     "name": "Neuschweinstein",
     "game": {
       "castleHealth": 100,
