@@ -22,54 +22,72 @@ exports.select = function(req, res) {
   console.log(req.body);
   if (req.body.username != null && req.body.password != null) {
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    //checkCredentialsDB(req.body.username, req.body.password);
-    //TODO should return user info to put into req.app.locals.currentUser
-    users.users.forEach(function(userJson) {
-      if (userJson.username === req.body.username) {
-        usernameInexistant = false;
-        if (userJson.password === req.body.password) {
-          wrongPassword = false;
-          currentUser = userJson;
-        }
-      }
-    });
-
-    if (usernameInexistant) {
-      err = true;
-      errMsg = "Username " + req.body.username + " does not exist";
-    } else if (wrongPassword) {
-      err = true;
-      errMsg = "Wrong password";
-    }
+    checkCredentialsDB(req, res, req.body.username, req.body.password);
+    // users.users.forEach(function(userJson) {
+    //   if (userJson.username === req.body.username) {
+    //     usernameInexistant = false;
+    //     if (userJson.password === req.body.password) {
+    //       wrongPassword = false;
+    //       currentUser = userJson;
+    //     }
+    //   }
+    // });
+    //
+    // if (usernameInexistant) {
+    //   err = true;
+    //   errMsg = "Username " + req.body.username + " does not exist";
+    // } else if (wrongPassword) {
+    //   err = true;
+    //   errMsg = "Wrong password";
+    // }
   } else {
     // else if we re not checking for credential
     // (ie select not called from login page)
     usernameInexistant = false;
     wrongPassword = false;
     currentUser = req.app.locals.currentUser;
+    // 
+    // req.app.locals.currentUser = currentUser;
+    //
+    // //TODO DB CALL TO COMMENT OUT FOR PROD
+    // rUserCastles(currentUser, userCastles);
+    // var userCastles = {
+    //   "castles": []
+    // };
+    // for (key in data.castles) {
+    //   for (mem in data.castles[key].members) {
+    //     if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+    //       userCastles.castles.push(data.castles[key]);
+    //     }
+    //   }
+    // }
+
+    makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
   }
 
-  if (err) {
-    req.app.locals.err = true;
-    req.app.locals.errMsg = errMsg;
-    res.redirect('login');
-  } else {
-    req.app.locals.currentUser = currentUser;
-
-    //TODO DB CALL TO COMMENT OUT FOR PROD
-    //rUserCastles(currentUser, userCastles);
-    var userCastles = {
-      "castles": []
-    };
-    for (key in data.castles) {
-      for (mem in data.castles[key].members) {
-        if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
-          userCastles.castles.push(data.castles[key]);
-        }
-      }
-    }
-  }
-  res.render('castles', userCastles);
+  // if (err) {
+  //   req.app.locals.err = true;
+  //   req.app.locals.errMsg = errMsg;
+  //   res.redirect('login');
+  // } else {
+  //   req.app.locals.currentUser = currentUser;
+  //
+  //   //TODO DB CALL TO COMMENT OUT FOR PROD
+  //   /*var dbUserCastles = */
+  //   rUserCastles(currentUser, userCastles);
+  //   var userCastles = {
+  //     "castles": []
+  //   };
+  //   for (key in data.castles) {
+  //     for (mem in data.castles[key].members) {
+  //       if (data.castles[key].members[mem].username === req.app.locals.currentUser.username) {
+  //         userCastles.castles.push(data.castles[key]);
+  //       }
+  //     }
+  //   }
+  //
+  //   makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
+  // }
 }
 
 
@@ -153,7 +171,7 @@ exports.view = function(req, res) {
     req.app.locals.currentCastle = currCastle;
   } else {
     //TODO DB CALL TO COMMENT OUT FOR PROD
-    findCastleAndRemoveHealth("Disney" /*req.app.locals.currentCastle.name*/, 40);
+    //findCastleAndRemoveHealth("Disney" /*req.app.locals.currentCastle.name*/, 40);
     name = req.app.locals.currentCastle.name;
     currCastle = req.app.locals.currentCastle;
     canDamage = false;
@@ -213,6 +231,10 @@ exports.join = function(req, res) {
     }
   }
   console.log(userCastles);
+
+  //TODO DB CALL TO COMMENT OUT FOR PROD
+   var dbUserCastles = findJoinableCastles(req.app.locals.currentUser.username);
+
   res.render('joinCastle', userCastles);
 };
 
@@ -235,23 +257,46 @@ d8888b. d8888b.      d88888b db    db d8b   db  .o88b.
 Y8888D' Y8888P'      YP      ~Y8888P' VP   V8P  `Y88P'
 */
 
-checkCredentialsDB = function(username, password) {
+checkCredentialsDB = function(req, res, username, password) {
   models.User
     .find({
         username: username
       },
       function(err, users) {
         if (err) console.log(err);
+        console.log(users);
+        var usernameInexistant = false;
+        var wrongPassword = false;
+        var errMsg = "";
         if (users.length == 0) {
-          console.log("no user " + username);
+          usernameInexistant = true;
+          errMsg = "Username " + req.body.username + " does not exist";
         } else if (users.length > 1) {
           console.log("too many users with username " + username);
         } else {
           if (users[0].password !== password) {
-            console.log("wrong password for user " + username);
+            wrongPassword = true;
+            errMsg = "Wrong password";
           } else {
             console.log("matching username/password");
           }
+        }
+
+
+        if(usernameInexistant || wrongPassword) {
+          req.app.locals.err = true;
+          req.app.locals.errMsg = errMsg;
+          res.redirect('login');
+        } else {
+          req.app.locals.currentUser = {
+              "name": users[0].name,
+              "username": users[0].username,
+              "password": users[0].password,
+              "email": users[0].email,
+              "imageURL": users[0].imageURL,
+          };
+
+          makeCastleJson(req, res, 'castles', 0); //0 select:userCastles
         }
       });
 }
@@ -330,7 +375,6 @@ addCastleToDB = function(castleJSON) {
 
 rUserCastles = function(currentUser, userCastles) {
   var result = [];
-  console.log("in rUserCastles");
   models.Castle
     .find()
     .populate('members')
@@ -432,29 +476,175 @@ findCastle = function(castleName) {
     });
 }
 
-
-//TODO now working
 findCastleAndRemoveHealth = function(castleName, healthAmount) {
-  console.log("in findCastleAndRemoveHealth");
   models.Castle
     .findOne({name: castleName})
-    .populate("game")
+    .populate("game quests")
     .exec(function(err, castle) {
       if(err) console.log(err);
       if (!castle) {
         console.log("castle " + castleName + " does not exist");
       } else {
-        console.log("castle " + castle.name + " has id " + castle._id);
-        console.log("Castle Health: " + castle.game.castleHealth);
-        if(castle.game.castleHealth >= healthAmount) {
-          castle.game.castleHealth = castle.game.castleHealth - healthAmount;
-        } else {
-          castle.game.castleHealth = 0;
+        var canDmg = false;
+
+        if(castle.quests) {
+          castle.quests.forEach(function(q){
+            if(!q.completed) {
+              canDmg = true;
+            }
+          });
         }
-        castle.save(function(err, c){
-          if(err) console.log(err);
-          console.log("Castle Health: " + c.game.castleHealth);
-        })
+
+        if(canDmg){
+          if(castle.game.castleHealth >= healthAmount) {
+            castle.game.castleHealth = castle.game.castleHealth - healthAmount;
+          } else {
+            castle.game.castleHealth = 0;
+            console.log("Your castle is falling");
+          }
+          castle.game.save(function(err, g){
+            if(err) console.log(err);
+            console.log("Castle new health: " + g.castleHealth);
+          });
+        }
       }
     });
+}
+
+
+findJoinableCastles = function(username) {
+  console.log(username);
+  var result = {
+    "castles": []
+  }
+  models.Castle
+    .find()
+    .populate("members")
+    .exec(function(err, castles){
+      if(err) console.log(err);
+      castles.forEach(function(c){
+        var canAdd = true;
+        if(c.members){
+          c.members.forEach(function(m){
+            if(m.username === username) {
+              canAdd = false;
+            }
+          });
+        }
+        if(canAdd){
+          result.castles.push({'name': c.name});
+        }
+      });
+      return result;
+    });
+}
+
+
+makeCastleJson = function(req, res, page, num) {
+  console.log("in makeCastleJson");
+  var result = {'castles': []};
+  models.Castle
+    .find()
+    .populate("members quests game admin")
+    .exec(function(err, castles){
+      if(err) console.log(err);
+      castles.forEach(function(c){
+        var cJson = {
+          "name": "",
+          "admin": "",
+          "members": [],
+          "quests": [],
+          "numCompleted": 0,
+          "game": {
+            "castleHealth": 0,
+            "monsterHealth": 0,
+            "items": []
+          }
+        };
+
+        var ncg = 0;
+
+        cJson.name = c.name;
+        if(c.admin){
+          cJson.admin = c.admin.username;
+        }
+        if(c.game){
+          cJson.game.castleHealth = c.game.castleHealth;
+          cJson.game.monsterHealth = c.game.monsterHealth;
+        }
+
+        c.members.forEach(function(m){
+          var mJson = {
+            "username":     m.username,
+            "numCompleted": 0
+          };
+          var nc = 0;
+          c.quests.forEach(function(q){
+            if(q.takenBy === m._id && q.completed) {
+              nc++;
+            }
+          });
+          mJson.numCompleted = nc;
+          cJson.members.push(mJson);
+        });
+        var i = 0;
+        c.quests.forEach(function(q){
+          var qJson = {
+            "id": i,
+            "title": q.title,
+            "description": q.description,
+            "level": q.level,
+            "deadline": q.deadline,
+            "takenBy": q.takenBy,
+            "completed": q.completed
+          };
+
+          if(q.completed) {
+            ncg++;
+          }
+
+          cJson.quests.push(qJson);
+        });
+
+        cJson.numCompleted = ncg;
+        result.castles.push(cJson);
+      });
+
+      //console.log(result);
+      dbCastleJson = result;
+      console.log(dbCastleJson);
+
+
+      var dataToSend;
+
+      switch(num){
+        case 0:
+        var dbUserCastles = {
+          "castles": []
+        };
+        result.castles.forEach(function(c){
+          c.members.forEach(function(m){
+            if(m.username === "123") {
+              dbUserCastles.castles.push(c);
+            }
+          });
+        });
+        dataToSend = dbUserCastles;
+        break;
+        default:
+
+      };
+
+      res.render(page, dataToSend);
+      //return result;
+    });
+}
+
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
