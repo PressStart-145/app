@@ -413,6 +413,7 @@ makeCastleJson = function(req, res, page, num, arg) {
           cJson.game.monsterHealth = c.game.monsterHealth;
         }
 
+        var memberIDs = [];
         c.members.forEach(function(m){
           var mJson = {
             "username":     m.username,
@@ -426,6 +427,16 @@ makeCastleJson = function(req, res, page, num, arg) {
           });
           mJson.numCompleted = nc;
           cJson.members.push(mJson);
+
+          var toAdd = true;
+          memberIDs.forEach(function(m2){
+            if (m2.username === m.username) {
+              toAdd = false;
+            }
+          });
+          if (toAdd) {
+            memberIDs.push({"id": m._id, "username": m.username});
+          }
         });
         var i = 0;
         c.quests.forEach(function(q){
@@ -435,13 +446,19 @@ makeCastleJson = function(req, res, page, num, arg) {
             "description": q.description,
             "level": q.level,
             "deadline": q.deadline,
-            "takenBy": q.takenBy,
+            "takenBy": "",
             "completed": q.completed
           };
 
           if(q.completed) {
             ncg++;
           }
+
+          memberIDs.forEach(function(m){
+            if(m.id === q.takenBy) {
+              qJson.takenBy = m.username;
+            }
+          });
 
           cJson.quests.push(qJson);
         });
