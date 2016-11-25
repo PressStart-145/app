@@ -5,6 +5,12 @@
 
 var data = require("../data/users.json");
 
+var cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'pressstart',
+    api_key: '253161822796357',
+    api_secret: '9vUKk4-tKlFrkk7rHai5tQrL27c'
+});
 
 exports.details = function(req, res) {
   res.render('accountDetails', {'user': req.app.locals.currentUser});
@@ -53,12 +59,20 @@ exports.add = function(req, res){
         'errMsg': errMsg
       });
   } else {
+      console.log(req.files);
+      var imgURL = req.files.image.path;
+      if(imgURL.trim().length != 0) {
+          cloudinary.uploader.upload(imgURL, function(result) {
+              imgURL = result.url;
+              console.log(result);
+          });
+      }
       var newUser = {
           "name": req.body.fullname,
           "username": req.body.username,
           "password": req.body.password,
           "email": req.body.email,
-          "imageURL": req.body.image
+          "imageURL": imgURL
       };
       data.users.push(newUser);
       //console.log(data);
