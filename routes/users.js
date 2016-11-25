@@ -5,6 +5,12 @@
 var data = require("../data/users.json");
 var models = require('../models');
 
+var cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'pressstart',
+    api_key: '253161822796357',
+    api_secret: '9vUKk4-tKlFrkk7rHai5tQrL27c'
+});
 
 exports.details = function(req, res) {
   res.render('accountDetails', {

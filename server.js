@@ -9,6 +9,18 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
 
+/* Cloudinary Image Hosting */
+var cloudinary = require('cloudinary');
+cloudinary.config({
+    cloud_name: 'pressstart',
+    api_key: '253161822796357',
+    api_secret: '9vUKk4-tKlFrkk7rHai5tQrL27c'
+});
+/*
+cloudinary.uploader.upload(imgURL, function(result) {
+    console.log(result);
+});*/
+
 /* Database Code */
 var mongoose = require('mongoose');
 var local_database_uri  = 'mongodb://localhost/';
@@ -25,7 +37,7 @@ mongoose.connect(database_uri);
   88   88 88~~~b.        `Y8b. 88~~~~~    88    88    88 88~~~
   88  .8D 88   8D      db   8D 88.        88    88b  d88 88
   Y8888D' Y8888P'      `8888Y' Y88888P    YP    ~Y8888P' 88
-   
+
   node initUserDB.js; node initQuestDB.js; node initCastleDB.js; node linkQuestDB.js; node linkCastleDB.js
 */
 
@@ -66,6 +78,11 @@ var dataCastle = require("./data/castles.json");
 var dataUsers = require("./data/users.json");
 app.locals.currentUser = dataUsers.users[0];
 app.locals.currentCastle = dataCastle.castles[0];
+
+app.configure(function(){
+    app.use(express.methodOverride());
+    app.use(express.multipart());
+   });
 
 app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', handlebars());
