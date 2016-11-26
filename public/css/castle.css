@@ -37,7 +37,7 @@ html, body {
     width: 100%;
 }
 
-.fightPane .row {
+.fightPane .row h1 {
     padding-left: 10%;
 }
 
@@ -94,4 +94,19 @@ html, body {
 #monsterPane {
     height: 48%;
     background-image: url("../images/monsters/kraken/Kraken.png");
+}
+
+#peacePane {
+    z-index: 20;
+    background-color: var(--yellow);
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    border-top: 10px solid var(--green);
+    border-bottom: 10px solid var(--green);
+    top: 42%;
+}
+
+#peacePane h3 {
+    margin: 15px 0px;
 }

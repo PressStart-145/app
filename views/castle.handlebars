@@ -36,6 +36,13 @@
 
 		<!-- Fight Scene GUI -->
 		<div class="fightPane">
+			{{#if noQuests}}
+				<div id="peacePane">
+					<div id="peaceInfo" class="row">
+						<h3>The monster has been quelled!</h3>
+					</div>
+				</div>
+			{{/if}}
 			<div id="castlePane">
 				<div id="castleInfo" class="row">
 					<h1>{{castleName}}</h1>

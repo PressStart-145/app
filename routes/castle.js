@@ -496,12 +496,24 @@ makeCastleJson = function(req, res, page, num, arg) {
           result.castles.forEach(function(c){
             if(c.name === arg) {
               req.app.locals.currentCastle = c;
+
+              var hasNoQuests = true;
+
+              if(c.quests) {
+                c.quests.forEach(function(q){
+                  if(!q.completed) {
+                    hasNoQuests = false;
+                  }
+                });
+              }
+
               dataToSend = {
                 'name': req.app.locals.currentUser.name,
                 'castleName': c.name,
                 'monsterName': "Kraken",
                 'castleHealth': c.game.castleHealth,
-                'monsterHealth': c.game.monsterHealth
+                'monsterHealth': c.game.monsterHealth,
+                'noQuests': hasNoQuests
               };
             }
           });
