@@ -165,27 +165,34 @@ addUser = function(req, res, userInfo, userFiles) {
             });
           } else {
               var imgURL = userFiles.image.path;
+              var newUser = {
+                "name": userInfo.fullname,
+                "username": userInfo.username,
+                "password": userInfo.password,
+                "email": userInfo.email,
+                "imageURL": imgURL
+              };
+
               if(imgURL.trim().length != 0) {
                   cloudinary.uploader.upload(imgURL, function(result) {
-                      imgURL = result.url;
-                      console.log(result);
+                      newUser['imageURL'] = result.url;
+                      var user = new models.User(newUser);
+                      user.save(function(err, user) {
+                        if (err) console.log(err);
+                        console.log("User " + user.username + " saved on DB");
+                        req.app.locals.createdUserSuccess = true;
+                        res.redirect('login');
+                      });
+                  });
+              } else {
+                  var user = new models.User(newUser);
+                  user.save(function(err, user) {
+                    if (err) console.log(err);
+                    console.log("User " + user.username + " saved on DB");
+                    req.app.locals.createdUserSuccess = true;
+                    res.redirect('login');
                   });
               }
-            var newUser = {
-              "name": userInfo.fullname,
-              "username": userInfo.username,
-              "password": userInfo.password,
-              "email": userInfo.email,
-              "imageURL": imgURL
-            };
-
-            var user = new models.User(newUser);
-            user.save(function(err, user) {
-              if (err) console.log(err);
-              console.log("User " + user.username + " saved on DB");
-              req.app.locals.createdUserSuccess = true;
-              res.redirect('login');
-            });
           }
         });
   }
