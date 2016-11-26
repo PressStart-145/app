@@ -31,7 +31,7 @@ exports.view = function(req, res) {
       });
 
       if(user.image === "") {
-        user.image = "PersonalAccount-01-01.png";
+        user.image = "/images/PersonalAccount-01-01.png";
       }
       user.numCompleted = e.numCompleted;
 

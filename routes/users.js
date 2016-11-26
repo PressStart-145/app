@@ -74,7 +74,7 @@ exports.add = function(req, res) {
   //     req.app.locals.createdUserSuccess = true;
   //     res.redirect('login');
   // }
-  addUser(req, res, req.body);
+  addUser(req, res, req.body, req.files);
 };
 
 exports.login = function(req, res) {
@@ -142,7 +142,7 @@ d8888b. d8888b.      d88888b db    db d8b   db  .o88b.
 Y8888D' Y8888P'      YP      ~Y8888P' VP   V8P  `Y88P'
 */
 
-addUser = function(req, res, userInfo) {
+addUser = function(req, res, userInfo, userFiles) {
   if (!(new RegExp(/^[a-zA-Z0-9_]+$/).test(req.body.username))) {
     var errMsg = "Username " + req.body.username + " is invalid. Only letters, numbers, and underscores allowed.";
     res.render('signup', {
@@ -164,12 +164,19 @@ addUser = function(req, res, userInfo) {
               'errMsg': errMsg
             });
           } else {
+              var imgURL = userFiles.image.path;
+              if(imgURL.trim().length != 0) {
+                  cloudinary.uploader.upload(imgURL, function(result) {
+                      imgURL = result.url;
+                      console.log(result);
+                  });
+              }
             var newUser = {
               "name": userInfo.fullname,
               "username": userInfo.username,
               "password": userInfo.password,
               "email": userInfo.email,
-              "imageURL": userInfo.image
+              "imageURL": imgURL
             };
 
             var user = new models.User(newUser);
