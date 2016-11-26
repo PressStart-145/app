@@ -51,3 +51,17 @@ a {
     background-position: center center;
     background-size: cover;
 }
+
+.listOptions ul {
+    list-style-type: none;
+    padding: 0;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.listOptions li {
+    padding: 5px;
+    margin-top: 5px;
+    border: 1px solid var(--purple);
+    border-radius: 5px;
+}
