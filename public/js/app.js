@@ -1,3 +1,10 @@
+var scrollEventHandler = function()
+{
+  window.scroll(0, window.pageYOffset);
+}
+
+window.addEventListener("scroll", scrollEventHandler, false);
+
 $("#sidebarMenu").load('/sidebar.html');
 
 $(".backBtn").click(function(e) {
