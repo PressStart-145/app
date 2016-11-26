@@ -1,13 +1,11 @@
-// var data = require("../data/castles.json");
-// var dataUsers = require("../data/users.json");
-var models = require('../models');
+var data = require("../data/castles.json");
+var dataUsers = require("../data/users.json");
 var quests;
 var monsterHealth;
 
 var models = require('../models');
 
-exports.add = function(req, res) {
-
+exports.add = function(req, res) { //TODO DB
     quests = req.app.locals.currentCastle.quests;
     var newQuest = {
         "id": quests.length,
@@ -20,7 +18,7 @@ exports.add = function(req, res) {
     };
     req.app.locals.currentCastle.quests.push(newQuest);
 
-    //console.log(req.app.locals.currentCastle.quests);
+    console.log(req.app.locals.currentCastle.quests);
 
     var currentCastle = req.app.locals.currentCastle;
     var todoTaskList = [];
@@ -37,41 +35,10 @@ exports.add = function(req, res) {
         }
     }
 
-    var dbQuest = new models.Quest({
-      "title":        newQuest.title,
-      "description":  newQuest.description,
-      "level":        newQuest.level,
-      "deadline":     newQuest.deadline,
-      "completed":    false,
-      "index":        newQuest.id
-    });
-
-    dbQuest.save(function(err, quest) {
-      if(err) console.log(err);
-      models.Castle
-        .find({name: currentCastle.name})
-        .exec(function(err, castles){
-          if(err) console.log(err);
-          if(castles.length == 0) {
-            console.log("no castle with with " + currentCastle.name);
-          } else if(castles.length > 1) {
-            console.log("too many castles with name " + currentCastle.name);
-          } else {
-            models.Castle
-              .update(
-                { _id: castles[0]._id },
-                { $push: { quests: quest } },
-                function(err, raw) {
-                  if(err) console.log(err);
-                  res.render('wizard', {
-                    'doneTaskList': doneTaskList,
-                    'todoTaskList': todoTaskList,
-                    'inProgressTaskList': inProgressTaskList
-                  });
-                }
-            );
-          }
-        });
+    res.render('wizard', {
+      'doneTaskList': doneTaskList,
+      'todoTaskList': todoTaskList,
+      'inProgressTaskList': inProgressTaskList
     });
 };
 
@@ -99,77 +66,12 @@ exports.taskDone = function(req, res) { //TODO DB
             console.log(monsterHealth);
         }
     });
-
-    models.Quest
-      .find({title: req.query.task})
-      .exec(function(err, quests){
-        if(err) console.log(err);
-        if(quests.length == 0) {
-          console.log("no quest with title " + req.query.task);
-        } else if(quests.length > 1) {
-          console.log("more than one quest with name " + req.body.task);
-        } else {
-          models.Quest
-            .update(
-              { _id: quests[0]._id },
-              { $set: { completed: true } },
-              function(err, raw) {
-                if(err) console.log(err);
-                updateGame();
-              }
-            );
-        }
-      });
-
-      updateGame = function() {
-        models.Castle
-          .find({name: req.app.locals.currentCastle.name})
-          .exec(function(err, castles){
-            if(err) console.log(err);
-            if(castles.length == 0) {
-              console.log("no castles with title " + req.app.locals.currentCastle.name);
-            } else if(castles.length > 1) {
-              console.log("more than one castles with name " + req.app.locals.currentCastle.name);
-            } else {
-              models.Game
-                .update(
-                  { _id: castles[0].game },
-                  { $set: { monsterHealth: monsterHealth } },
-                  function(err, raw) {
-                    if(err) console.log(err);
-                    console.log("monsterHealth updated in DB");
-                  }
-                );
-            }
-          });
-      }
-
 }
 
-var spawnMonster = function(req) {
+var spawnMonster = function(req) { //TODO DB
     if(req.app.locals.currentCastle.monsterHealth == 0) {
         req.app.locals.currentCastle.monsterHealth = 100;
         console.log("A new monster has been spawned!!!");
-        models.Game
-          .find({name: req.app.locals.currentCastle.name})
-          .exec(function(err, castles){
-            if(err) console.log(err);
-            if(castles.length == 0) {
-              console.log("no castles with title " + req.app.locals.currentCastle.name);
-            } else if(castles.length > 1) {
-              console.log("more than one castles with name " + req.app.locals.currentCastle.name);
-            } else {
-              models.Game
-                .update(
-                  { _id: castles[0].game },
-                  { $set: { monsterHealth: req.app.locals.currentCastle.monsterHealth } },
-                  function(err, raw) {
-                    if(err) console.log(err);
-                    console.log("monsterHealth updated in DB");
-                  }
-                );
-            }
-          });
     }
 }
 
@@ -211,7 +113,7 @@ printCastles = function() {
 
 exports.account = function(req, res) {
 
-    //printCastles();
+    printCastles();
 
     var currentUser = req.app.locals.currentUser;
     var currentCastle = req.app.locals.currentCastle;
@@ -247,7 +149,7 @@ exports.account = function(req, res) {
 };
 
 
-exports.acceptTask = function(req, res) {
+exports.acceptTask = function(req, res) { //TODO DB
     var acceptedTaskIndex = req.body.taskNum;
     var accepteeUsername = req.app.locals.currentUser.username;
     var currentCastle = req.app.locals.currentCastle;
@@ -263,7 +165,7 @@ exports.acceptTask = function(req, res) {
       }
     }
 
-    req.app.locals.currentCastle = currentCastle;
+    console.log(currentCastle.quests);
 
     for (var key in currentCastle.quests) {
         if (currentCastle.quests[key].completed) {
@@ -276,62 +178,15 @@ exports.acceptTask = function(req, res) {
     }
 
 
-    models.User
-    .find({username: accepteeUsername})
-    .exec(function(err, users){
-      if(err) console.log(err);
-      if(users.length == 0) {
-        console.log("no users with name " + accepteeUsername);
-      } else if(users.length > 1) {
-        console.log("more than one user with username " + accepteeUsername);
-      } else {
-        updateQuest(users[0]._id);
-      }
+    res.render('wizard', {
+      'doneTaskList': doneTaskList,
+      'todoTaskList': todoTaskList,
+      'inProgressTaskList': inProgressTaskList
     });
-
-
-    updateQuest = function(userID) {
-      models.Castle
-        .find({name: currentCastle.name})
-        .populate("quests")
-        .exec(function(err, castles){
-          if(err) console.log(err);
-          if(castles.length == 0) {
-            console.log("no castles with name " + currentCastle.name);
-          } else if(castles.length > 1) {
-            console.log("more than one castles with name " + currentCastle.name);
-          } else {
-            var q_id;
-            castles[0].quests.forEach(function(q){
-              if(q.index == acceptedTaskIndex) {
-                q_id = q._id;
-              }
-            });
-
-            models.Quest
-              .update(
-                { _id: q_id },
-                { $set: { takenBy: userID } },
-                function(err, raw) {
-                  if(err) console.log(err);
-                  // console.log("after accept task");
-                  // console.log(currentCastle);
-                  res.render('wizard', {
-                    'doneTaskList': doneTaskList,
-                    'todoTaskList': todoTaskList,
-                    'inProgressTaskList': inProgressTaskList
-                  });
-                }
-              );
-          }
-        });
-    }
-
 };
 
 exports.view = function(req, res) {
     var currentCastle = req.app.locals.currentCastle;
-    console.log(currentCastle);
     var todoTaskList = [];
     var inProgressTaskList = [];
     var doneTaskList = [];
@@ -357,7 +212,6 @@ exports.view = function(req, res) {
 exports.view2 = function(req, res) {
     var currentUser = req.app.locals.currentUser;
     var currentCastle = req.app.locals.currentCastle;
-    console.log(currentCastle);
     var todoTaskList = [];
     var inProgressTaskList = [];
     var doneTaskList = [];
@@ -463,51 +317,13 @@ exports.completeTask = function(req, res) { //TODO DB
   completedTask = doneTaskList.length;
   var onlyOneCompleted = (completedTask == 1);
 
-  models.Castle
-    .find({name: currentCastle.name})
-    .populate("quests")
-    .exec(function(err, castles){
-      if(err) console.log(err);
-      if(castles.length == 0) {
-        console.log("no castles with name " + currentCastle.name);
-      } else if(castles.length > 1) {
-        console.log("more than one castles with name " + currentCastle.name);
-      } else {
-        var q_id;
-        castles[0].quests.forEach(function(q){
-          if(q.index == completedTaskIndex) {
-            q_id = q._id;
-          }
-        });
-
-        models.Quest
-          .update(
-            { _id: q_id },
-            { $set: { completed: true } },
-            function(err, raw) {
-              if(err) console.log(err);
-              updateGame(castles[0].game);
-            }
-          );
-      }
-    });
-    updateGame = function(gameID) {
-      models.Game
-        .update(
-          { _id: gameID },
-          { $set: { monsterHealth: currentCastle.game.monsterHealth } },
-          function(err, raw) {
-            if(err) console.log(err);
-            res.render('account', {
-                'numCompleted': completedTask,
-                'currentTaskList': todoTaskList,
-                'doneTaskList': doneTaskList,
-                'onlyOneCompleted': onlyOneCompleted,
-                'user': currentUser
-            });
-          }
-        );
-    }
+  res.render('account', {
+      'numCompleted': completedTask,
+      'currentTaskList': todoTaskList,
+      'doneTaskList': doneTaskList,
+      'onlyOneCompleted': onlyOneCompleted,
+      'user': currentUser
+  });
 }
 
 exports.reopenTask = function(req, res) { //TODO DB (not in use though)

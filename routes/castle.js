@@ -438,14 +438,14 @@ makeCastleJson = function(req, res, page, num, arg) {
             memberIDs.push({"id": m._id, "username": m.username});
           }
         });
-        var i = 0;
+        // var i = 0;
         c.quests.forEach(function(q){
           var qJson = {
-            "id": i,
+            "id": q.index,
             "title": q.title,
             "description": q.description,
             "level": q.level,
-            "deadline": q.deadline,
+            "deadline": q.deadline.toDateString(),
             "takenBy": "",
             "completed": q.completed
           };
@@ -455,7 +455,8 @@ makeCastleJson = function(req, res, page, num, arg) {
           }
 
           memberIDs.forEach(function(m){
-            if(m.id === q.takenBy) {
+            //if(m.id === q.takenBy) { // <-- this doesnt work fu JS
+            if((m.id).toString() === (q.takenBy).toString()) {
               qJson.takenBy = m.username;
             }
           });
