@@ -90,8 +90,6 @@ exports.view = function(req, res) {
         rankings = tmpUsers.slice();
         rankings.sort(compareCompleted);
 
-
-
         res.render('team', {
             'users': users,
             'castleName': castle.name,

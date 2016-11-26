@@ -160,3 +160,13 @@ html, body {
   width: 90%;
   text-align: center;
 }
+
+#contentDiv {
+    width: 80%;
+    margin: 0 auto !important;
+    overflow-y:scroll;
+}
+
+#contentDiv .row {
+    margin-top: 10px;
+}
