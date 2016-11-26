@@ -27,5 +27,5 @@
     "username": "DonaldDuck",
     "password": "goose",
     "email": "duck@mail.com",
-    "imageURL": "duck.gif"
+    "imageURL": "/images/duck.gif"
 }]

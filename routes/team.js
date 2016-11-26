@@ -30,7 +30,7 @@ exports.view = function(req, res) {
           }
 
           if(u.imageURL == null || u.imageURL === "") {
-            user.image = "PersonalAccount-01-01.png";
+            user.image = "/images/PersonalAccount-01-01.png";
           } else {
             console.log("imgurl");
             console.log(u.imageURL);
