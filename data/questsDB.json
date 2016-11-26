@@ -4,27 +4,31 @@
     "description": "yeah seriously",
     "level": 10,
     "deadline": "02/10/1994",
-    "completed": true
+    "completed": true,
+    "index": 0
   },
   {
     "title": "pick your nose",
     "description": "mhh its delicious",
     "level": 1,
     "deadline": "10/31/2014",
-    "completed": false
+    "completed": false,
+    "index": 1
   },
   {
     "title": "Eat food",
     "description": "yeah seriously",
     "level": 3,
     "deadline": "12/25/2016",
-    "completed": false
+    "completed": false,
+    "index": 2
   },
   {
     "title": "do compiler hw",
     "description": "rip me",
     "level": 9,
     "deadline": "06/06/666",
-    "completed": false
+    "completed": false,
+    "index": 3
   }
 ]

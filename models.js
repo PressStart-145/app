@@ -18,7 +18,8 @@ var QuestSchema = new Mongoose.Schema({
   "level":        Number,
   "deadline":     Date,
   "takenBy":      {type: Mongoose.Schema.Types.ObjectId,  ref: 'User', default: new Mongoose.Types.ObjectId},
-  "completed":    Boolean
+  "completed":    Boolean,
+  "index":        Number
 });
 exports.Quest = Mongoose.model('Quest', QuestSchema);
 
