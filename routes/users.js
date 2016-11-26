@@ -19,18 +19,20 @@ exports.details = function(req, res) {
 }
 
 exports.update = function(req, res) {
-  if (req.body.name !== "") {
-    req.app.locals.currentUser.name = req.body.name;
-  }
-  if (req.body.email !== "") {
-    req.app.locals.currentUser.email = req.body.email;
-  }
-  if (req.body.password !== "") {
-    req.app.locals.currentUser.password = req.body.password;
-  }
+  // if (req.body.name !== "") {
+  //   req.app.locals.currentUser.name = req.body.name;
+  // }
+  // if (req.body.email !== "") {
+  //   req.app.locals.currentUser.email = req.body.email;
+  // }
+  // if (req.body.password !== "") {
+  //   req.app.locals.currentUser.password = req.body.password;
+  // }
+  //
+  // req.app.locals.success = true;
+  // res.redirect('account');
 
-  req.app.locals.success = true;
-  res.redirect('account');
+  updateUser(req, res, req.body);
 }
 
 exports.signup = function(req, res) {
@@ -196,4 +198,35 @@ addUser = function(req, res, userInfo, userFiles) {
           }
         });
   }
+}
+
+updateUser = function(req, res, userInfo) {
+  userInfo.username = req.app.locals.currentUser.username;
+  userInfo.imageURL = req.app.locals.currentUser.imageURL;
+  if (userInfo.name === "") {
+    userInfo.name = req.app.locals.currentUser.name;
+  }
+  if (userInfo.email === "") {
+    userInfo.email = req.app.locals.currentUser.email;
+  }
+  if (userInfo.password === "") {
+    userInfo.password = req.app.locals.currentUser.password;
+  }
+
+  models.User.findOneAndUpdate({
+      username: userInfo.username
+  }, {
+      $set: {
+          name: userInfo.name,
+          email: userInfo.email,
+          password: userInfo.password
+      }
+  }, {
+    new: true
+  }, function(err, doc) {
+      if (err) console.log(err);
+      req.app.locals.currentUser = userInfo;
+      req.app.locals.success = true;
+      res.redirect('account');
+  });
 }
