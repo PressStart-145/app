@@ -40,3 +40,14 @@ a {
 .subtitle {
     font-size: 70%;
 }
+
+.icon {
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    margin: 5px;
+    border: 1px solid black;
+    border-radius: 7px;
+    background-position: center center;
+    background-size: cover;
+}

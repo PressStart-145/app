@@ -47,7 +47,7 @@
 				{{else}}
 				<div class="row userRowDiv">
 				{{/if}}
-					<div class="col-xs-2"><img src="{{image}}" class="img-thumbnail"/></div>
+					<div class="col-xs-2 icon" style="background-image:url({{image}});"></div>
 					<div class="col-xs-8">
 						<div class="row">
 							<bold>{{username}}</bold>
@@ -71,7 +71,7 @@
 				{{else}}
 				<div class="row rankingRowDiv">
 				{{/if}}
-					<div class="col-xs-2"><img src="{{image}}" class="img-thumbnail"/></div>
+					<div class="col-xs-2 icon" style="background-image:url({{image}});"></div>
 					<div class="col-xs-8">{{username}}</div>
 					<div class="col-xs-2" style="text-align: right;">{{numCompleted}}</div>
 				</div>
@@ -81,7 +81,7 @@
 			<div id="achievementDiv" class="container-fluid hidden">
 				{{#each achievements}}
 				<div class="row achievementRowDiv">
-					<div class="col-xs-2"><img src="/images/{{image}}" class="img-thumbnail"/></div>
+					<div class="col-xs-2 icon" style="background-image:url(/images/{{image}});"></div>
 					<div class="col-xs-8">{{name}}</div>
 					<div class="col-xs-2" style="text-align: right;">{{numCompleted}}</div>
 				</div>
