@@ -202,7 +202,6 @@ addUser = function(req, res, userInfo, userFiles) {
 
 updateUser = function(req, res, userInfo) {
   userInfo.username = req.app.locals.currentUser.username;
-  userInfo.imageURL = req.app.locals.currentUser.imageURL;
   if (userInfo.name === "") {
     userInfo.name = req.app.locals.currentUser.name;
   }
@@ -212,6 +211,9 @@ updateUser = function(req, res, userInfo) {
   if (userInfo.password === "") {
     userInfo.password = req.app.locals.currentUser.password;
   }
+  if (userInfo.imageURL === "") {
+    userInfo.imageURL = req.app.locals.currentUser.imageURL;
+  }
 
   models.User.findOneAndUpdate({
       username: userInfo.username
@@ -219,7 +221,8 @@ updateUser = function(req, res, userInfo) {
       $set: {
           name: userInfo.name,
           email: userInfo.email,
-          password: userInfo.password
+          password: userInfo.password,
+          imageURL: userInfo.imageURL
       }
   }, {
     new: true
