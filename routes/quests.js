@@ -5,7 +5,7 @@ var monsterHealth;
 
 var models = require('../models');
 
-exports.add = function(req, res) {
+exports.add = function(req, res) { //TODO DB
     quests = req.app.locals.currentCastle.quests;
     var newQuest = {
         "id": quests.length,
@@ -42,7 +42,7 @@ exports.add = function(req, res) {
     });
 };
 
-exports.taskDone = function(req, res) {
+exports.taskDone = function(req, res) { //TODO DB
     quests = req.app.locals.currentCastle.quests;
     monsterHealth = req.app.locals.currentCastle.game["monsterHealth"];
     quests.forEach(function(e) {
@@ -68,7 +68,7 @@ exports.taskDone = function(req, res) {
     });
 }
 
-var spawnMonster = function(req) {
+var spawnMonster = function(req) { //TODO DB
     if(req.app.locals.currentCastle.monsterHealth == 0) {
         req.app.locals.currentCastle.monsterHealth = 100;
         console.log("A new monster has been spawned!!!");
@@ -149,7 +149,7 @@ exports.account = function(req, res) {
 };
 
 
-exports.acceptTask = function(req, res) {
+exports.acceptTask = function(req, res) { //TODO DB
     var acceptedTaskIndex = req.body.taskNum;
     var accepteeUsername = req.app.locals.currentUser.username;
     var currentCastle = req.app.locals.currentCastle;
@@ -260,7 +260,7 @@ exports.view2 = function(req, res) {
     });
 };
 
-exports.completeTask = function(req, res) {
+exports.completeTask = function(req, res) { //TODO DB
   var completedTaskIndex = req.body.taskNum;
   var currentUser = req.app.locals.currentUser;
   var currentCastle = req.app.locals.currentCastle;
@@ -326,7 +326,7 @@ exports.completeTask = function(req, res) {
   });
 }
 
-exports.reopenTask = function(req, res) {
+exports.reopenTask = function(req, res) { //TODO DB (not in use though)
   var completedTaskName = req.body.taskName;
   var currentUser = req.app.locals.currentUser;
   var currentCastle = req.app.locals.currentCastle;
