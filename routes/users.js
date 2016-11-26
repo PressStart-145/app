@@ -32,7 +32,7 @@ exports.update = function(req, res) {
   // req.app.locals.success = true;
   // res.redirect('account');
 
-  updateUser(req, res, req.body);
+  updateUser(req, res, req.body, req.files);
 }
 
 exports.signup = function(req, res) {
@@ -200,7 +200,7 @@ addUser = function(req, res, userInfo, userFiles) {
   }
 }
 
-updateUser = function(req, res, userInfo) {
+updateUser = function(req, res, userInfo, userFiles) {
   userInfo.username = req.app.locals.currentUser.username;
   if (userInfo.name === "") {
     userInfo.name = req.app.locals.currentUser.name;
@@ -211,25 +211,48 @@ updateUser = function(req, res, userInfo) {
   if (userInfo.password === "") {
     userInfo.password = req.app.locals.currentUser.password;
   }
-  if (userInfo.imageURL === "") {
-    userInfo.imageURL = req.app.locals.currentUser.imageURL;
+  if (userFiles.imageURL === "") {
+    userFiles.imageURL = req.app.locals.currentUser.imageURL;
   }
 
-  models.User.findOneAndUpdate({
-      username: userInfo.username
-  }, {
-      $set: {
-          name: userInfo.name,
-          email: userInfo.email,
-          password: userInfo.password,
-          imageURL: userInfo.imageURL
-      }
-  }, {
-    new: true
-  }, function(err, doc) {
-      if (err) console.log(err);
-      req.app.locals.currentUser = userInfo;
-      req.app.locals.success = true;
-      res.redirect('account');
-  });
+  var imgURL = userFiles.image.path;
+  if(imgURL.trim().length != 0) {
+      cloudinary.uploader.upload(imgURL, function(result) {
+          models.User.findOneAndUpdate({
+              username: userInfo.username
+          }, {
+              $set: {
+                  name: userInfo.name,
+                  email: userInfo.email,
+                  password: userInfo.password,
+                  imageURL: result.url
+              }
+          }, {
+            new: true
+          }, function(err, doc) {
+              if (err) console.log(err);
+              req.app.locals.currentUser = userInfo;
+              req.app.locals.success = true;
+              res.redirect('account');
+          });
+      });
+  } else {
+      models.User.findOneAndUpdate({
+          username: userInfo.username
+      }, {
+          $set: {
+              name: userInfo.name,
+              email: userInfo.email,
+              password: userInfo.password,
+              imageURL: userFiles.imageURL
+          }
+      }, {
+        new: true
+      }, function(err, doc) {
+          if (err) console.log(err);
+          req.app.locals.currentUser = userInfo;
+          req.app.locals.success = true;
+          res.redirect('account');
+      });
+  }
 }
