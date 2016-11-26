@@ -45,8 +45,6 @@
 							<div><a href="/account/details" class="btn" id="btnChangeInfo">Change your info</a></div>
 						</div>
 					</div>
-				</div>
-				<div class="container-fluid">
 					<div class="row extra">
 						<div class="col-xs-6">
 							<h5 id="currentQuestsBtn" class="btn selected">Current Quests</h5>
@@ -55,6 +53,8 @@
 							<h5 id="completedQuestsBtn" class="btn">Done Quests</h5>
 						</div>
 					</div>
+				</div>
+				<div class="container-fluid taskList">
 					{{#each currentTaskList}}
 						<div class="row currentTaskRow" id="task#{{id}}">
 							<div class="col-xs-5">{{title}}</div>
@@ -69,19 +69,19 @@
 							<!--<div class="col-xs-4 btn">Reopen</div>-->
 						</div>
 					{{/each}}
+					<div class="confirm">
+						<p>Are you all done with <span id="taskTitle"></span>?</p>
+						<a href="#" id="yesDone" class="btn">Yes</a>
+						<a href="#" id="noDone" class="btn">No</a>
+					</div>
+					<h3 style="width:100%; text-align:center;">
+						{{#if onlyOneCompleted}}
+							Completed {{numCompleted}} Quest
+						{{else}}
+							Completed {{numCompleted}} Quests
+						{{/if}}
+					</h3>
 				</div>
-				<div class="confirm">
-					<p>Are you all done with <span id="taskTitle"></span>?</p>
-					<a href="#" id="yesDone" class="btn">Yes</a>
-					<a href="#" id="noDone" class="btn">No</a>
-				</div>
-				<h3 style="width:100%; text-align:center;">
-					{{#if onlyOneCompleted}}
-						Completed {{numCompleted}} Quest
-					{{else}}
-						Completed {{numCompleted}} Quests
-					{{/if}}
-				</h3>
 			</div>
 			{{#if success}}
 			<div class="alert alert-success">

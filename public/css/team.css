@@ -2,6 +2,8 @@
 
 html, body {
   margin: 0;
+  display: table;
+  position: absolute;
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -164,7 +166,7 @@ html, body {
 #contentDiv {
     width: 80%;
     margin: 0 auto !important;
-    overflow-y:scroll;
+    overflow-y: scroll !important;
 }
 
 #contentDiv .row {
