@@ -27,29 +27,29 @@
 <body>
 	<div class="container wrap">
 
-		<div id="mainDiv" class="container-fluid">
-			<div class="row sidebarToggleButton">
-				<a href="#menu-toggle" id="mainDivSidebarButtonImg">
-					<img src="/images/HamburgerMenuBar-01.png"/>
-				</a>
-			</div>
-			<div id="castleNameDiv" class="row">
-				<h1>{{castleName}}</h1>
-			</div>
-			<div class="row extra" id='rankingAchievmentButtonRow'>
-				<div class="col-xs-4">
-					<a href="#" id='usersButton' class="btn selected">Members</a>
+		<div id="mainDiv">
+			<div class="container-fluid">
+				<div class="row sidebarToggleButton">
+					<a href="#menu-toggle" id="mainDivSidebarButtonImg">
+						<img src="/images/HamburgerMenuBar-01.png"/>
+					</a>
 				</div>
-				<div class="col-xs-4">
-					<a href="#" id='rankingsButton' class="btn">Rankings</a>
+				<div id="castleNameDiv" class="row">
+					<h1>{{castleName}}</h1>
 				</div>
-				<div class="col-xs-4">
-					<a href="#" id='achievementsButton' class="btn">Achievements</a>
+				<div class="row extra" id='rankingAchievmentButtonRow'>
+					<div class="col-xs-4">
+						<a href="#" id='usersButton' class="btn selected">Members</a>
+					</div>
+					<div class="col-xs-4">
+						<a href="#" id='rankingsButton' class="btn">Rankings</a>
+					</div>
+					<div class="col-xs-4">
+						<a href="#" id='achievementsButton' class="btn">Achievements</a>
+					</div>
 				</div>
-			</div>
-
-			<div id="contentDiv" class="row">
-				<div id="userDiv" class="container-fluid">
+			</div><div id="contentDiv" class="container-fluid">
+				<div id="userDiv" class="listView">
 					{{#each users}}
 					{{#if currUser}}
 					<div class="row userRowDiv currUserDiv">
@@ -73,7 +73,7 @@
 					</div>
 					{{/each}}
 				</div>
-				<div id="rankingDiv" class="container-fluid hidden">
+				<div id="rankingDiv" class="hidden listView">
 					{{#each rankings}}
 					{{#if currUser}}
 					<div class="row rankingRowDiv currUserDiv">
@@ -91,7 +91,7 @@
 					{{/each}}
 				</div>
 
-				<div id="achievementDiv" class="container-fluid hidden">
+				<div id="achievementDiv" class="hidden listView">
 					{{#each achievements}}
 					<div class="row achievementRowDiv">
 						<div class="col-xs-2 icon" style="background-image:url(/images/{{image}});"></div>

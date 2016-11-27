@@ -20,10 +20,6 @@ html, body {
   color: black;
 }
 
-.currUserDiv {
-  color: red;
-}
-
 .userTaskRowDiv {
   display: none;
 }
@@ -138,6 +134,11 @@ html, body {
 
 */
 
+#mainDiv {
+    max-height: 97%;
+    margin: 3% 0px;
+}
+
 #userDiv.hidden {
   visibility: hidden;
 }
@@ -166,9 +167,20 @@ html, body {
 #contentDiv {
     width: 80%;
     margin: 0 auto !important;
+    max-height: 70%;
     overflow-y: scroll !important;
 }
 
 #contentDiv .row {
     margin-top: 10px;
+}
+
+.currUserDiv {
+  color: var(--yellow);
+  border: 1px solid var(--yellow) !important;
+}
+
+#rankingDiv>:first-child {
+    border: 1px dashed var(--yellow) !important;
+    background-color: var(--purple);
 }
