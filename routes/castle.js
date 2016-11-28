@@ -421,11 +421,16 @@ makeCastleJson = function(req, res, page, num, arg) {
           };
           var nc = 0;
           c.quests.forEach(function(q){
-            if(q.takenBy === m._id && q.completed) {
+            if((q.takenBy).toString() === (m._id).toString() && q.completed) {
               nc++;
             }
           });
           mJson.numCompleted = nc;
+          console.log("<-");
+          console.log(cJson.name);
+          console.log(mJson.username);
+          console.log(mJson.numCompleted);
+          console.log("->");
           cJson.members.push(mJson);
 
           var toAdd = true;
