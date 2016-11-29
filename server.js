@@ -8,6 +8,9 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
+var bodyParser = require('body-parser'); // for reading POSTed form data into `req.body`
+var expressSession = require('express-session');
+var cookieParser = require('cookie-parser');
 
 /* Cloudinary Image Hosting */
 var cloudinary = require('cloudinary');
@@ -41,30 +44,6 @@ mongoose.connect(database_uri);
   node initUserDB.js; node initQuestDB.js; node initCastleDB.js; node linkQuestDB.js; node linkCastleDB.js
 */
 
-// DB TESTING
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function() {
-//     var kittySchema = mongoose.Schema({
-//         name: String
-//     });
-//     var Kitten = mongoose.model('Kitty', kittySchema);
-//     var silence = new Kitten({name: "silence"});
-//
-//     silence.save(function(err, cat){
-//         if (err) console.log(err);
-//         console.log("saving");
-//         console.log(cat);
-//         Kitten
-//           .find()
-//           .remove()
-//           .exec(function() {
-//             console.log("Kitty table dropped");
-//             mongoose.connection.close();
-//         });
-//     });
-// });
-
 var app = express();
 var castle = require('./routes/castle');
 var users = require('./routes/users');
@@ -78,6 +57,12 @@ var dataCastle = require("./data/castles.json");
 var dataUsers = require("./data/users.json");
 app.locals.currentUser = dataUsers.users[0];
 app.locals.currentCastle = dataCastle.castles[0];
+
+app.use(cookieParser());
+
+app.use(expressSession({secret:'dank M3M35'}));
+
+app.use(bodyParser());
 
 app.configure(function(){
     app.use(express.methodOverride());
@@ -105,7 +90,7 @@ app.post('/login/sendPassword', users.sendPassword);
 app.get('/login/forgotPassword', users.forgotPassword);
 app.post('/signup/add', users.add);
 app.post('/account/completeTask', quests.completeTask);
-app.post('/account/reopenTask', quests.reopenTask);
+//app.post('/account/reopenTask', quests.reopenTask);
 app.get('/account/details', users.details);
 app.post('/account/update', users.update);
 app.post('/wizard/acceptTask', quests.acceptTask);
