@@ -98,7 +98,7 @@ exports.view = function(req, res) {
     if(castle.members.length > 4) {
       achievements.push({
         'image' : 'Castle-01-01.png',
-        'name' : 'Recruited many knights and ladies'
+        'name' : 'Recruited many lads and gals'
       });
     }
 

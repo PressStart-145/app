@@ -13,8 +13,12 @@ cloudinary.config({
 });
 
 exports.details = function(req, res) {
+  var u = req.app.locals.currentUser;
+  if(req.session.user) {
+    u = req.session.user
+  }
   res.render('accountDetails', {
-    'user': req.app.locals.currentUser
+    'user': u
   });
 }
 
@@ -182,6 +186,7 @@ Y8888D' Y8888P'      YP      ~Y8888P' VP   V8P  `Y88P'
 */
 
 addUser = function(req, res, userInfo, userFiles) {
+  console.log(userInfo);
   if (!(new RegExp(/^[a-zA-Z0-9_]+$/).test(req.body.username))) {
     var errMsg = "Username " + req.body.username + " is invalid. Only letters, numbers, and underscores allowed.";
     res.render('signup', {
