@@ -41,7 +41,7 @@
 		        </form>
 
 				<div class="row extra">
-		        	<a href="#" id="forgotPassword" class="btn">Forgot your password?</a>
+		        	<a href="/login/forgotPassword" id="forgotPassword" class="btn">Forgot your password?</a>
 				</div>
 				<div class="row extra">
 					<a href="/signup" class="btn" id="makeAccount">Don't have an account?</a>
@@ -55,7 +55,7 @@
 				{{#if success}}
 				<div class="alert alert-success">
 	  			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-	  			Account successfully created.
+					{{successMsg}}
 				</div>
 				{{/if}}
 			</div>

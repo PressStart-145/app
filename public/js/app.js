@@ -19,7 +19,7 @@ $(".sidebarToggleButton").click(function(e) {
     $("#sidebarDiv").toggleClass("toggled");
 });
 
-$('#forgotPassword').click(function(e){
-  e.preventDefault();
-  $.post( "/login/forgotPassword", {},function(data){});
-});
+// $('#forgotPassword').click(function(e){
+//   e.preventDefault();
+//   $.post( "/login/forgotPassword", {},function(data){});
+// });

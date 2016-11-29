@@ -7,9 +7,9 @@ var models = require('../models');
 
 var cloudinary = require('cloudinary');
 cloudinary.config({
-    cloud_name: 'pressstart',
-    api_key: '253161822796357',
-    api_secret: '9vUKk4-tKlFrkk7rHai5tQrL27c'
+  cloud_name: 'pressstart',
+  api_key: '253161822796357',
+  api_secret: '9vUKk4-tKlFrkk7rHai5tQrL27c'
 });
 
 exports.details = function(req, res) {
@@ -82,57 +82,103 @@ exports.add = function(req, res) {
 exports.login = function(req, res) {
   var err = req.app.locals.err;
   var errMsg = req.app.locals.errMsg;
-  var success = req.app.locals.createdUserSuccess;
+  var success = req.app.locals.success;
+  var successMsg = req.app.locals.successMsg;
   req.app.locals.err = null;
   req.app.locals.errMsg = null;
-  req.app.locals.createdUserSuccess = null;
+  req.app.locals.success = null;
+  req.app.locals.successMsg = null;
 
   res.render('login', {
     'err': err,
     'errMsg': errMsg,
-    'success': success
+    'success': success,
+    'successMsg': successMsg
   });
 };
 
+exports.forgotPassword = function(req, res) {
+  res.render('forgotPassword');
+};
+
 exports.sendPassword = function(req, res) {
-  console.log("Not Sending Email, Commented Out");
-  /*
-  var userEmail = 'popovingenieur@gmail.com'; //TODO get from json data
+  if (!req.body.username) {
+    req.app.locals.err = true;
+    req.app.locals.errMsg = "no username specified"
+    res.redirect("/login");
+  }
 
-  console.log("In sending email function");
-
-  var nodemailer = require('nodemailer');
-
-  // create reusable transporter object using the default SMTP transport
-  var transporter = nodemailer.createTransport({
-       service: 'gmail', // no need to set host or port etc.
-       auth: {
-          user: 'pressstartcogs120@gmail.com',
-          pass: 'cogs120cse170'
+  models.User
+    .find({
+      username: req.body.username
+    })
+    .exec(function(err, users) {
+      if (err) console.log(err);
+      if (users.length == 0) {
+        req.app.locals.err = true;
+        req.app.locals.errMsg = "no username " + req.body.username
+        res.redirect("/login");
+      } else if (users.length > 1) {
+        console.log(users);
+        req.app.locals.err = true;
+        req.app.locals.errMsg = "more than one username " + req.body.username
+        res.redirect("/login");
+      } else {
+        sendEmail(users[0]);
       }
-  });
+    });
 
-  // setup e-mail data with unicode symbols
-  var mailOptions = {
-      from: '"Press Start" <pressstartcogs120@gmail.com>', // sender address
+
+  sendEmail = function(user) {
+    var userEmail = user.email; //'popovingenieur@gmail.com';
+
+
+    var regex = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+
+    if (!regex.test(user.email)) {
+      req.app.locals.err = true;
+      req.app.locals.errMsg = "Wrong email format " + user.email
+      res.redirect("/login");
+    }
+
+    var nodemailer = require('nodemailer');
+
+    // create reusable transporter object using the default SMTP transport
+    var transporter = nodemailer.createTransport({
+      service: 'gmail', // no need to set host or port etc.
+      auth: {
+        user: 'pressstartcogs120@gmail.com',
+        pass: 'cogs120PS'
+      }
+    });
+
+    // setup e-mail data with unicode symbols
+    var emailTxt = "Hi " + user.name + "\n here is your password for username (" + user.username + ")/n" + user.password;
+    var emailHtml = "<h1>Hi " + user.name + "</h1><p>Here is your password for username (" + user.username + ")</p><p>" + user.password + "</p>";
+
+    var mailOptions = {
+      from: '"Quest We Can" <pressstartcogs120@gmail.com>', // sender address
       to: userEmail, // list of receivers
-      subject: 'Your Press Start password', // Subject line
-      text: 'Here s your password you moron: dickbutt', // plaintext body
-      html: '<b>Here s your password you moron: dickbutt</b>' // html body
-  };
+      subject: 'Your Quest We Can password', // Subject line
+      text: emailTxt, // plaintext body
+      html: emailHtml // html body
+    };
 
 
-  // send mail with defined transport object
-  transporter.sendMail(mailOptions, function(error, info){
-      if(error){
-          return console.log(error);
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+         console.log(error);
+         req.app.locals.err = true;
+         req.app.locals.errMsg = "Failed to send email"
+         res.redirect("/login");
       }
       console.log('Message sent: ' + info.response);
-  });*/
-
-
-
-  res.send('<h1>Email sent</h1>') //TODO write confirmation page
+      req.app.locals.success = true;
+      req.app.locals.successMsg = "Sent email to " + user.email
+      res.redirect("/login");
+    });
+  }
 };
 
 /*
@@ -166,35 +212,37 @@ addUser = function(req, res, userInfo, userFiles) {
               'errMsg': errMsg
             });
           } else {
-              var imgURL = userFiles.image.path;
-              var newUser = {
-                "name": userInfo.fullname,
-                "username": userInfo.username,
-                "password": userInfo.password,
-                "email": userInfo.email,
-                "imageURL": imgURL
-              };
+            var imgURL = userFiles.image.path;
+            var newUser = {
+              "name": userInfo.fullname,
+              "username": userInfo.username,
+              "password": userInfo.password,
+              "email": userInfo.email,
+              "imageURL": imgURL
+            };
 
-              if(imgURL.trim().length != 0) {
-                  cloudinary.uploader.upload(imgURL, function(result) {
-                      newUser['imageURL'] = result.url;
-                      var user = new models.User(newUser);
-                      user.save(function(err, user) {
-                        if (err) console.log(err);
-                        console.log("User " + user.username + " saved on DB");
-                        req.app.locals.createdUserSuccess = true;
-                        res.redirect('login');
-                      });
-                  });
-              } else {
-                  var user = new models.User(newUser);
-                  user.save(function(err, user) {
-                    if (err) console.log(err);
-                    console.log("User " + user.username + " saved on DB");
-                    req.app.locals.createdUserSuccess = true;
-                    res.redirect('login');
-                  });
-              }
+            if (imgURL.trim().length != 0) {
+              cloudinary.uploader.upload(imgURL, function(result) {
+                newUser['imageURL'] = result.url;
+                var user = new models.User(newUser);
+                user.save(function(err, user) {
+                  if (err) console.log(err);
+                  console.log("User " + user.username + " saved on DB");
+                  req.app.locals.success = true;
+                  req.app.locals.successMsg = "Account successfully created.";
+                  res.redirect('login');
+                });
+              });
+            } else {
+              var user = new models.User(newUser);
+              user.save(function(err, user) {
+                if (err) console.log(err);
+                console.log("User " + user.username + " saved on DB");
+                req.app.locals.success = true;
+                req.app.locals.successMsg = "Account successfully created.";
+                res.redirect('login');
+              });
+            }
           }
         });
   }
@@ -216,43 +264,44 @@ updateUser = function(req, res, userInfo, userFiles) {
   }
 
   var imgURL = userFiles.image.path;
-  if(imgURL.trim().length != 0) {
-      cloudinary.uploader.upload(imgURL, function(result) {
-          models.User.findOneAndUpdate({
-              username: userInfo.username
-          }, {
-              $set: {
-                  name: userInfo.name,
-                  email: userInfo.email,
-                  password: userInfo.password,
-                  imageURL: result.url
-              }
-          }, {
-            new: true
-          }, function(err, doc) {
-              if (err) console.log(err);
-              req.app.locals.currentUser = userInfo;
-              req.app.locals.success = true;
-              res.redirect('account');
-          });
-      });
-  } else {
+  if (imgURL.trim().length != 0) {
+    cloudinary.uploader.upload(imgURL, function(result) {
       models.User.findOneAndUpdate({
-          username: userInfo.username
+        username: userInfo.username
       }, {
-          $set: {
-              name: userInfo.name,
-              email: userInfo.email,
-              password: userInfo.password,
-              imageURL: userFiles.imageURL
-          }
+        $set: {
+          name: userInfo.name,
+          email: userInfo.email,
+          password: userInfo.password,
+          imageURL: result.url
+        }
       }, {
         new: true
       }, function(err, doc) {
-          if (err) console.log(err);
-          req.app.locals.currentUser = userInfo;
-          req.app.locals.success = true;
-          res.redirect('account');
+        if (err) console.log(err);
+        req.app.locals.currentUser = userInfo;
+        req.app.locals.success = true;
+        req.app.locals.successMsg = "Account successfully created.";
+        res.redirect('account');
       });
+    });
+  } else {
+    models.User.findOneAndUpdate({
+      username: userInfo.username
+    }, {
+      $set: {
+        name: userInfo.name,
+        email: userInfo.email,
+        password: userInfo.password,
+        imageURL: userFiles.imageURL
+      }
+    }, {
+      new: true
+    }, function(err, doc) {
+      if (err) console.log(err);
+      req.app.locals.currentUser = userInfo;
+      req.app.locals.success = true;
+      res.redirect('account');
+    });
   }
 }
