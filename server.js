@@ -101,7 +101,8 @@ if('development' == app.get('env')) {
 }
 
 // Add routes here
-app.post('/login/forgotPassword', users.sendPassword);
+app.post('/login/sendPassword', users.sendPassword);
+app.get('/login/forgotPassword', users.forgotPassword);
 app.post('/signup/add', users.add);
 app.post('/account/completeTask', quests.completeTask);
 app.post('/account/reopenTask', quests.reopenTask);
