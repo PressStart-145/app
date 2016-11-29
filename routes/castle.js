@@ -457,7 +457,8 @@ makeCastleJson = function(req, res, page, num, arg) {
         c.members.forEach(function(m) {
           var mJson = {
             "username": m.username,
-            "numCompleted": 0
+            "numCompleted": 0,
+            "imageURL": m.imageURL
           };
           var nc = 0;
           c.quests.forEach(function(q) {

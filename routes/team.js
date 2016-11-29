@@ -40,7 +40,7 @@ exports.view = function(req, res) {
           user.currUser = true;
         }
       }
-
+      console.log(u.imageURL);
       if(u.imageURL == null || u.imageURL === "") {
         user.image = "/images/PersonalAccount-01-01.png";
       } else {
