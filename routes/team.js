@@ -60,25 +60,55 @@ exports.view = function(req, res) {
       tmpUsers.push(user);
     });
 
-    var achievements = [
-      {
-        'image' : 'TeamInfo-01-01.png',
-        'name' : 'Killed a boss!'
-      } ,
-      {
-        'image' : 'TeamInfo-01-01.png',
-        'name' : 'Protected 10 towns!'
-      } ,
-      {
-        'image' : 'TeamInfo-01-01.png',
-        'name' : 'No damage in a week!'
-      } ,
-      {
-        'image' : 'TeamInfo-01-01.png',
-        'name' : '7 quests completed'
-      }
-    ];
+    var achievements = [];
+    if(castle.game.monsterHealth < 50) {
+      achievements.push({
+        'image' : '/monsters/kraken/Kraken.png',
+        'name' : 'Dealt lots of damage'
+      });
+    }
 
+    if(parseInt(castle.game.castleHealth) > 70) {
+      achievements.push({
+        'image' : 'Castle-01-01.png',
+        'name' : 'Little damage taken'
+      });
+    }
+
+    if(parseInt(castle.numCompleted) > 10) {
+      achievements.push({
+        'image' : 'TeamInfo-01-01.png',
+        'name' : 'Lots of tasks done'
+      });
+    } else if(parseInt(castle.numCompleted) > 5) {
+      achievements.push({
+        'image' : 'TeamInfo-01-01.png',
+        'name' : 'Many tasks done'
+      });
+    }
+    castle.members.forEach(function(m){
+      if(parseInt(m.numCompleted) > 4) {
+        achievements.push({
+          'image' : 'PersonalAccount-01-01.png',
+          'name' : m.username + ' has finished ' + m.numCompleted + ' tasks'
+        });
+      }
+    });
+
+    if(castle.members.length > 4) {
+      achievements.push({
+        'image' : 'Castle-01-01.png',
+        'name' : 'Recruited many knights and ladies'
+      });
+    }
+
+
+    if(achievements.length == 0) {
+      achievements.push({
+        'image' : 'TeamInfo-01-01.png',
+        'name' : 'no achievements yet'
+      });
+    }
 
     function compareCompleted(a,b) {
       if (a.numCompleted > b.numCompleted)
