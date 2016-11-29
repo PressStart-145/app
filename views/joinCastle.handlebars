@@ -22,8 +22,8 @@
 </head>
 
 <body>
-	<div class="container vertical-center">
-        <div id="search">
+	<div class="container">
+        <div id="search" class="vertical-center">
             <form onsubmit="searchCastles()" target="formresponse">
                 <p>Find your castle!</p>
                 <input type="text" name="name" placeholder="Castle Name" autofocus="">
@@ -38,14 +38,14 @@
             </form>
 			<iframe name='formresponse' style="display: none;"></iframe>
         </div>
-        <div class="confirm">
+        <div class="confirm vertical-center">
 			<form id="sendJoin" method="post" action="/castle/add">
 	            <p></p>
 	            <input type="submit" id="yesJoin" class="btn" value="Yes">
 			</form>
             <a href="#" id="noJoin" class="btn">No</a>
         </div>
-        <a href="../../castle/select" class="btn">Cancel</a>
+        <a href="../../castle/select" class="btn" id="cancel">Cancel</a>
 	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
