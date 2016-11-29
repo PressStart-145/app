@@ -403,7 +403,7 @@ exports.acceptTask = function(req, res) {
 
 };
 
-exports.view = function(req, res) {
+exports.viewOld = function(req, res) {
   var currentCastle = req.app.locals.currentCastle;
   if (req.session.castle) {
     currentCastle = req.session.castle;
@@ -431,7 +431,7 @@ exports.view = function(req, res) {
   });
 };
 
-exports.view2 = function(req, res) {
+exports.view = function(req, res) {
   var currentUser = req.app.locals.currentUser;
   var currentCastle = req.app.locals.currentCastle;
   if (req.session.user) {
@@ -483,7 +483,7 @@ exports.view2 = function(req, res) {
   completedTask = doneTaskList.length;
   var onlyOneCompleted = (completedTask == 1);
 
-  res.render('wizard2', {
+  res.render('wizard', {
     'doneTaskList': doneTaskList,
     'currentTaskList': userToDoTaskList,
     'userCompleteTaskList': userCompleteTaskList,

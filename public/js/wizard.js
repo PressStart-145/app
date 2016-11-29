@@ -1,11 +1,22 @@
-$("#openQuestsBtn").click(function(e) {
-    $(this).addClass("selected");
-    $("#currentQuestsBtn").removeClass("selected");
-    $("#completedQuestsBtn").removeClass("selected");
+window.onload = function() {
+    var h = window.innerHeight - 50;
+    console.log(h - $("#wizardHeader").height());
+    $(".taskList").css('max-height', h - $("#wizardHeader").height());
+}
 
-    $(".todoTaskRow").removeClass("hidden");
-    $(".doneTaskRow").addClass("hidden");
-    $(".inProgressTaskList").addClass("hidden");
+var afterPost = false;
+
+$("#openQuestsBtn").click(function(e) {
+    if(afterPost) {
+        afterPost = false;
+        location.reload();
+    }
+    else {
+        $(this).addClass("selected");
+        $("#personalQuestsBtn").removeClass("selected");
+        $("#teamList").removeClass("hidden");
+        $("#personalList").addClass("hidden");
+    }
     //$("#ranks").show();
 });
 
@@ -20,14 +31,54 @@ $("#currentQuestsBtn").click(function(e) {
     //$("#ranks").show();
 });
 
-$("#completedQuestsBtn").click(function(e) {
+$("#personalList .currentTaskRow .btn").click(function(e) {
+    e.preventDefault();
+    //$(".confirm").show();
+    //console.log($(this).parent());
+    var index = $(this).parent()[0].id.split("#")[1];
+    console.log(index);
+    $($(this).parent()[0]).addClass("hidden");
+    afterPost = true;
+
+    var title = $(this).parent().children().eq(0).text();
+    var level = $(this).parent().children().eq(1).text();
+
+    var html = "<div class=\"row doneTaskRow\">";
+    var html = html + "<div class=\"col-xs-7\">" + title + "</div>";
+    var html = html + "<div class=\"col-xs-5\">" + level + "</div></div>";
+    $("#personalList .doneList").append(html);
+    var count = parseInt($("#compCount").text().split(" ")[1]);
+    count++;
+    if(count == 1) {
+        $("#compCount").text( "Completed " + count + " Quest");
+    } else {
+        $("#compCount").text( "Completed " + count + " Quests");
+    }
+
+    //$("#taskTitle").text(txt); //txt.trim());
+    //$.post(“/account/completeTask/abc”,{'taskTitle': txt},callbackFunction);
+    $.post( "/account/completeTask", {'taskNum': parseInt(index)});
+});
+
+$(".completedQuestsBtn").click(function(e) {
+    $(this).toggleClass("selected");
+    if($(this).hasClass("selected")) {
+        completedMsg = "Hide Completed Quests";
+    } else {
+        completedMsg = "Show Completed Quests";
+    }
+    $(this).text(completedMsg);
+
+    console.log($(this).parent().next().html());
+    $(this).parent().next().toggleClass("hidden");
+    //$("#ranks").show();
+});
+
+$("#personalQuestsBtn").click(function(e) {
     $(this).addClass("selected");
     $("#openQuestsBtn").removeClass("selected");
-    $("#currentQuestsBtn").removeClass("selected");
-
-    $(".doneTaskRow").removeClass("hidden");
-    $(".inProgressTaskList").addClass("hidden");
-    $(".todoTaskRow").addClass("hidden");
+    $("#teamList").addClass("hidden");
+    $("#personalList").removeClass("hidden");
     //$("#ranks").show();
 });
 

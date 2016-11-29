@@ -1,0 +1,137 @@
+<!-- Map and quest board screen. -->
+
+<!doctype html>
+
+<html>
+<head>
+	<!--<script src="/js/analytics.js"></script>-->
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+		ga('create', 'UA-87591120-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+
+	<title>Create a new Quest</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-theme.min.css" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="/css/app.css">
+	<link rel="stylesheet" type="text/css" href="/css/wizard.css">
+</head>
+
+<body>
+	<div class="container wrap">
+		<div id="mainDiv">
+			<div class="row sidebarToggleButton">
+				<a href="#menu-toggle" id="mainDivSidebarButtonImg">
+					<img src="/images/HamburgerMenuBar-01.png" />
+				</a>
+			</div>
+			<div class="container-fluid">
+				<!-- <button class="backBtn">Back</button> -->
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xs-4">
+							<img src="/images/characters/wizardTransparent.png" height="100px">
+						</div>
+						<div class="col-xs-6 vertical-center">
+							<div id="greedingDiv">
+								<div>Howdy Traveler</div>
+								<a href="/newQuest" class="btn">Make a new Quest</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="container-fluid">
+					<div class="row extra">
+						<div class="col-xs-4">
+							<h6 id="openQuestsBtn" class="btn selected">Open</h6>
+						</div>
+						<div class="col-xs-4">
+							<h6 id="currentQuestsBtn" class="btn">Active</h6>
+						</div>
+						<div class="col-xs-4">
+							<h6 id="completedQuestsBtn" class="btn">Done</h6>
+						</div>
+					</div>
+					<div class="row taskList">
+						{{#each inProgressTaskList}}
+							<div class="row inProgressTaskList hidden">
+								<div class="col-xs-5">{{title}}</div>
+								<div class="col-xs-3">{{level}} pts</div>
+								<div class="col-xs-4">{{takenBy}}</div>
+							</div>
+						{{/each}}
+						{{#each doneTaskList}}
+							<div class="row doneTaskRow hidden">
+								<div class="col-xs-5">{{title}}</div>
+								<div class="col-xs-3">{{level}} pts</div>
+								<div class="col-xs-4">{{takenBy}}</div>
+							</div>
+						{{/each}}
+						{{#each todoTaskList}}
+							<div class="row todoTaskRow">
+								<div class="showDesc">
+									<div class="col-xs-5 info" id="task#{{id}}">
+										<div class="title">{{title}}</div>
+										<div class="subtitle">{{deadline}}</div>
+									</div>
+									<div class="col-xs-3 vertical-center" id="levelField">
+										<div>{{level}} pts</div>
+									</div>
+								</div>
+								<p class="col-xs-4 btn">Accept</p>
+							</div>
+							<div class="row descRow" style="display: none;">
+								<div class="col-xs-12">
+									<div class="description">{{description}}</div>
+								</div>
+							</div>
+						{{/each}}
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- mainDiv -->
+
+		<div id="sidebarDiv" class="toggled">
+			<div class="row sidebarToggleButton sidebarButton">
+				<a href="#menu-toggle">
+					<img src="/images/HamburgerMenuBar-01.png" />
+				</a>
+			</div>
+			<br/>
+			<div id="welcomeMsgDiv" class="row">
+				Welcome back {{name}}!
+			</div>
+			<div id="sidebarMenu"></div>
+		</div>
+		<!-- sidebarDiv -->
+	</div>
+	<!-- container -->
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/app.js"></script>
+	<script src="/js/wizard.js"></script>
+
+	<script>
+		$("#mainDivSidebarButtonImg").click(function(e) {
+			ga('send', 'event', 'Menu', 'click', 'Nav');
+		});
+		$("#openQuestsBtn").click(function(e) {
+			ga('send', 'event', 'Tab', 'click', 'TabNav');
+		});
+		$("#currentQuestsBtn").click(function(e) {
+			ga('send', 'event', 'Tab', 'click', 'TabNav');
+		});
+		$("#completed").click(function(e) {
+			ga('send', 'event', 'Tab', 'click', 'TabNav');
+		});
+	</script>
+</body>
+</html>

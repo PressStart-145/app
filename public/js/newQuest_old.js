@@ -19,15 +19,6 @@ var validateForm = function() {
         $("#dateAlert").show();
         isDeadline = false;
     }
-    var inDate = deadline.split("/");
-    var dueDate = new Date();
-    dueDate.setFullYear(inDate[2], inDate[0]-1, inDate[1]);
-    var today = new Date();
-    if(dueDate < today) {
-        console.log("Deadline is before today.");
-        $("#lateAlert").show();
-        isDeadline = false;
-    }
     if (isNaN(level) || level > 10 || level < 1) {
         console.log("Point value is out of range.");
         $("#levelAlert").show();
@@ -54,6 +45,6 @@ var sendTaskData = function() {
         "members": toAdd
     };*/
     $.post("/wizard/add", data, function(data, status) {
-        window.location = "/wizard2";
+        window.location = "/wizard";
     });
 }

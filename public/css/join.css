@@ -4,6 +4,7 @@ body {
     position: absolute;
     height: 100%;
     width: 100%;
+    overflow: scroll;
 
     color: white;
 }
@@ -31,4 +32,8 @@ input {
 
 .confirm .btn {
     background-color: var(--yellow);
+}
+
+#resultsList {
+    
 }

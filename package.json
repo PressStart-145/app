@@ -9,10 +9,12 @@
   },
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cloudinary": "",
+    "cookie-parser": "^1.4.3",
     "express": "3.x",
+    "express-session": "^1.14.2",
     "express3-handlebars": "*",
-    "mongoose": "^4.6.8",
-    "cloudinary": ""
+    "mongoose": "^4.6.8"
   },
   "repository": {
     "type": "git",
