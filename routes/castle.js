@@ -426,11 +426,6 @@ makeCastleJson = function(req, res, page, num, arg) {
             }
           });
           mJson.numCompleted = nc;
-          console.log("<-");
-          console.log(cJson.name);
-          console.log(mJson.username);
-          console.log(mJson.numCompleted);
-          console.log("->");
           cJson.members.push(mJson);
 
           var toAdd = true;
