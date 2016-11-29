@@ -27,6 +27,9 @@ exports.select = function(req, res) {
     usernameInexistant = false;
     wrongPassword = false;
     currentUser = req.app.locals.currentUser;
+    if(req.session.user ) {
+      currentUser = req.session.user;
+    }
     makeCastleJson(req, res, 'castles', 0, null); //0 select:userCastles
   }
 }
@@ -39,7 +42,7 @@ exports.add = function(req, res) {
     "numCompleted": 0
   };
 
-  console.log(req.body);
+  // console.log(req.body);
 
   if (req.body.type === "castle") {
     var newCastle = {
@@ -60,7 +63,7 @@ exports.add = function(req, res) {
     var postMembers = req.body.members.split(",");
     console.log(req.body.members.split(","));
     for (key in req.body.members.split(",")) {
-        console.log(req.body.members.split(",")[key]);
+      console.log(req.body.members.split(",")[key]);
     }
     for (key in postMembers) {
       newCastle.members.push({
@@ -70,7 +73,11 @@ exports.add = function(req, res) {
     }
     addCastleToDB(req, res, newCastle);
   } else if (req.body.type === "member") {
-    addMemberToCastle(req, res, req.app.locals.currentUser.username, req.body.name);
+    var un = req.app.locals.currentUser.username
+    if(req.session.user) {
+      un = req.session.user.username;
+    }
+    addMemberToCastle(req, res, un, req.body.name);
   }
 }
 
@@ -78,12 +85,20 @@ exports.view = function(req, res) {
   if (req.query.name != undefined) {
     findCastle(req, res, req.query.name);
   } else {
-    findCastleAndRemoveHealth(req, res, req.app.locals.currentCastle.name, 3);
+    var cn = req.app.locals.currentCastle.name
+    if(req.session.castle) {
+      cn = req.session.castle.name;
+    }
+    findCastleAndRemoveHealth(req, res, cn, 3);
   }
 };
 
 exports.join = function(req, res) {
-  findJoinableCastles(req, res, req.app.locals.currentUser.username);
+  var un = req.app.locals.currentUser.username
+  if(req.session.user) {
+    un = req.session.user.username;
+  }
+  findJoinableCastles(req, res, un);
 };
 
 exports.build = function(req, res) {
@@ -125,19 +140,34 @@ checkCredentialsDB = function(req, res, username, password) {
         }
 
 
-        if(usernameInexistant || wrongPassword) {
+        if (usernameInexistant || wrongPassword) {
           req.app.locals.err = true;
           req.app.locals.errMsg = errMsg;
+          req.session.err = true;
+          req.session.errMsg = errMsg;
+          req.session.save();
           res.redirect('login');
         } else {
           req.app.locals.currentUser = {
-              "name": users[0].name,
-              "username": users[0].username,
-              "password": users[0].password,
-              "email": users[0].email,
-              "imageURL": users[0].imageURL,
+            "name": users[0].name,
+            "username": users[0].username,
+            "password": users[0].password,
+            "email": users[0].email,
+            "imageURL": users[0].imageURL,
           };
-          makeCastleJson(req, res, 'castles', 0, null); //0 select:userCastles
+
+          req.session.regenerate(function() {
+            // Store the user's primary key
+            // in the session store to be retrieved,
+            // or in this case the entire user object
+            req.session.user = users[0];
+            // console.log(req.session);
+            req.session.save(function(err) {
+              makeCastleJson(req, res, 'castles', 0, null); //0 select:userCastles
+            });
+
+          });
+
         }
       });
 }
@@ -154,10 +184,12 @@ addCastleToDB = function(req, res, castleJSON) {
   });
 
   models.Castle
-    .find({name: castleJSON.name})
-    .exec(function(err, castles){
-      if(err) console.log(err);
-      if(castles.length != 0) {
+    .find({
+      name: castleJSON.name
+    })
+    .exec(function(err, castles) {
+      if (err) console.log(err);
+      if (castles.length != 0) {
         console.log("castle " + castleJSON.name + " already exist");
         makeCastleJson(req, res, 'castles', 0, null);
       } else {
@@ -306,9 +338,11 @@ addMemberToCastle = function(req, res, username, castleName) {
 
 findCastle = function(req, res, castleName) {
   models.Castle
-    .findOne({name: castleName})
-    .exec(function(err, castle){
-      if(err) console.log(err);
+    .findOne({
+      name: castleName
+    })
+    .exec(function(err, castle) {
+      if (err) console.log(err);
       if (!castle) {
         console.log("castle " + castleName + " does not exist");
       } else {
@@ -319,33 +353,35 @@ findCastle = function(req, res, castleName) {
 
 findCastleAndRemoveHealth = function(req, res, castleName, healthAmount) {
   models.Castle
-    .findOne({name: castleName})
+    .findOne({
+      name: castleName
+    })
     .populate("game quests")
     .exec(function(err, castle) {
-      if(err) console.log(err);
+      if (err) console.log(err);
       if (!castle) {
         console.log("castle " + castleName + " does not exist");
       } else {
         var canDmg = false;
 
-        if(castle.quests) {
-          castle.quests.forEach(function(q){
-            if(!q.completed) {
+        if (castle.quests) {
+          castle.quests.forEach(function(q) {
+            if (!q.completed) {
               canDmg = true;
             }
           });
         }
 
-        if(canDmg){
-          if(castle.game.castleHealth >= healthAmount) {
+        if (canDmg) {
+          if (castle.game.castleHealth >= healthAmount) {
             castle.game.castleHealth = castle.game.castleHealth - healthAmount;
           } else {
             castle.game.castleHealth = 0;
             console.log("Your castle is falling");
           }
         }
-        castle.game.save(function(err, g){
-          if(err) console.log(err);
+        castle.game.save(function(err, g) {
+          if (err) console.log(err);
           makeCastleJson(req, res, 'castle', 1, castleName);
         });
       }
@@ -360,19 +396,21 @@ findJoinableCastles = function(req, res, username) {
   models.Castle
     .find()
     .populate("members")
-    .exec(function(err, castles){
-      if(err) console.log(err);
-      castles.forEach(function(c){
+    .exec(function(err, castles) {
+      if (err) console.log(err);
+      castles.forEach(function(c) {
         var canAdd = true;
-        if(c.members){
-          c.members.forEach(function(m){
-            if(m.username === username) {
+        if (c.members) {
+          c.members.forEach(function(m) {
+            if (m.username === username) {
               canAdd = false;
             }
           });
         }
-        if(canAdd){
-          result.castles.push({'name': c.name});
+        if (canAdd) {
+          result.castles.push({
+            'name': c.name
+          });
         }
       });
       makeCastleJson(req, res, 'joinCastle', 2, result);
@@ -382,13 +420,15 @@ findJoinableCastles = function(req, res, username) {
 
 
 makeCastleJson = function(req, res, page, num, arg) {
-  var result = {'castles': []};
+  var result = {
+    'castles': []
+  };
   models.Castle
     .find()
     .populate("members quests game admin")
-    .exec(function(err, castles){
-      if(err) console.log(err);
-      castles.forEach(function(c){
+    .exec(function(err, castles) {
+      if (err) console.log(err);
+      castles.forEach(function(c) {
         var cJson = {
           "name": "",
           "admin": "",
@@ -405,23 +445,23 @@ makeCastleJson = function(req, res, page, num, arg) {
         var ncg = 0;
 
         cJson.name = c.name;
-        if(c.admin){
+        if (c.admin) {
           cJson.admin = c.admin.username;
         }
-        if(c.game){
+        if (c.game) {
           cJson.game.castleHealth = c.game.castleHealth;
           cJson.game.monsterHealth = c.game.monsterHealth;
         }
 
         var memberIDs = [];
-        c.members.forEach(function(m){
+        c.members.forEach(function(m) {
           var mJson = {
-            "username":     m.username,
+            "username": m.username,
             "numCompleted": 0
           };
           var nc = 0;
-          c.quests.forEach(function(q){
-            if((q.takenBy).toString() === (m._id).toString() && q.completed) {
+          c.quests.forEach(function(q) {
+            if ((q.takenBy).toString() === (m._id).toString() && q.completed) {
               nc++;
             }
           });
@@ -429,17 +469,20 @@ makeCastleJson = function(req, res, page, num, arg) {
           cJson.members.push(mJson);
 
           var toAdd = true;
-          memberIDs.forEach(function(m2){
+          memberIDs.forEach(function(m2) {
             if (m2.username === m.username) {
               toAdd = false;
             }
           });
           if (toAdd) {
-            memberIDs.push({"id": m._id, "username": m.username});
+            memberIDs.push({
+              "id": m._id,
+              "username": m.username
+            });
           }
         });
         // var i = 0;
-        c.quests.forEach(function(q){
+        c.quests.forEach(function(q) {
           var qJson = {
             "id": q.index,
             "title": q.title,
@@ -450,13 +493,13 @@ makeCastleJson = function(req, res, page, num, arg) {
             "completed": q.completed
           };
 
-          if(q.completed) {
+          if (q.completed) {
             ncg++;
           }
 
-          memberIDs.forEach(function(m){
+          memberIDs.forEach(function(m) {
             //if(m.id === q.takenBy) { // <-- this doesnt work fu JS
-            if((m.id).toString() === (q.takenBy).toString()) {
+            if ((m.id).toString() === (q.takenBy).toString()) {
               qJson.takenBy = m.username;
             }
           });
@@ -478,14 +521,18 @@ makeCastleJson = function(req, res, page, num, arg) {
       //1 view:currentCastle
       //2 join:joinableCastles
       //0 build:castles. users, currentUser
-      switch(num){
+      switch (num) {
         case 0:
           var dbUserCastles = {
             "castles": []
           };
-          result.castles.forEach(function(c){
-            c.members.forEach(function(m){
-              if(m.username === req.app.locals.currentUser.username) {
+          result.castles.forEach(function(c) {
+            c.members.forEach(function(m) {
+              var un = req.app.locals.currentUser.username
+              if(req.session.user) {
+                un = req.session.user.username;
+              }
+              if (m.username === un) {
                 dbUserCastles.castles.push(c);
               }
             });
@@ -493,22 +540,29 @@ makeCastleJson = function(req, res, page, num, arg) {
           dataToSend = dbUserCastles;
           break;
         case 1:
-          result.castles.forEach(function(c){
-            if(c.name === arg) {
+          result.castles.forEach(function(c) {
+            if (c.name === arg) {
               req.app.locals.currentCastle = c;
+              req.session.castle = c
+              req.session.save();
 
               var hasNoQuests = true;
 
-              if(c.quests) {
-                c.quests.forEach(function(q){
-                  if(!q.completed) {
+              if (c.quests) {
+                c.quests.forEach(function(q) {
+                  if (!q.completed) {
                     hasNoQuests = false;
                   }
                 });
               }
 
+              var un = req.app.locals.currentUser.name
+              if(req.session.user) {
+                un = req.session.user.name;
+              }
+
               dataToSend = {
-                'name': req.app.locals.currentUser.name,
+                'name': un,
                 'castleName': c.name,
                 'monsterName': "Kraken",
                 'castleHealth': c.game.castleHealth,
@@ -522,22 +576,28 @@ makeCastleJson = function(req, res, page, num, arg) {
           dataToSend = arg;
           break;
         case 3:
+          var un = req.app.locals.currentUser.username
+          if(req.session.user) {
+            un = req.session.user.username;
+          }
           var userData = {
             "users": [],
             "castles": result.castles,
-            "currUser": req.app.locals.currentUser.username
+            "currUser": un
           };
 
-          result.castles.forEach(function(c){
-            c.members.forEach(function(m){
+          result.castles.forEach(function(c) {
+            c.members.forEach(function(m) {
               var inIt = false;
-              userData.users.forEach(function(u){
-                if(m.username === u.username) {
+              userData.users.forEach(function(u) {
+                if (m.username === u.username) {
                   inIt = true;
                 }
               });
-              if(!inIt){
-                userData.users.push({"username": m.username});
+              if (!inIt) {
+                userData.users.push({
+                  "username": m.username
+                });
               }
             });
           });

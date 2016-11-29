@@ -19,19 +19,6 @@ exports.details = function(req, res) {
 }
 
 exports.update = function(req, res) {
-  // if (req.body.name !== "") {
-  //   req.app.locals.currentUser.name = req.body.name;
-  // }
-  // if (req.body.email !== "") {
-  //   req.app.locals.currentUser.email = req.body.email;
-  // }
-  // if (req.body.password !== "") {
-  //   req.app.locals.currentUser.password = req.body.password;
-  // }
-  //
-  // req.app.locals.success = true;
-  // res.redirect('account');
-
   updateUser(req, res, req.body, req.files);
 }
 
@@ -40,42 +27,6 @@ exports.signup = function(req, res) {
 }
 
 exports.add = function(req, res) {
-  //   var usernameTaken = false;
-  //   var invalidUsername = false;
-  //   if(!(new RegExp(/^[a-zA-Z0-9_]+$/).test(req.body.username))) {
-  //       invalidUsername = true;
-  //   }
-  //   data.users.forEach(function(userJson){
-  //     if(userJson.username === req.body.username) {
-  //       usernameTaken = true;
-  //     }
-  //   });
-  //   if(usernameTaken) {
-  //     var errMsg = "Username " + req.body.username + " taken";
-  //     res.render('signup', {
-  //       'err': true,
-  //       'errMsg': errMsg
-  //     });
-  // } else if(invalidUsername) {
-  //     var errMsg = "Username " + req.body.username + " is invalid. Only letters, numbers, and underscores allowed.";
-  //     res.render('signup', {
-  //       'err': true,
-  //       'errMsg': errMsg
-  //     });
-  // } else {
-  //     var newUser = {
-  //         "name": req.body.fullname,
-  //         "username": req.body.username,
-  //         "password": req.body.password,
-  //         "email": req.body.email,
-  //         "imageURL": req.body.image
-  //     };
-  //     data.users.push(newUser);
-  //     //console.log(data);
-  //
-  //     req.app.locals.createdUserSuccess = true;
-  //     res.redirect('login');
-  // }
   addUser(req, res, req.body, req.files);
 };
 
@@ -84,10 +35,32 @@ exports.login = function(req, res) {
   var errMsg = req.app.locals.errMsg;
   var success = req.app.locals.success;
   var successMsg = req.app.locals.successMsg;
+
+  if(req.session.err) {
+    err = req.session.err;
+  }
+  if(req.session.errMsg) {
+    errMsg = req.session.errMsg;
+  }
+  if(req.session.success) {
+    success = req.session.success;
+  }
+  if(req.session.successMsg) {
+    successMsg = req.session.successMsg;
+  }
+
   req.app.locals.err = null;
   req.app.locals.errMsg = null;
   req.app.locals.success = null;
   req.app.locals.successMsg = null;
+
+  req.session.err = null;
+  req.session.errMsg = null;
+  req.session.success = null;
+  req.session.successMsg = null;
+  req.session.save();
+
+  req.session.destroy();
 
   res.render('login', {
     'err': err,
@@ -104,7 +77,10 @@ exports.forgotPassword = function(req, res) {
 exports.sendPassword = function(req, res) {
   if (!req.body.username) {
     req.app.locals.err = true;
-    req.app.locals.errMsg = "no username specified"
+    req.app.locals.errMsg = "no username specified";
+    req.session.err = true;
+    req.session.errMsg = "no username specified";
+    req.session.save();
     res.redirect("/login");
   }
 
@@ -116,12 +92,18 @@ exports.sendPassword = function(req, res) {
       if (err) console.log(err);
       if (users.length == 0) {
         req.app.locals.err = true;
-        req.app.locals.errMsg = "no username " + req.body.username
+        req.app.locals.errMsg = "no username " + req.body.username;
+        req.session.err = true;
+        req.session.errMsg = "no username " + req.body.username;
+        req.session.save();
         res.redirect("/login");
       } else if (users.length > 1) {
         console.log(users);
         req.app.locals.err = true;
-        req.app.locals.errMsg = "more than one username " + req.body.username
+        req.app.locals.errMsg = "more than one username " + req.body.username;
+        req.session.err = true;
+        req.session.errMsg = "more than one username " + req.body.username;
+        req.session.save();
         res.redirect("/login");
       } else {
         sendEmail(users[0]);
@@ -137,7 +119,10 @@ exports.sendPassword = function(req, res) {
 
     if (!regex.test(user.email)) {
       req.app.locals.err = true;
-      req.app.locals.errMsg = "Wrong email format " + user.email
+      req.app.locals.errMsg = "Wrong email format " + user.email;
+      req.session.err = true;
+      req.session.errMsg = "Wrong email format " + user.email;
+      req.session.save();
       res.redirect("/login");
     }
 
@@ -170,12 +155,18 @@ exports.sendPassword = function(req, res) {
       if (error) {
          console.log(error);
          req.app.locals.err = true;
-         req.app.locals.errMsg = "Failed to send email"
+         req.app.locals.errMsg = "Failed to send email";
+         req.session.err = true;
+         req.session.errMsg = "Failed to send email";
+         req.session.save();
          res.redirect("/login");
       }
       console.log('Message sent: ' + info.response);
       req.app.locals.success = true;
-      req.app.locals.successMsg = "Sent email to " + user.email
+      req.app.locals.successMsg = "Sent email to " + user.email;
+      req.session.success = true;
+      req.session.successMsg = "Sent email to " + user.email;
+      req.session.save();
       res.redirect("/login");
     });
   }
@@ -230,6 +221,9 @@ addUser = function(req, res, userInfo, userFiles) {
                   console.log("User " + user.username + " saved on DB");
                   req.app.locals.success = true;
                   req.app.locals.successMsg = "Account successfully created.";
+                  req.session.success = true;
+                  req.session.successMsg = "Account successfully created.";
+                  req.session.save();
                   res.redirect('login');
                 });
               });
@@ -240,6 +234,9 @@ addUser = function(req, res, userInfo, userFiles) {
                 console.log("User " + user.username + " saved on DB");
                 req.app.locals.success = true;
                 req.app.locals.successMsg = "Account successfully created.";
+                req.session.success = true;
+                req.session.successMsg = "Account successfully created.";
+                req.session.save();
                 res.redirect('login');
               });
             }
@@ -250,6 +247,9 @@ addUser = function(req, res, userInfo, userFiles) {
 
 updateUser = function(req, res, userInfo, userFiles) {
   userInfo.username = req.app.locals.currentUser.username;
+  if(req.session.user) {
+    userInfo.username = req.session.user.username;
+  }
   if (userInfo.name === "") {
     userInfo.name = req.app.locals.currentUser.name;
   }
@@ -300,6 +300,10 @@ updateUser = function(req, res, userInfo, userFiles) {
     }, function(err, doc) {
       if (err) console.log(err);
       req.app.locals.currentUser = userInfo;
+      if(req.session.user) {
+        req.session.user = userInfo;
+        req.session.save();
+      }
       req.app.locals.success = true;
       res.redirect('account');
     });

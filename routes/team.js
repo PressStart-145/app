@@ -7,6 +7,21 @@ exports.view = function(req, res) {
     var castleUsers = castle.members;
     var currentUser = req.app.locals.currentUser;
 
+    if(req.session.user && req.session.castle) {
+      castle = req.session.castle;
+      castleUsers = castle.members;
+      currentUser = req.session.user;
+    }
+
+    // console.log(currentUser.username);
+    // if(req.session && req.session.user && req.session.castle) {
+    //   console.log("session user");
+    //   console.log(req.session.user.username);
+    //   console.log("session castle");
+    //   console.log(req.session.castle.name);
+    // } else {
+    //   console.log("not session");
+    // }
     var tmpUsers = [];
 
 
